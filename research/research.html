@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Бабосік — Research</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0c0c0e;
+      --surface:   #141417;
+      --surface2:  #1c1c20;
+      --border:    #27272c;
+      --text:      #e8e8ed;
+      --muted:     #6e6e78;
+      --accent:    #34d399;
+      --accent2:   #818cf8;
+      --warn:      #f87171;
+      --tag-bg:    #1e2a22;
+      --tag-text:  #4ade80;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(12,12,14,.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      height: 52px;
+    }
+
+    nav .logo {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--accent);
+      margin-right: 16px;
+      letter-spacing: -.3px;
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 10px;
+      border-radius: 6px;
+      transition: color .15s, background .15s;
+    }
+    nav a:hover { color: var(--text); background: var(--surface2); }
+
+    nav .md-link {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 5px 10px;
+      text-decoration: none;
+      transition: color .15s, border-color .15s;
+    }
+    nav .md-link:hover { color: var(--text); border-color: var(--accent); background: var(--surface); }
+    nav .md-link svg { flex-shrink: 0; }
+
+    /* ── Layout ── */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 48px 32px 80px;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      margin-bottom: 56px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-label {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--tag-bg);
+      border: 1px solid rgba(52,211,153,.2);
+      border-radius: 4px;
+      padding: 3px 8px;
+      margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -.5px;
+      color: var(--text);
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .hero p {
+      color: var(--muted);
+      font-size: 15px;
+      max-width: 560px;
+    }
+
+    /* ── Section ── */
+    section { margin-bottom: 64px; scroll-margin-top: 72px; }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .section-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+      min-width: 28px;
+    }
+    .section-header h2 {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -.3px;
+    }
+
+    /* ── Table ── */
+    .table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+    }
+    thead { background: var(--surface); }
+    thead th {
+      padding: 11px 16px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    tbody tr { border-bottom: 1px solid var(--border); transition: background .1s; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: var(--surface); }
+    tbody td {
+      padding: 13px 16px;
+      vertical-align: top;
+      color: var(--text);
+      line-height: 1.55;
+    }
+    tbody td:first-child { color: var(--muted); font-size: 13px; }
+    .good { color: #4ade80; }
+    .bad  { color: #f87171; }
+    .num-cell { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--muted); }
+
+    /* ── Pattern cards ── */
+    .patterns-grid {
+      display: grid;
+      gap: 16px;
+    }
+    .pattern-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      gap: 0 16px;
+    }
+    .pattern-card.best { border-color: rgba(52,211,153,.35); background: #0e1e18; }
+    .pattern-card.second { border-color: rgba(129,140,248,.25); background: #111220; }
+    .pattern-card.avoid { border-color: rgba(248,113,113,.2); background: #1d1010; }
+
+    .pattern-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      padding-top: 2px;
+      grid-row: span 4;
+    }
+    .pattern-card.best .pattern-num { color: var(--accent); }
+    .pattern-card.second .pattern-num { color: var(--accent2); }
+    .pattern-card.avoid .pattern-num { color: var(--warn); }
+
+    .pattern-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .badge {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      border-radius: 4px;
+      padding: 2px 6px;
+    }
+    .badge-best { background: rgba(52,211,153,.15); color: var(--accent); }
+    .badge-second { background: rgba(129,140,248,.15); color: var(--accent2); }
+    .badge-avoid { background: rgba(248,113,113,.15); color: var(--warn); }
+
+    .pattern-desc { color: var(--muted); font-size: 13.5px; margin-bottom: 12px; }
+
+    .pattern-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .meta-item { font-size: 12.5px; }
+    .meta-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+    .meta-value { color: var(--text); }
+
+    /* ── JTBD ── */
+    .jtbd-list { list-style: none; display: grid; gap: 12px; }
+    .jtbd-list li {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 18px;
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 10px;
+      align-items: start;
+    }
+    .jtbd-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+      background: var(--surface2);
+      border-radius: 4px;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .jtbd-text { font-size: 14px; color: var(--text); font-style: italic; }
+
+    /* ── Conclusions ── */
+    .conclusion-list { list-style: none; display: grid; gap: 10px; }
+    .conclusion-list li {
+      display: flex;
+      gap: 12px;
+      align-items: baseline;
+      font-size: 14px;
+    }
+    .conclusion-list li::before {
+      content: '→';
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      flex-shrink: 0;
+    }
+
+    /* ── Screens placeholder ── */
+    .screens-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+    .screen-placeholder {
+      background: var(--surface);
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      height: 140px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .screen-placeholder svg { opacity: .4; }
+    .screen-img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      display: block;
+    }
+
+    /* ── Recommend block ── */
+    .recommend-grid { display: grid; gap: 12px; }
+    .recommend-item {
+      background: var(--surface);
+      border-left: 3px solid transparent;
+      border-radius: 0 10px 10px 0;
+      padding: 14px 18px;
+    }
+    .recommend-item.best { border-color: var(--accent); }
+    .recommend-item.second { border-color: var(--accent2); }
+    .recommend-item.avoid { border-color: var(--warn); }
+    .recommend-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .recommend-item.best .recommend-label { color: var(--accent); }
+    .recommend-item.second .recommend-label { color: var(--accent2); }
+    .recommend-item.avoid .recommend-label { color: var(--warn); }
+    .recommend-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+    .recommend-reasons { list-style: none; display: grid; gap: 4px; }
+    .recommend-reasons li { font-size: 13px; color: var(--muted); display: flex; gap: 8px; }
+    .recommend-reasons li::before { content: '·'; color: var(--muted); flex-shrink: 0; }
+
+    /* ── Footer ── */
+    footer {
+      margin-top: 80px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--text); }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      nav { padding: 0 16px; gap: 4px; }
+      nav a { display: none; }
+      .container { padding: 32px 16px 60px; }
+      .hero h1 { font-size: 24px; }
+      .pattern-meta { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">Бабосік</span>
+  <a href="#competitors">Конкуренти</a>
+  <a href="#patterns">Патерни</a>
+  <a href="#jtbd">JTBD</a>
+  <a href="#conclusions">Висновки</a>
+  <a href="research.md" class="md-link">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+    research.md
+  </a>
+</nav>
+
+<div class="container">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-label">Research · Phase 1</div>
+    <h1>Конкурентний аналіз<br>та UX-патерни</h1>
+    <p>Огляд ринку особистих фінансів, Jobs To Be Done та вибір UX-патерну для Бабосіка.</p>
+  </div>
+
+  <!-- Competitors -->
+  <section id="competitors">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Конкуренти</h2>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Продукт</th>
+            <th>Що добре</th>
+            <th>Що не так</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Monobank</td>
+            <td class="good">Зручна категоризація, живий дизайн</td>
+            <td class="bad">Немає кастомних категорій, обмежена аналітика</td>
+          </tr>
+          <tr>
+            <td>YNAB</td>
+            <td class="good">Потужна система бюджетів</td>
+            <td class="bad">Складно, дорого, англійська</td>
+          </tr>
+          <tr>
+            <td>CoinKeeper</td>
+            <td class="good">Симпатичний UI</td>
+            <td class="bad">Застарів, мало автоматизації</td>
+          </tr>
+          <tr>
+            <td>Notion (самописний)</td>
+            <td class="good">Гнучкість</td>
+            <td class="bad">Немає автоімпорту, треба робити руками</td>
+          </tr>
+          <tr>
+            <td>Spendee</td>
+            <td class="good">Мультибанк, дизайн</td>
+            <td class="bad">Платне, не локалізоване для UA</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Benchmark / Patterns -->
+  <section id="patterns">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>UX-патерни</h2>
+    </div>
+
+    <div class="patterns-grid" style="margin-bottom:32px;">
+
+      <div class="pattern-card best">
+        <div class="pattern-num">01</div>
+        <div>
+          <div class="pattern-title">
+            Snapshot / Summary-first
+            <span class="badge badge-best">Вибір для MVP</span>
+          </div>
+          <div class="pattern-desc">Агрегат на першому плані: велика цифра, кілька карток, один-два графіки. Деталі — один клік нижче.</div>
+          <div class="pattern-meta">
+            <div class="meta-item">
+              <div class="meta-label">Де</div>
+              <div class="meta-value">Mint, Monobank Analytics</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Підходить</div>
+              <div class="meta-value">Регулярний перегляд, "як справи загалом?"</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Ламається</div>
+              <div class="meta-value">Забагато категорій → список замість дашборду</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pattern-card">
+        <div class="pattern-num">02</div>
+        <div>
+          <div class="pattern-title">Chronological Feed</div>
+          <div class="pattern-desc">Транзакції від нових до старих, як соцмережа. Скрол = час. Кожен елемент — дія.</div>
+          <div class="pattern-meta">
+            <div class="meta-item">
+              <div class="meta-label">Де</div>
+              <div class="meta-value">Revolut, банківські виписки</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Підходить</div>
+              <div class="meta-value">"Що я купив вчора?", пошук транзакції</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Ламається</div>
+              <div class="meta-value">200 транзакцій нічого не скажуть про структуру витрат</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pattern-card second">
+        <div class="pattern-num">03</div>
+        <div>
+          <div class="pattern-title">
+            Spatial / Visual Map
+            <span class="badge badge-second">Якщо 10+ категорій</span>
+          </div>
+          <div class="pattern-desc">Гроші як простір. Treemap або bubble chart — розмір фігури = сума. Категорії видно за секунду через площу.</div>
+          <div class="pattern-meta">
+            <div class="meta-item">
+              <div class="meta-label">Де</div>
+              <div class="meta-value">Spendee (bubble), BI-інструменти</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Підходить</div>
+              <div class="meta-value">Побачити пропорції миттєво без читання цифр</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Ламається</div>
+              <div class="meta-value">Мобільний, порівняння місяців, відсутність даних</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pattern-card avoid">
+        <div class="pattern-num">04</div>
+        <div>
+          <div class="pattern-title">
+            Goal / Budget Contrast
+            <span class="badge badge-avoid">Не для MVP</span>
+          </div>
+          <div class="pattern-desc">Кожна категорія в контексті бюджету: "витратив 3200 з 4000". Прогрес-бари, червоне/зелене.</div>
+          <div class="pattern-meta">
+            <div class="meta-item">
+              <div class="meta-label">Де</div>
+              <div class="meta-value">YNAB, Every Dollar</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Підходить</div>
+              <div class="meta-value">Сформована фінансова дисципліна, є бюджети</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Ламається</div>
+              <div class="meta-value">Без бюджетів — порожні бари. Бюджети відкладені на post-MVP.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pattern-card">
+        <div class="pattern-num">05</div>
+        <div>
+          <div class="pattern-title">Query / Intent-first</div>
+          <div class="pattern-desc">Користувач формулює питання через фільтри або природну мову. Немає фіксованого "головного екрану".</div>
+          <div class="pattern-meta">
+            <div class="meta-item">
+              <div class="meta-label">Де</div>
+              <div class="meta-value">Google Finance, AI-асистенти, Notion</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Підходить</div>
+              <div class="meta-value">Досвідчений користувач, нестандартні питання</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Ламається</div>
+              <div class="meta-value">Без звички — blank state, розгубленість. Дорогий у розробці.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Recommendation -->
+    <div class="recommend-grid">
+      <div class="recommend-item best">
+        <div class="recommend-label">Вибір для Бабосіка</div>
+        <div class="recommend-title">Snapshot / Summary-first</div>
+        <ul class="recommend-reasons">
+          <li>MVP вже визначив: аналітика по категоріях, порівняння місяць-до-місяця, топ витрат — це і є дашборд.</li>
+          <li>Швидкість без спінерів (принцип CLAUDE.md) — агрегати кешуються, сторінка відкривається миттєво.</li>
+          <li>Десктоп як основний — дашборд масштабується природно: сітка карток, графік збоку.</li>
+        </ul>
+      </div>
+      <div class="recommend-item second">
+        <div class="recommend-label">Другий — за умови 10+ категорій</div>
+        <div class="recommend-title">Spatial / Visual Map (Treemap)</div>
+        <ul class="recommend-reasons">
+          <li>Додається як альтернативний вигляд аналітики — перемикач List / Map.</li>
+          <li>Дає миттєве розуміння пропорцій там, де дашборд перетворюється на довгий список.</li>
+        </ul>
+      </div>
+      <div class="recommend-item avoid">
+        <div class="recommend-label">Не підходить</div>
+        <div class="recommend-title">Goal / Budget Contrast</div>
+        <ul class="recommend-reasons">
+          <li>Бюджети та цілі явно відкладені на наступні ітерації (CLAUDE.md).</li>
+          <li>Без бюджетів інтерфейс виглядає зламаним: порожні прогрес-бари, заклики без контексту.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- JTBD -->
+  <section id="jtbd">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Jobs To Be Done</h2>
+    </div>
+    <ul class="jtbd-list">
+      <li>
+        <div class="jtbd-num">1</div>
+        <div class="jtbd-text">"Я хочу знати, куди йдуть гроші, без того щоб вручну щось вводити"</div>
+      </li>
+      <li>
+        <div class="jtbd-num">2</div>
+        <div class="jtbd-text">"Я хочу побачити, де я витрачаю забагато"</div>
+      </li>
+      <li>
+        <div class="jtbd-num">3</div>
+        <div class="jtbd-text">"Я хочу порівняти цей місяць з минулим"</div>
+      </li>
+      <li>
+        <div class="jtbd-num">4</div>
+        <div class="jtbd-text">"Я хочу свої категорії, а не ті що мені нав'язали"</div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Screens -->
+  <section id="screens">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Референси</h2>
+    </div>
+    <div id="screens-grid" class="screens-grid">
+      <!-- Populated by JS from screens/ folder, or placeholder if empty -->
+    </div>
+    <script>
+      (function(){
+        const grid = document.getElementById('screens-grid');
+        const imgs = [];
+        if(imgs.length === 0){
+          const names = ['Monobank Analytics','YNAB Dashboard','Spendee Bubbles','CoinKeeper UI'];
+          names.forEach(n => {
+            const d = document.createElement('div');
+            d.className = 'screen-placeholder';
+            d.innerHTML = `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg><span>${n}</span>`;
+            grid.appendChild(d);
+          });
+        }
+      })();
+    </script>
+  </section>
+
+  <!-- Conclusions -->
+  <section id="conclusions">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Висновки</h2>
+    </div>
+    <ul class="conclusion-list">
+      <li>Користувачі хочуть <strong>автоматизацію</strong> (не вводити вручну), але <strong>контроль</strong> (виправити, перекатегоризувати).</li>
+      <li><strong>Категорії</strong> — ключова фіча: стандартні не підходять всім.</li>
+      <li><strong>Аналітика</strong> має бути зрозумілою з першого погляду, не вимагати фінансових знань.</li>
+      <li>Дизайн: <strong>дружній і живий</strong>, не банківський.</li>
+    </ul>
+  </section>
+
+</div>
+
+<div class="container" style="padding-top:0;">
+  <footer>
+    <span>Бабосік · Research Phase 1 · 2026</span>
+    <a href="research.md">← Переглянути research.md</a>
+  </footer>
+</div>
+
+</body>
+</html>
