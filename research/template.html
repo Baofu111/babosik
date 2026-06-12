@@ -183,11 +183,7 @@
       <span class="section-num">01</span>
       <h2>Конкуренти</h2>
     </div>
-    <div class="table-wrap"><table><thead><tr><th>Продукт</th><th>Що добре</th><th>Що не так</th></tr></thead><tbody><tr><td>Monobank</td><td class='good'>Зручна категоризація, живий дизайн</td><td class='bad'>Немає кастомних категорій, обмежена аналітика</td></tr>
-<tr><td>YNAB</td><td class='good'>Потужна система бюджетів</td><td class='bad'>Складно, дорого, англійська</td></tr>
-<tr><td>CoinKeeper</td><td class='good'>Симпатичний UI</td><td class='bad'>Застарів, мало автоматизації</td></tr>
-<tr><td>Notion (самописний)</td><td class='good'>Гнучкість</td><td class='bad'>Немає автоімпорту, треба робити руками</td></tr>
-<tr><td>Spendee</td><td class='good'>Мультибанк, дизайн</td><td class='bad'>Платне, не локалізоване для UA</td></tr></tbody></table></div>
+    <!-- BUILD:competitors -->
   </section>
 
   <section id="patterns">
@@ -195,8 +191,8 @@
       <span class="section-num">02</span>
       <h2>UX-патерни</h2>
     </div>
-    <div class="patterns-grid" style="margin-bottom:32px;"><div class="pattern-card best"><div class="pattern-num">01</div><div><div class="pattern-title">Snapshot / Summary-first <span class="badge badge-best">Вибір для MVP</span></div><div class="pattern-desc">Агрегат на першому плані: велика цифра, кілька карток, один-два графіки. Деталі — один клік нижче.</div><div class="pattern-meta"><div class="meta-item"><div class="meta-label">Де</div><div class="meta-value">Mint, Monobank Analytics, більшість фінтех-застосунків</div></div><div class="meta-item"><div class="meta-label">Підходить</div><div class="meta-value">Регулярний перегляд (щотижня/щомісяця). &quot;Як справи загалом?&quot;</div></div><div class="meta-item"><div class="meta-label">Ламається</div><div class="meta-value">Забагато категорій → список замість дашборду. Погано для першого знайомства з даними.</div></div></div></div></div><div class="pattern-card"><div class="pattern-num">02</div><div><div class="pattern-title">Chronological Feed </div><div class="pattern-desc">Транзакції від нових до старих, як соцмережа. Скрол = час. Кожен елемент — дія.</div><div class="pattern-meta"><div class="meta-item"><div class="meta-label">Де</div><div class="meta-value">Revolut (основний екран), банківські виписки</div></div><div class="meta-item"><div class="meta-label">Підходить</div><div class="meta-value">&quot;Що я купив вчора?&quot; — пошук конкретної транзакції, перевірка списань</div></div><div class="meta-item"><div class="meta-label">Ламається</div><div class="meta-value">Непридатний для розуміння патернів. 200 транзакцій за місяць нічого не скажуть про структуру витрат.</div></div></div></div></div><div class="pattern-card second"><div class="pattern-num">03</div><div><div class="pattern-title">Spatial / Visual Map <span class="badge badge-second">Якщо 10+ категорій</span></div><div class="pattern-desc">Гроші як простір. Treemap або bubble chart — розмір фігури = сума. Категорії видно за секунду через площу.</div><div class="pattern-meta"><div class="meta-item"><div class="meta-label">Де</div><div class="meta-value">Spendee (bubble), фінансові BI-інструменти</div></div><div class="meta-item"><div class="meta-label">Підходить</div><div class="meta-value">Багато категорій, потрібно побачити пропорції миттєво без читання цифр</div></div><div class="meta-item"><div class="meta-label">Ламається</div><div class="meta-value">Мобільний — bubble charts нечитабельні. Порівняння двох місяців складне. Нові користувачі без даних — пустий екран.</div></div></div></div></div><div class="pattern-card avoid"><div class="pattern-num">04</div><div><div class="pattern-title">Goal / Budget Contrast <span class="badge badge-avoid">Не для MVP</span></div><div class="pattern-desc">Кожна категорія завжди в контексті бюджету: &quot;витратив 3200 з 4000&quot;. Прогрес-бари, червоне/зелене.</div><div class="pattern-meta"><div class="meta-item"><div class="meta-label">Де</div><div class="meta-value">YNAB, Every Dollar</div></div><div class="meta-item"><div class="meta-label">Підходить</div><div class="meta-value">Користувач вже сформував фінансову дисципліну, знає свій бюджет, хоче контролювати відхилення</div></div><div class="meta-item"><div class="meta-label">Ламається</div><div class="meta-value">Без заданих бюджетів — порожні бари. Додає когнітивне навантаження (&quot;а скільки взагалі планувати?&quot;)</div></div></div></div></div><div class="pattern-card"><div class="pattern-num">05</div><div><div class="pattern-title">Query / Intent-first </div><div class="pattern-desc">Користувач формулює питання через фільтри або природну мову. Немає фіксованого &quot;головного екрану&quot;.</div><div class="pattern-meta"><div class="meta-item"><div class="meta-label">Де</div><div class="meta-value">Google Finance, AI-фінансові асистенти, Notion</div></div><div class="meta-item"><div class="meta-label">Підходить</div><div class="meta-value">Досвідчений користувач, нестандартні питання (&quot;скільки на таксі у вихідні&quot;)</div></div><div class="meta-item"><div class="meta-label">Ламається</div><div class="meta-value">Вимагає знати, що запитати. Без звички — blank state, розгубленість. Висока вартість розробки AI-варіанту.</div></div></div></div></div></div>
-    <div class="recommend-grid"><div class="recommend-item best"><div class="recommend-label">Вибір для Бабосіка</div><div class="recommend-title">Snapshot / Summary-first</div><ul class="recommend-reasons"><li>MVP вже це визначив — &quot;аналітика по категоріях за місяць&quot;, &quot;порівняння місяць-до-місяця&quot;, &quot;топ витрат&quot; — це і є дашборд.</li><li>Швидкість без спінерів (принцип з CLAUDE.md) — агрегати кешуються, сторінка відкривається миттєво.</li><li>Десктоп як основний — дашборд масштабується на широкий екран природно: сітка карток, графік збоку.</li></ul></div><div class="recommend-item second"><div class="recommend-label">Другий — за умови 10+ категорій</div><div class="recommend-title">Spatial / Visual Map</div><ul class="recommend-reasons"><li>Якщо користувач має розгалужену структуру (їжа → кафе/магазин/доставка), treemap дає миттєве розуміння пропорцій.</li><li>Додається як альтернативний вигляд аналітики — перемикач List / Map.</li></ul></div><div class="recommend-item avoid"><div class="recommend-label">Не підходить</div><div class="recommend-title">Goal / Budget Contrast</div><ul class="recommend-reasons"><li>Бюджети та цілі — явно відкладено на наступні ітерації.</li><li>Без бюджетів інтерфейс виглядає зламаним: порожні прогрес-бари, заклики &quot;встановити ліміт&quot; без контексту.</li></ul></div></div>
+    <!-- BUILD:patterns -->
+    <!-- BUILD:recommendations -->
   </section>
 
   <section id="jtbd">
@@ -204,7 +200,7 @@
       <span class="section-num">03</span>
       <h2>Jobs To Be Done</h2>
     </div>
-    <ul class="jtbd-list"><li><div class="jtbd-num">1</div><div class="jtbd-text">"&quot;Я хочу знати, куди йдуть гроші, без того щоб вручну щось вводити&quot;"</div></li><li><div class="jtbd-num">2</div><div class="jtbd-text">"&quot;Я хочу побачити, де я витрачаю забагато&quot;"</div></li><li><div class="jtbd-num">3</div><div class="jtbd-text">"&quot;Я хочу порівняти цей місяць з минулим&quot;"</div></li><li><div class="jtbd-num">4</div><div class="jtbd-text">"&quot;Я хочу свої категорії, а не ті що мені нав&#x27;язали&quot;"</div></li></ul>
+    <!-- BUILD:jtbd -->
   </section>
 
   <section id="screens">
@@ -212,7 +208,7 @@
       <span class="section-num">04</span>
       <h2>Референси</h2>
     </div>
-    <div class="screens-grid"><img src="screens/coinkeeper_home.png" alt="coinkeeper_home" class="screen-img" loading="lazy"><img src="screens/monobank_analytics.png" alt="monobank_analytics" class="screen-img" loading="lazy"><img src="screens/spendee_overview.png" alt="spendee_overview" class="screen-img" loading="lazy"><img src="screens/ynab_dashboard.png" alt="ynab_dashboard" class="screen-img" loading="lazy"></div>
+    <!-- BUILD:screens -->
   </section>
 
   <section id="conclusions">
@@ -220,14 +216,14 @@
       <span class="section-num">05</span>
       <h2>Висновки</h2>
     </div>
-    <ul class="conclusion-list"><li>Користувачі хочуть <strong>автоматизацію</strong> (не вводити вручну), але <strong>контроль</strong> (виправити, перекатегоризувати)</li><li><strong>Категорії</strong> — ключова фіча: стандартні не підходять всім</li><li><strong>Аналітика</strong> має бути зрозумілою з першого погляду, не вимагати фінансових знань</li><li>Дизайн: <strong>дружній і живий</strong>, не банківський</li></ul>
+    <!-- BUILD:conclusions -->
   </section>
 
 </div>
 
 <div class="container" style="padding-top:0;">
   <footer>
-    <span>Бабосік · Research · 2026-06-12</span>
+    <span>Бабосік · Research · <!-- BUILD:date --></span>
     <a href="research.md">← Переглянути research.md</a>
   </footer>
 </div>
