@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Бабосік — Персони та JTBD</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0c0c0e;
+      --surface:   #141417;
+      --surface2:  #1c1c20;
+      --border:    #27272c;
+      --text:      #e8e8ed;
+      --muted:     #6e6e78;
+      --accent:    #34d399;
+      --accent2:   #818cf8;
+      --warn:      #f87171;
+      --amber:     #fbbf24;
+      --tag-bg:    #1e2a22;
+      --tag-text:  #4ade80;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(12,12,14,.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+      display: flex; align-items: center; gap: 8px; height: 52px;
+    }
+    nav .logo { font-weight: 700; font-size: 15px; color: var(--accent); margin-right: 16px; letter-spacing: -.3px; }
+    nav a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 500; padding: 6px 10px; border-radius: 6px; transition: color .15s, background .15s; }
+    nav a:hover { color: var(--text); background: var(--surface2); }
+    nav .md-link {
+      margin-left: auto; display: flex; align-items: center; gap: 6px;
+      font-family: 'JetBrains Mono', monospace; font-size: 12px;
+      color: var(--muted); background: var(--surface); border: 1px solid var(--border);
+      border-radius: 6px; padding: 5px 10px; text-decoration: none;
+      transition: color .15s, border-color .15s;
+    }
+    nav .md-link:hover { color: var(--text); border-color: var(--accent); }
+
+    /* ── Layout ── */
+    .container { max-width: 960px; margin: 0 auto; padding: 48px 32px 80px; }
+
+    /* ── Hero ── */
+    .hero { margin-bottom: 56px; padding-bottom: 40px; border-bottom: 1px solid var(--border); }
+    .hero-label {
+      display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--accent); background: var(--tag-bg);
+      border: 1px solid rgba(52,211,153,.2); border-radius: 4px; padding: 3px 8px; margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 32px; font-weight: 700; letter-spacing: -.5px; line-height: 1.2; margin-bottom: 12px; }
+    .hero p { color: var(--muted); font-size: 15px; max-width: 600px; }
+    .hero-nav { display: flex; gap: 8px; margin-top: 20px; flex-wrap: wrap; }
+    .hero-nav a {
+      font-size: 12px; font-weight: 500; color: var(--muted); text-decoration: none;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 6px; padding: 5px 12px; transition: color .15s, border-color .15s;
+    }
+    .hero-nav a:hover { color: var(--text); border-color: var(--accent); }
+
+    /* ── Section ── */
+    section { margin-bottom: 72px; scroll-margin-top: 72px; }
+    .section-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 28px; }
+    .section-num { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); min-width: 28px; }
+    .section-header h2 { font-size: 20px; font-weight: 700; letter-spacing: -.3px; }
+
+    /* ── Badges ── */
+    .badge {
+      display: inline-flex; align-items: center;
+      font-size: 10px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+      border-radius: 4px; padding: 2px 6px; white-space: nowrap;
+    }
+    .badge-primary  { background: rgba(52,211,153,.15);  color: var(--accent); }
+    .badge-secondary{ background: rgba(129,140,248,.15); color: var(--accent2); }
+    .badge-hyp      { background: rgba(251,191,36,.12);  color: var(--amber); border: 1px solid rgba(251,191,36,.25); }
+    .badge-ok       { background: rgba(52,211,153,.12);  color: var(--accent); }
+    .badge-partial  { background: rgba(251,191,36,.12);  color: var(--amber); }
+    .badge-no       { background: rgba(248,113,113,.12); color: var(--warn); }
+    .badge-unknown  { background: var(--surface2); color: var(--muted); }
+    .badge-updated  { background: rgba(129,140,248,.15); color: var(--accent2); }
+
+    .q-mark {
+      display: inline-flex; align-items: center; justify-content: center;
+      font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700;
+      background: rgba(251,191,36,.15); color: var(--amber);
+      border: 1px solid rgba(251,191,36,.3); border-radius: 3px;
+      padding: 1px 5px; margin-left: 4px; vertical-align: middle;
+    }
+
+    /* ── Persona Cards ── */
+    .personas-grid { display: grid; gap: 20px; }
+
+    .persona-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .persona-card.primary {
+      border-color: rgba(52,211,153,.4);
+      background: linear-gradient(135deg, #0e1e18 0%, #141417 60%);
+    }
+    .persona-card.secondary {
+      border-color: rgba(129,140,248,.2);
+      background: linear-gradient(135deg, #111220 0%, #141417 60%);
+    }
+
+    .persona-header {
+      padding: 20px 24px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+    }
+    .persona-name { font-size: 18px; font-weight: 700; letter-spacing: -.3px; margin-bottom: 4px; }
+    .persona-role { font-size: 13px; color: var(--muted); }
+    .persona-age  { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); margin-left: 6px; }
+
+    .persona-body { padding: 20px 24px; display: grid; gap: 18px; }
+
+    .persona-section-label {
+      font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 8px;
+    }
+
+    .persona-context {
+      font-size: 13.5px; color: var(--text); line-height: 1.6;
+    }
+
+    .persona-note {
+      font-size: 12px; color: var(--muted);
+      background: var(--surface2); border-left: 2px solid var(--amber);
+      border-radius: 0 6px 6px 0; padding: 8px 12px; margin-top: 8px;
+      line-height: 1.5;
+    }
+    .persona-note strong { color: var(--amber); }
+
+    .pain-list, .trust-list, .job-list { list-style: none; display: grid; gap: 7px; }
+    .pain-list li, .trust-list li, .job-list li {
+      font-size: 13px; display: flex; gap: 8px; align-items: baseline;
+    }
+    .pain-list li::before   { content: '·'; color: var(--warn);   flex-shrink: 0; }
+    .trust-list li.plus::before  { content: '+'; color: var(--accent);  flex-shrink: 0; font-weight: 600; }
+    .trust-list li.minus::before { content: '−'; color: var(--warn);   flex-shrink: 0; font-weight: 600; }
+    .job-list li::before    { content: '→'; color: var(--accent); flex-shrink: 0; font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+
+    .pain-hyp { color: var(--muted); font-style: italic; }
+
+    .persona-quote {
+      font-size: 14px; font-style: italic; color: var(--text);
+      border-left: 2px solid var(--accent2);
+      padding: 8px 14px;
+      background: var(--surface2); border-radius: 0 8px 8px 0;
+    }
+    .persona-quote small {
+      display: block; margin-top: 4px; font-size: 11px; font-style: normal;
+      color: var(--muted);
+    }
+
+    .persona-two-col {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+
+    /* ── Jobs Hierarchy ── */
+    .main-job-block {
+      background: linear-gradient(135deg, #0e1e18, #111114);
+      border: 1px solid rgba(52,211,153,.35);
+      border-radius: 14px;
+      padding: 24px 28px;
+      margin-bottom: 28px;
+      position: relative;
+    }
+    .main-job-block::before {
+      content: 'Main Job';
+      font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--accent); position: absolute; top: -1px; left: 20px;
+      background: #0e1e18; padding: 0 8px; transform: translateY(-50%);
+    }
+    .main-job-text {
+      font-size: 15px; line-height: 1.7;
+    }
+    .main-job-text .when  { color: var(--muted); }
+    .main-job-text .want  { color: var(--text); }
+    .main-job-text .sothat{ color: var(--accent); }
+    .main-job-source { margin-top: 12px; font-size: 12px; color: var(--muted); }
+
+    .jobs-grid { display: grid; gap: 10px; }
+
+    .job-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+    }
+    .job-card.emotional {
+      border-color: rgba(129,140,248,.25);
+      background: #111220;
+    }
+    .job-card.hyp {
+      border-color: rgba(251,191,36,.2);
+      background: #1a1608;
+      opacity: .85;
+    }
+
+    .job-card-header {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
+    }
+    .job-id {
+      font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600;
+      color: var(--muted); background: var(--surface2);
+      border-radius: 4px; padding: 2px 7px; white-space: nowrap;
+    }
+    .job-card.emotional .job-id { color: var(--accent2); background: rgba(129,140,248,.1); }
+    .job-card.hyp .job-id       { color: var(--amber);   background: rgba(251,191,36,.1); }
+
+    .job-title { font-size: 14px; font-weight: 600; }
+
+    .job-formula { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 10px; }
+    .job-formula .when   { color: var(--muted); }
+    .job-formula .want   { color: var(--text); }
+    .job-formula .sothat { color: var(--accent); }
+    .job-card.emotional .job-formula .sothat { color: var(--accent2); }
+    .job-card.hyp .job-formula .sothat       { color: var(--amber); }
+
+    .job-personas {
+      display: flex; gap: 6px; flex-wrap: wrap;
+    }
+    .persona-chip {
+      font-size: 11px; font-weight: 500; border-radius: 4px; padding: 2px 8px;
+      background: var(--surface2); color: var(--muted);
+    }
+    .persona-chip.primary-chip { background: rgba(52,211,153,.1); color: var(--accent); }
+
+    .job-hyp-reason {
+      margin-top: 10px; font-size: 12px; color: var(--muted);
+      font-style: italic; border-top: 1px solid var(--border); padding-top: 8px;
+    }
+
+    .subsection-label {
+      font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--muted); margin: 24px 0 12px; display: flex; align-items: center; gap: 8px;
+    }
+    .subsection-label::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+
+    /* ── Matrix Table ── */
+    .matrix-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); }
+
+    .matrix-table {
+      width: 100%; border-collapse: collapse; font-size: 12.5px;
+      min-width: 780px;
+    }
+    .matrix-table thead { background: var(--surface); }
+    .matrix-table thead th {
+      padding: 11px 14px; text-align: left;
+      font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+      color: var(--muted); border-bottom: 1px solid var(--border); white-space: nowrap;
+    }
+    .matrix-table thead th.col-persona { color: var(--text); }
+    .matrix-table thead th.col-primary { color: var(--accent); }
+
+    .matrix-table tbody tr { border-bottom: 1px solid var(--border); transition: background .1s; }
+    .matrix-table tbody tr:last-child { border-bottom: none; }
+    .matrix-table tbody tr:hover { background: var(--surface); }
+    .matrix-table tbody td { padding: 12px 14px; vertical-align: top; line-height: 1.5; }
+
+    .matrix-table .col-job { min-width: 140px; }
+    .matrix-table .job-cell-id {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600;
+      color: var(--muted); display: block; margin-bottom: 3px;
+    }
+    .matrix-table .job-cell-name { font-size: 12.5px; font-weight: 600; color: var(--text); }
+
+    .imp-cell { text-align: center; }
+    .imp {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 28px; height: 28px; border-radius: 50%;
+      font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .imp-3 { background: rgba(52,211,153,.15); color: var(--accent); }
+    .imp-2 { background: rgba(251,191,36,.15);  color: var(--amber); }
+    .imp-1 { background: var(--surface2);        color: var(--muted); }
+    .imp-q { background: rgba(251,191,36,.1);    color: var(--amber); font-size: 12px; }
+
+    .imp-note { font-size: 11px; color: var(--muted); line-height: 1.4; display: block; }
+
+    .func-cell { font-size: 12px; color: var(--muted); max-width: 160px; }
+
+    .comp-cell { font-size: 11.5px; max-width: 160px; }
+    .comp-item { display: flex; gap: 4px; align-items: baseline; margin-bottom: 3px; }
+    .comp-name { color: var(--text); white-space: nowrap; }
+    .comp-ok      { color: var(--accent); }
+    .comp-partial { color: var(--amber);  }
+    .comp-no      { color: var(--warn);   }
+    .comp-unk     { color: var(--muted);  }
+
+    .matrix-row-mj  { background: rgba(52,211,153,.03); }
+    .matrix-row-ej  { background: rgba(129,140,248,.03); }
+
+    /* ── Conclusions ── */
+    .mvp-grid { display: grid; gap: 12px; margin-bottom: 32px; }
+    .mvp-item {
+      background: var(--surface);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 10px 10px 0;
+      padding: 16px 20px;
+    }
+    .mvp-item-label {
+      font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 6px;
+    }
+    .mvp-item-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+    .mvp-item-text  { font-size: 13px; color: var(--muted); }
+
+    .cut-grid { display: grid; gap: 10px; }
+    .cut-item {
+      background: var(--surface);
+      border-left: 3px solid var(--warn);
+      border-radius: 0 10px 10px 0;
+      padding: 14px 18px;
+    }
+    .cut-item-label { font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--warn); margin-bottom: 4px; }
+    .cut-item-title { font-size: 14px; font-weight: 600; margin-bottom: 5px; }
+    .cut-item-text  { font-size: 13px; color: var(--muted); }
+
+    /* ── Gaps table ── */
+    .table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); }
+    table.gaps { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    table.gaps thead { background: var(--surface); }
+    table.gaps thead th { padding: 11px 16px; text-align: left; font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--border); }
+    table.gaps tbody tr { border-bottom: 1px solid var(--border); transition: background .1s; }
+    table.gaps tbody tr:last-child { border-bottom: none; }
+    table.gaps tbody tr:hover { background: var(--surface); }
+    table.gaps tbody td { padding: 12px 16px; vertical-align: top; line-height: 1.55; font-size: 13px; }
+    table.gaps .gap-topic { font-weight: 500; color: var(--text); }
+    table.gaps .gap-status { white-space: nowrap; }
+
+    /* ── Source tag ── */
+    .src { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); }
+
+    /* ── Table ── */
+    .table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); }
+
+    /* ── Footer ── */
+    footer {
+      margin-top: 80px; padding-top: 24px; border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 12px; color: var(--muted);
+    }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--text); }
+
+    /* ── Responsive ── */
+    @media (max-width: 680px) {
+      nav { padding: 0 16px; gap: 4px; }
+      nav a:not(.md-link) { display: none; }
+      .container { padding: 28px 16px 60px; }
+      .hero h1 { font-size: 24px; }
+      .persona-two-col { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">Бабосік</span>
+  <a href="#personas">Персони</a>
+  <a href="#jobs">Jobs</a>
+  <a href="#matrix">Матриця</a>
+  <a href="#conclusions">Висновок</a>
+  <a href="#gaps">Прогалини</a>
+  <a href="personas.md" class="md-link">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+    personas.md
+  </a>
+</nav>
+
+<div class="container">
+
+  <!-- ── Hero ── -->
+  <div class="hero">
+    <div class="hero-label">Research · Phase 2</div>
+    <h1>Персони та<br>Jobs To Be Done</h1>
+    <p>Хто наш користувач, що ним рухає, де він зривається. Побудовано на research.md.
+       Позначки <span class="q-mark">?</span> — гіпотези без підтвердження даними.</p>
+    <div class="hero-nav">
+      <a href="research.html">← Research Phase 1</a>
+      <a href="personas.md">personas.md</a>
+      <a href="jtbd.md">jtbd.md</a>
+      <a href="audit.md">audit.md</a>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- 01 — ПЕРСОНИ                          -->
+  <!-- ══════════════════════════════════════ -->
+  <section id="personas">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Персони</h2>
+    </div>
+
+    <div class="personas-grid">
+
+      <!-- ── PRIMARY: Олена ── -->
+      <div class="persona-card primary">
+        <div class="persona-header">
+          <div>
+            <div class="persona-name">Олена <span class="persona-age">29</span></div>
+            <div class="persona-role">Менеджерка проектів</div>
+          </div>
+          <span class="badge badge-primary">Primary</span>
+        </div>
+
+        <div class="persona-body">
+
+          <div>
+            <div class="persona-section-label">Контекст</div>
+            <div class="persona-context">
+              Зарплата раз на місяць, картка <strong>Mono або ПриватБанк</strong>, живе в Києві.
+              Наприкінці місяця з 20 000 грн залишається 4 000 — і не може пояснити куди пішло решта.
+              Відкриває аналітику банку: бачить базові категорії і велике «Інше».
+              Хотіла б знати, але вводити кожен чек вручну не буде — пробувала, кидала.
+            </div>
+            <div class="persona-note">
+              <strong>Доресерч:</strong> ПриватБанк — 53,7% ринку активних карток, Monobank — 16,6% (НБУ 2024).
+              «Олена = Mono-юзер» — виведено, не підтверджено. Потрібна підтримка обох або явний вибір сегменту.
+            </div>
+          </div>
+
+          <div class="persona-two-col">
+            <div>
+              <div class="persona-section-label">Jobs</div>
+              <ul class="job-list">
+                <li>Знати загальну картину без ручного вводу</li>
+                <li>Категорії що відповідають її реальному життю</li>
+                <li>Після місяця зрозуміти де вийшла за рамки</li>
+              </ul>
+            </div>
+            <div>
+              <div class="persona-section-label">Болі</div>
+              <ul class="pain-list">
+                <li>«Інше» в аналітиці — чорна діра</li>
+                <li>Вводити вручну — пробувала, кидала</li>
+                <li>YNAB: ціна $109 + складна методологія <span class="badge badge-updated">доресерч</span></li>
+                <li class="pain-hyp">Тривога «система знову застаріє» <span class="q-mark">?</span></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="persona-two-col">
+            <div>
+              <div class="persona-section-label">Що переконує</div>
+              <ul class="trust-list">
+                <li class="plus">Підключила банк → одразу бачить свої дані</li>
+                <li class="plus">Може виправити категорію в один клік</li>
+              </ul>
+            </div>
+            <div>
+              <div class="persona-section-label">Що відлякує</div>
+              <ul class="trust-list">
+                <li class="minus">Реєстрація без можливості одразу щось побачити</li>
+                <li class="minus">Порожній екран після першого входу</li>
+                <li class="minus">Соціальний доказ як тригер <span class="q-mark">?</span></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="persona-quote">
+            «Я хочу знати, куди йдуть гроші, без того щоб вручну щось вводити.»
+            <small>Конструйований JTBD #1 — реальних цитат у research немає</small>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── SECONDARY: Максим + Катя ── -->
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+
+        <!-- Максим -->
+        <div class="persona-card secondary">
+          <div class="persona-header">
+            <div>
+              <div class="persona-name">Максим <span class="persona-age">34</span></div>
+              <div class="persona-role">Розробник</div>
+            </div>
+            <span class="badge badge-secondary">Secondary</span>
+          </div>
+
+          <div class="persona-body">
+            <div>
+              <div class="persona-section-label">Контекст</div>
+              <div class="persona-context" style="font-size:13px;">
+                Веде фінанси в Notion — сам зробив таблицю з категоріями і фільтрами.
+                Щотижня копіює транзакції вручну. Хоче автоімпорт без втрати гнучкості.
+              </div>
+            </div>
+            <div>
+              <div class="persona-section-label">Jobs</div>
+              <ul class="job-list" style="font-size:13px;">
+                <li>Автоматизувати збір без втрати своєї структури</li>
+                <li>Аналітика в розрізі часу (квартал, порівняння)</li>
+                <li>Теги для довільних вирізок <span class="q-mark">?</span></li>
+              </ul>
+            </div>
+            <div>
+              <div class="persona-section-label">Болі</div>
+              <ul class="pain-list" style="font-size:13px;">
+                <li>Notion: автоімпорту нема, рутина вбиває звичку</li>
+                <li>Готові категорії не підходять</li>
+                <li>Ціна як бар'єр <span class="badge badge-updated">частково підтверджено</span></li>
+              </ul>
+            </div>
+            <div class="persona-quote">
+              «Я хочу порівняти цей місяць з минулим.»
+              <small>JTBD #3 — конструйований</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Катя -->
+        <div class="persona-card secondary">
+          <div class="persona-header">
+            <div>
+              <div class="persona-name">Катя <span class="persona-age">26</span></div>
+              <div class="persona-role">Фрілансерка</div>
+            </div>
+            <span class="badge badge-secondary">Secondary</span>
+          </div>
+
+          <div class="persona-body">
+            <div>
+              <div class="persona-section-label">Контекст</div>
+              <div class="persona-context" style="font-size:13px;">
+                Нерегулярний дохід. Хоче розуміти «вкладаюсь я чи ні» без жорсткого бюджетування.
+                Відкрила YNAB, не зрозуміла з чого починати — закрила.
+              </div>
+            </div>
+            <div>
+              <div class="persona-section-label">Jobs</div>
+              <ul class="job-list" style="font-size:13px;">
+                <li>Бачити витрати незалежно від доходу</li>
+                <li>Порівнювати місяці без введення бюджетів</li>
+                <li>Знайти «норму» через спостереження <span class="q-mark">?</span></li>
+              </ul>
+            </div>
+            <div>
+              <div class="persona-section-label">Болі</div>
+              <ul class="pain-list" style="font-size:13px;">
+                <li>YNAB: ціна + складна методологія (blank state — симптом)</li>
+                <li>Картина через один банк неповна — ~35% витрат готівка <span class="badge badge-updated">доресерч</span></li>
+                <li class="pain-hyp">Уникає дивитись бо картина лякає <span class="q-mark">?</span></li>
+              </ul>
+            </div>
+            <div class="persona-quote">
+              «Я хочу побачити, де я витрачаю забагато.»
+              <small>JTBD #2 — конструйований</small>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /secondary grid -->
+
+    </div><!-- /personas-grid -->
+  </section>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- 02 — JOBS HIERARCHY                   -->
+  <!-- ══════════════════════════════════════ -->
+  <section id="jobs">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Jobs To Be Done</h2>
+    </div>
+
+    <!-- Main Job -->
+    <div class="main-job-block">
+      <div class="main-job-text">
+        <span class="when">Коли</span> місяць добігає кінця і я знову не розумію куди пішли гроші,<br>
+        <span class="want">я хочу</span> побачити повну і чесну картину своїх витрат одним поглядом —<br>
+        <span class="sothat">щоб</span> нарешті розуміти що відбувається з моїми фінансами, не витрачаючи на це окремого часу.
+      </div>
+      <div class="main-job-source" style="margin-top:12px;">
+        <span class="src">research.md → JTBD #1, Висновки</span> · Персона: Олена (primary)
+      </div>
+    </div>
+
+    <!-- Related Jobs -->
+    <div class="subsection-label">Related Jobs — на шляху до main job</div>
+    <div class="jobs-grid" style="margin-bottom:24px;">
+
+      <div class="job-card">
+        <div class="job-card-header">
+          <span class="job-id">RJ-1</span>
+          <span class="job-title">Зібрати картину без рутини</span>
+          <div class="job-personas" style="margin-left:auto;">
+            <span class="persona-chip primary-chip">Олена</span>
+            <span class="persona-chip">Максим</span>
+          </div>
+        </div>
+        <div class="job-formula">
+          <span class="when">Коли</span> мій банк проводить оплату,
+          <span class="want">я хочу</span> щоб вона одразу з'явилась у моїй картині сама,
+          <span class="sothat">щоб</span> я не мусила нічого підтримувати вручну.
+        </div>
+        <div class="src">research.md → JTBD #1 · Конкуренти: Notion — «треба робити руками»</div>
+      </div>
+
+      <div class="job-card">
+        <div class="job-card-header">
+          <span class="job-id">RJ-2</span>
+          <span class="job-title">Привести картину у відповідність до свого життя</span>
+          <div class="job-personas" style="margin-left:auto;">
+            <span class="persona-chip primary-chip">Олена</span>
+            <span class="persona-chip">Максим</span>
+          </div>
+        </div>
+        <div class="job-formula">
+          <span class="when">Коли</span> транзакція потрапляє не туди,
+          <span class="want">я хочу</span> швидко поставити її туди де вона має сенс для мене,
+          <span class="sothat">щоб</span> картина відображала моє реальне життя, а не чужі шаблони.
+        </div>
+        <div class="src">research.md → JTBD #4 · Конкуренти: Monobank — «немає кастомних категорій»</div>
+      </div>
+
+      <div class="job-card">
+        <div class="job-card-header">
+          <span class="job-id">RJ-3</span>
+          <span class="job-title">Побачити де я виходжу за рамки</span>
+          <div class="job-personas" style="margin-left:auto;">
+            <span class="persona-chip primary-chip">Олена</span>
+            <span class="persona-chip">Катя</span>
+          </div>
+        </div>
+        <div class="job-formula">
+          <span class="when">Коли</span> я дивлюсь на витрати за місяць,
+          <span class="want">я хочу</span> одразу бачити де витратила більше ніж зазвичай,
+          <span class="sothat">щоб</span> знати куди звернути увагу наступного місяця.
+        </div>
+        <div class="src">research.md → JTBD #2 · UX-патерни: Snapshot обраний саме для цього</div>
+      </div>
+
+      <div class="job-card">
+        <div class="job-card-header">
+          <span class="job-id">RJ-4</span>
+          <span class="job-title">Зрозуміти чи я змінююсь</span>
+          <div class="job-personas" style="margin-left:auto;">
+            <span class="persona-chip">Максим</span>
+            <span class="persona-chip">Катя</span>
+            <span class="persona-chip primary-chip">Олена</span>
+          </div>
+        </div>
+        <div class="job-formula">
+          <span class="when">Коли</span> починається новий місяць,
+          <span class="want">я хочу</span> порівняти його з попереднім,
+          <span class="sothat">щоб</span> побачити чи моя поведінка змінюється чи я ходжу по колу.
+        </div>
+        <div class="src">research.md → JTBD #3 · CLAUDE.md → MVP: «порівняння місяць-до-місяця»</div>
+      </div>
+
+      <div class="job-card">
+        <div class="job-card-header">
+          <span class="job-id">RJ-5</span>
+          <span class="job-title">Зрозуміти чи підходить інструмент до того як вкладати час</span>
+          <span class="badge badge-partial" style="margin-left:auto;">частково підтв.</span>
+          <div class="job-personas">
+            <span class="persona-chip primary-chip">Олена</span>
+            <span class="persona-chip">Катя</span>
+          </div>
+        </div>
+        <div class="job-formula">
+          <span class="when">Коли</span> я вперше відкриваю новий інструмент,
+          <span class="want">я хочу</span> одразу побачити щось осмислене що стосується мене,
+          <span class="sothat">щоб</span> зрозуміти чи воно варте мого часу — ще до налаштувань.
+        </div>
+        <div class="src">UX-патерни: 3 різних паттерни ламаються в одній точці (blank state). Конкретна поведінка після першого входу — не досліджена.</div>
+      </div>
+
+    </div>
+
+    <!-- Emotional Jobs -->
+    <div class="subsection-label">Emotional Jobs</div>
+    <div class="jobs-grid" style="margin-bottom:24px;">
+
+      <div class="job-card emotional">
+        <div class="job-card-header">
+          <span class="job-id">EJ-1</span>
+          <span class="job-title">Відчувати контроль, а не провину</span>
+          <div class="job-personas" style="margin-left:auto;">
+            <span class="persona-chip primary-chip">Олена</span>
+            <span class="persona-chip">Катя</span>
+          </div>
+        </div>
+        <div class="job-formula">
+          <span class="when">Коли</span> я відкриваю свої витрати,
+          <span class="want">я хочу</span> відчувати що тримаю ситуацію під контролем, а не що мене оцінюють,
+          <span class="sothat" style="color:var(--accent2)">щоб</span> повертатись добровільно — а не уникати бо неприємно.
+        </div>
+        <div class="src">research.md → Висновки: «дружній і живий, не банківський» · Goal/Budget pattern: тиск червоного/зеленого</div>
+      </div>
+
+      <div class="job-card emotional">
+        <div class="job-card-header">
+          <span class="job-id">EJ-2</span>
+          <span class="job-title">Відчути що цього разу впораюсь</span>
+          <div class="job-personas" style="margin-left:auto;">
+            <span class="persona-chip">Катя</span>
+            <span class="persona-chip primary-chip">Олена</span>
+          </div>
+        </div>
+        <div class="job-formula">
+          <span class="when">Коли</span> я починаю користуватись новим інструментом,
+          <span class="want">я хочу</span> одразу відчути що можу в цьому розібратись,
+          <span class="sothat" style="color:var(--accent2)">щоб</span> не кинути знову на першому кроці — як вже було.
+        </div>
+        <div class="src">Конкуренти: YNAB і Notion відпали через перший контакт, не через якість продукту</div>
+      </div>
+
+    </div>
+
+    <!-- Hypotheses -->
+    <div class="subsection-label">Гіпотези <span class="q-mark">?</span> — не підтверджені даними</div>
+    <div class="jobs-grid">
+
+      <div class="job-card hyp">
+        <div class="job-card-header">
+          <span class="job-id">Г-1</span>
+          <span class="job-title">Мати «систему» на яку можна послатись</span>
+          <span class="badge badge-hyp" style="margin-left:auto;">Соціальний</span>
+        </div>
+        <div class="job-formula" style="color:var(--muted);">
+          Коли хтось питає як я веду фінанси, я хочу мати систему, щоб відчувати себе відповідальною людиною.
+        </div>
+        <div class="job-hyp-reason">Соціальний вимір у research взагалі не розглядався.</div>
+      </div>
+
+      <div class="job-card hyp">
+        <div class="job-card-header">
+          <span class="job-id">Г-2</span>
+          <span class="job-title">Пояснити собі велику трату</span>
+        </div>
+        <div class="job-formula" style="color:var(--muted);">
+          Коли бачу велику суму за місяць, хочу одразу розуміти що це і чому, щоб не тривожитись.
+        </div>
+        <div class="job-hyp-reason">Логічно для Олени, але у research не згадується.</div>
+      </div>
+
+      <div class="job-card hyp">
+        <div class="job-card-header">
+          <span class="job-id">Г-3</span>
+          <span class="job-title">Зрозуміти чи мій рівень витрат «нормальний»</span>
+        </div>
+        <div class="job-formula" style="color:var(--muted);">
+          Коли дивлюсь на витрати, хочу орієнтир «нормально це чи ні», щоб не оцінювати у вакуумі.
+        </div>
+        <div class="job-hyp-reason">JTBD #2 передбачає якийсь еталон порівняння, але він не визначений.</div>
+      </div>
+
+      <div class="job-card hyp">
+        <div class="job-card-header">
+          <span class="job-id">Г-4</span>
+          <span class="job-title">Не втратити дані якщо сервіс закриється</span>
+          <div class="job-personas" style="margin-left:auto;"><span class="persona-chip">Максим</span></div>
+        </div>
+        <div class="job-formula" style="color:var(--muted);">
+          Коли довіряю інструменту свої дані, хочу знати що зможу їх забрати.
+        </div>
+        <div class="job-hyp-reason">Технічний профіль Максима припускає це, але у research не описано.</div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- 03 — JTBD МАТРИЦЯ                    -->
+  <!-- ══════════════════════════════════════ -->
+  <section id="matrix">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>JTBD-матриця</h2>
+    </div>
+
+    <p style="font-size:13px; color:var(--muted); margin-bottom:20px;">
+      Важливість: <strong style="color:var(--accent)">3</strong> — критична ·
+      <strong style="color:var(--amber)">2</strong> — вагома ·
+      <strong style="color:var(--muted)">1</strong> — слабка ·
+      <strong style="color:var(--amber)">?</strong> — невідомо.
+      Конкуренти: ✅ закриває · ⚠ частково · ✗ не закриває · ? невідомо.
+    </p>
+
+    <div class="matrix-wrap">
+      <table class="matrix-table">
+        <thead>
+          <tr>
+            <th class="col-job">Job</th>
+            <th class="col-primary">Олена<br><small style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px;">primary</small></th>
+            <th class="col-persona">Максим</th>
+            <th class="col-persona">Катя</th>
+            <th>Функція</th>
+            <th>Конкуренти</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <!-- MJ -->
+          <tr class="matrix-row-mj">
+            <td class="col-job">
+              <span class="job-cell-id">MJ</span>
+              <span class="job-cell-name">Побачити повну картину одним поглядом</span>
+            </td>
+            <td class="imp-cell">
+              <div class="imp imp-3">3</div>
+              <span class="imp-note">Вся персона на цьому. JTBD #1</span>
+            </td>
+            <td class="imp-cell">
+              <div class="imp imp-2">2</div>
+              <span class="imp-note">Картина є в Notion, але застаріла. JTBD #3</span>
+            </td>
+            <td class="imp-cell">
+              <div class="imp imp-3">3</div>
+              <span class="imp-note">«Вкладаюсь я чи ні». JTBD #2</span>
+            </td>
+            <td class="func-cell">Дашборд місяця — сума, розбивка, топ позицій</td>
+            <td class="comp-cell">
+              <div class="comp-item"><span class="comp-partial">⚠</span><span class="comp-name">Monobank</span></div>
+              <div class="comp-item"><span class="comp-ok">✅</span><span class="comp-name">YNAB</span></div>
+              <div class="comp-item"><span class="comp-ok">✅</span><span class="comp-name">Spendee</span></div>
+              <div class="comp-item"><span class="comp-no">✗</span><span class="comp-name">Notion</span></div>
+            </td>
+          </tr>
+
+          <!-- RJ-1 -->
+          <tr>
+            <td class="col-job">
+              <span class="job-cell-id">RJ-1</span>
+              <span class="job-cell-name">Зібрати картину без рутини</span>
+            </td>
+            <td class="imp-cell">
+              <div class="imp imp-3">3</div>
+              <span class="imp-note">Пробувала вручну — кидала. JTBD #1</span>
+            </td>
+            <td class="imp-cell">
+              <div class="imp imp-3">3</div>
+              <span class="imp-note">Щотижня копіює з Notion — головна причина шукати альтернативу</span>
+            </td>
+            <td class="imp-cell">
+              <div class="imp imp-q">?</div>
+              <span class="imp-note">Чи проблема в ручному вводі чи в onboarding — не розмежовано</span>
+            </td>
+            <td class="func-cell">Підключення банку і автопідтягування транзакцій</td>
+            <td class="comp-cell">
+              <div class="comp-item"><span class="comp-partial">⚠</span><span class="comp-name">Monobank</span></div>
+              <div class="comp-item"><span class="comp-unk">?</span><span class="comp-name">YNAB</span></div>
+              <div class="comp-item"><span class="comp-ok">✅</span><span class="comp-name">Spendee</span></div>
+              <div class="comp-item"><span class="comp-no">✗</span><span class="comp-name">Notion</span></div>
+            </td>
+          </tr>
+
+          <!-- RJ-2 -->
+          <tr>
+            <td class="col-job">
+              <span class="job-cell-id">RJ-2</span>
+              <span class="job-cell-name">Привести картину у відповідність до свого життя</span>
+            </td>
+            <td class="imp-cell">
+              <div class="imp imp-3">3</div>
+              <span class="imp-note">Найбільш задокументований біль. 3 незалежних сигнали. JTBD #4</span>
+            </td>
+            <td class="imp-cell">
+              <div class="imp imp-3">3</div>
+              <span class="imp-note">Веде власну структуру категорій. JTBD #4</span>
+            </td>
+            <td class="imp-cell">
+              <div class="imp imp-q">?</div>
+              <span class="imp-note">Біль Каті — YNAB onboarding, а не категорії</span>
+            </td>
+            <td class="func-cell">Редагування категорій + CRUD власних категорій і підкатегорій</td>
+            <td class="comp-cell">
+              <div class="comp-item"><span class="comp-no">✗</span><span class="comp-name">Monobank</span></div>
+              <div class="comp-item"><span class="comp-ok">✅</span><span class="comp-name">YNAB</span></div>
+              <div class="comp-item"><span class="comp-ok">✅</span><span class="comp-name">Notion</span></div>
+              <div class="comp-item"><span class="comp-unk">?</span><span class="comp-name">Spendee</span></div>
+            </td>
+          </tr>
+
+          <!-- RJ-3 -->
+          <tr>
+            <td class="col-job">
+              <span class="job-cell-id">RJ-3</span>
+              <span class="job-cell-name">Побачити де виходжу за рамки</span>
+            </td>
+            <td class="imp-cell">
+              <div class="imp imp-3">3</div>
+              <span class="imp-note">«Де вийшла за рамки». JTBD #2</span>
+            </td>
+            <td class="imp-cell">
+              <div class="imp imp-2">2</div>
+              <span class="imp-note">Є, але Максим більше про порівняння в часі (RJ-4)</span>
+            </td>
+            <td class="imp-cell">
+              <div class="imp imp-3">3</div>
+              <span class="imp-note">«Вкладаюсь я чи ні» = пошук перевищень. JTBD #2</span>
+            </td>
+            <td class="func-cell">Аналітика перевищень — виділення де витрачено більше ніж зазвичай</td>
+            <td class="comp-cell">
+              <div class="comp-item"><span class="comp-partial">⚠</span><span class="comp-name">Monobank</span></div>
+              <div class="comp-item"><span class="comp-partial">⚠</span><span class="comp-name">YNAB</span></div>
+              <div class="comp-item"><span class="comp-no">✗</span><span class="comp-name">Notion</span></div>
+            </td>
+          </tr>
+
+          <!-- RJ-4 -->
+          <tr>
+            <td class="col-job">
+              <span class="job-cell-id">RJ-4</span>
+              <span class="job-cell-name">Зрозуміти чи я змінююсь</span>
+            </td>
+            <td class="imp-cell">
+              <div class="imp imp-2">2</div>
+              <span class="imp-note">Є JTBD #3, але пріоритет — просто «зрозуміти куди йдуть»</span>
+            </td>
+            <td class="imp-cell">
+              <div class="imp imp-3">3</div>
+              <span class="imp-note">Головна ціль профілю. JTBD #3</span>
+            </td>
+            <td class="imp-cell">
+              <div class="imp imp-3">3</div>
+              <span class="imp-note">Порівнювати місяці при нерегулярному доході. JTBD #3</span>
+            </td>
+            <td class="func-cell">Порівняння місяць-до-місяця в аналітиці</td>
+            <td class="comp-cell">
+              <div class="comp-item"><span class="comp-partial">⚠</span><span class="comp-name">Monobank</span></div>
+              <div class="comp-item"><span class="comp-ok">✅</span><span class="comp-name">YNAB</span></div>
+              <div class="comp-item"><span class="comp-unk">?</span><span class="comp-name">Spendee</span></div>
+            </td>
+          </tr>
+
+          <!-- RJ-5 -->
+          <tr>
+            <td class="col-job">
+              <span class="job-cell-id">RJ-5</span>
+              <span class="job-cell-name">Зрозуміти чи підходить інструмент до вкладення часу</span>
+            </td>
+            <td class="imp-cell">
+              <div class="imp imp-3">3</div>
+              <span class="imp-note">Відкрила YNAB → blank state → закрила</span>
+            </td>
+            <td class="imp-cell">
+              <div class="imp imp-1">1</div>
+              <span class="imp-note">Технічний профіль — терплячий до onboarding</span>
+            </td>
+            <td class="imp-cell">
+              <div class="imp imp-3">3</div>
+              <span class="imp-note">YNAB blank state — пряма точка зриву</span>
+            </td>
+            <td class="func-cell">Перший екран з реальними даними одразу після підключення банку</td>
+            <td class="comp-cell">
+              <div class="comp-item"><span class="comp-partial">⚠</span><span class="comp-name">Monobank</span></div>
+              <div class="comp-item"><span class="comp-no">✗</span><span class="comp-name">YNAB</span></div>
+              <div class="comp-item"><span class="comp-no">✗</span><span class="comp-name">Notion</span></div>
+            </td>
+          </tr>
+
+          <!-- EJ-1 -->
+          <tr class="matrix-row-ej">
+            <td class="col-job">
+              <span class="job-cell-id" style="color:var(--accent2);">EJ-1</span>
+              <span class="job-cell-name">Відчувати контроль, не провину</span>
+            </td>
+            <td class="imp-cell">
+              <div class="imp imp-3">3</div>
+              <span class="imp-note">«Дружній, не банківський» — вся ця вимога виросла з неї</span>
+            </td>
+            <td class="imp-cell">
+              <div class="imp imp-q">?</div>
+              <span class="imp-note">Емоційний вимір для технічного профілю — не описаний</span>
+            </td>
+            <td class="imp-cell">
+              <div class="imp imp-3">3</div>
+              <span class="imp-note">YNAB з червоними барами — відштовхнув</span>
+            </td>
+            <td class="func-cell">Тон продукту. Відсутність штрафних сигналів без запиту</td>
+            <td class="comp-cell">
+              <div class="comp-item"><span class="comp-partial">⚠</span><span class="comp-name">Monobank</span></div>
+              <div class="comp-item"><span class="comp-no">✗</span><span class="comp-name">YNAB</span></div>
+              <div class="comp-item"><span class="comp-partial">⚠</span><span class="comp-name">CoinKeeper</span></div>
+            </td>
+          </tr>
+
+          <!-- EJ-2 -->
+          <tr class="matrix-row-ej">
+            <td class="col-job">
+              <span class="job-cell-id" style="color:var(--accent2);">EJ-2</span>
+              <span class="job-cell-name">Відчути що цього разу впораюсь</span>
+            </td>
+            <td class="imp-cell">
+              <div class="imp imp-2">2</div>
+              <span class="imp-note">Кидала Notion, але YNAB = «складно і дорого», не емоційна травма</span>
+            </td>
+            <td class="imp-cell">
+              <div class="imp imp-1">1</div>
+              <span class="imp-note">Технічний профіль — розбереться</span>
+            </td>
+            <td class="imp-cell">
+              <div class="imp imp-3">3</div>
+              <span class="imp-note">YNAB = пряма емоційна невдача</span>
+            </td>
+            <td class="func-cell">Швидкий «перший успіх»: підключив банк → одразу бачу свої транзакції</td>
+            <td class="comp-cell">
+              <div class="comp-item" style="color:var(--muted); font-size:11px;">Всі конкуренти закривають погано — blank state або обов'язкові дії без контексту</div>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- 04 — ВИСНОВОК                         -->
+  <!-- ══════════════════════════════════════ -->
+  <section id="conclusions">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Висновок — що будуємо першим</h2>
+    </div>
+
+    <p style="font-size:13px; color:var(--muted); margin-bottom:20px;">
+      Критерії відбору: важливість <strong style="color:var(--accent)">3</strong> для primary (Олена) <strong>і</strong> не закриті ринком повністю.
+    </p>
+
+    <div class="mvp-grid" style="margin-bottom:36px;">
+      <div class="mvp-item">
+        <div class="mvp-item-label">Ядро MVP · 1</div>
+        <div class="mvp-item-title">RJ-2 — Привести картину у відповідність до свого життя</div>
+        <div class="mvp-item-text">
+          Важливість для Олени: <strong style="color:var(--accent)">3</strong>.
+          Monobank ❌ прямо («немає кастомних категорій»). Єдиний job де провідний UA-гравець провалюється в лоб.
+          Без RJ-2 Бабосік — кращий Monobank лише в деталях. З RJ-2 — якісно інший продукт.
+        </div>
+      </div>
+      <div class="mvp-item">
+        <div class="mvp-item-label">Ядро MVP · 2</div>
+        <div class="mvp-item-title">RJ-1 — Зібрати картину без рутини</div>
+        <div class="mvp-item-text">
+          Важливість для Олени: <strong style="color:var(--accent)">3</strong>.
+          Monobank ⚠ закриває тільки в межах своєї екосистеми і без RJ-2.
+          RJ-1 + RJ-2 разом — не закриті жодним конкурентом одночасно.
+        </div>
+      </div>
+      <div class="mvp-item">
+        <div class="mvp-item-label">Ядро MVP · 3</div>
+        <div class="mvp-item-title">RJ-5 — Зрозуміти чи підходить інструмент до вкладення часу</div>
+        <div class="mvp-item-text">
+          Важливість для Олени: <strong style="color:var(--accent)">3</strong>.
+          Ніхто не закриває добре. Це не фіча — це умова виживання: якщо Олена закриє вкладку після першого входу, вона не повернеться.
+          Рішення: одразу після підключення банку показати реальні транзакції.
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection-label">Функції-кандидати на виліт</div>
+    <div class="cut-grid">
+      <div class="cut-item">
+        <div class="cut-item-label">Кандидат на виліт</div>
+        <div class="cut-item-title">Теги на транзакціях</div>
+        <div class="cut-item-text">
+          Закриває RJ-2 (гнучкість) — але тільки для Максима (secondary). Для primary Олени прямого job немає.
+          У research «теги» не згадуються жодного разу. Рекомендація: відкласти до того як RJ-2 (категорії) стабільно працює.
+        </div>
+      </div>
+      <div class="cut-item">
+        <div class="cut-item-label">Кандидат на виліт</div>
+        <div class="cut-item-title">Ручне додавання транзакцій</div>
+        <div class="cut-item-text">
+          Суперечить духу RJ-1 — персони хочуть не вводити вручну. Use case (готівка, інший банк) логічний,
+          але жодна персона не виражає його прямо. Доресерч: ~34,6% витрат за сумою — готівка (НБУ 2025).
+          Рекомендація: відкласти або реалізувати мінімально (одне поле суми і категорії).
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- 05 — ПРОГАЛИНИ                        -->
+  <!-- ══════════════════════════════════════ -->
+  <section id="gaps">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Прогалини <span class="q-mark" style="font-size:14px; vertical-align:middle;">?</span></h2>
+    </div>
+
+    <div class="table-wrap">
+      <table class="gaps">
+        <thead>
+          <tr>
+            <th>Що невідомо</th>
+            <th>Статус</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="gap-topic">Реальні цитати з форумів або інтерв'ю</td>
+            <td class="gap-status"><span class="badge badge-hyp">[?] у research немає</span></td>
+          </tr>
+          <tr>
+            <td class="gap-topic">Звідки взялись Висновки і JTBD (інтерв'ю? здогад?)</td>
+            <td class="gap-status"><span class="badge badge-hyp">[?] джерело не вказано</span></td>
+          </tr>
+          <tr>
+            <td class="gap-topic">Як часто люди реально переглядають фінанси</td>
+            <td class="gap-status"><span class="badge badge-updated">⚡ Оновлено</span>
+              <span style="font-size:12px; color:var(--muted); display:block; margin-top:3px;">Активні користувачі — ~5 разів/тиждень (coinlaw.io 2026). «Щотижня/щомісяця» — занижено.</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="gap-topic">Поведінка після першого входу — чи повертаються</td>
+            <td class="gap-status"><span class="badge badge-hyp">[?] не досліджено</span>
+              <span style="font-size:12px; color:var(--muted); display:block; margin-top:3px;">68% кидають fintech під час KYC/реєстрації (Signicat) — але це не blank state після підключення банку.</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="gap-topic">Частота реального використання перекатегоризації</td>
+            <td class="gap-status"><span class="badge badge-hyp">[?] не досліджено</span></td>
+          </tr>
+          <tr>
+            <td class="gap-topic">Як люди знаходять нові фінансові інструменти</td>
+            <td class="gap-status"><span class="badge badge-hyp">[?] не досліджено</span></td>
+          </tr>
+          <tr>
+            <td class="gap-topic">Чутливість до ціни (скільки готові платити)</td>
+            <td class="gap-status"><span class="badge badge-updated">⚡ Оновлено</span>
+              <span style="font-size:12px; color:var(--muted); display:block; margin-top:3px;">Ціна $109/рік — #1 скарга на YNAB (Reddit, Trustpilot). UA-специфіки немає.</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="gap-topic">Страх приватності («хтось побачить мої витрати»)</td>
+            <td class="gap-status"><span class="badge badge-hyp">[?] не згадується</span></td>
+          </tr>
+          <tr>
+            <td class="gap-topic">Мультибанк-поведінка (Mono + Приват + готівка)</td>
+            <td class="gap-status"><span class="badge badge-updated">⚡ Оновлено</span>
+              <span style="font-size:12px; color:var(--muted); display:block; margin-top:3px;">Привт 53,7% vs Mono 16,6% ринку. Fealthy підтримує обидва. Готівка: ~35% від суми операцій.</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="gap-topic">Обґрунтування аудиторії 25–45</td>
+            <td class="gap-status"><span class="badge badge-hyp">[?] без джерела</span></td>
+          </tr>
+          <tr>
+            <td class="gap-topic">Новий конкурент — Fealthy (fealthy.app)</td>
+            <td class="gap-status"><span class="badge badge-updated">⚡ Знайдено</span>
+              <span style="font-size:12px; color:var(--muted); display:block; margin-top:3px;">UA-конкурент: Mono (автосинх) + Приват (імпорт). Позиція: «мінімалізм, нічого зайвого». Ключовий біль: мультибанк, а не категорії.</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    <span>Бабосік · Research Phase 2 · Персони та JTBD</span>
+    <span><a href="research.html">← Phase 1</a> · <a href="personas.md">personas.md</a> · <a href="jtbd.md">jtbd.md</a></span>
+  </footer>
+
+</div>
+</body>
+</html>
