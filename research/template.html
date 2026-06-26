@@ -43,9 +43,13 @@
       padding: 0 32px;
       display: flex; align-items: center; gap: 8px; height: 52px;
     }
-    nav .logo { font-weight: 700; font-size: 15px; color: var(--accent); margin-right: 16px; letter-spacing: -.3px; }
+    nav .logo { font-weight: 700; font-size: 15px; color: var(--accent); margin-right: 8px; letter-spacing: -.3px; text-decoration: none; }
     nav a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 500; padding: 6px 10px; border-radius: 6px; transition: color .15s, background .15s; }
     nav a:hover { color: var(--text); background: var(--surface2); }
+    nav .page-link { font-weight: 600; }
+    nav .page-link.active { color: var(--accent); background: rgba(52,211,153,.08); }
+    nav .page-link.active:hover { background: rgba(52,211,153,.12); }
+    nav .nav-sep { width: 1px; height: 20px; background: var(--border); margin: 0 4px; flex-shrink: 0; }
     nav .md-link {
       margin-left: auto; display: flex; align-items: center; gap: 6px;
       font-family: 'JetBrains Mono', monospace; font-size: 12px;
@@ -68,6 +72,13 @@
     }
     .hero h1 { font-size: 32px; font-weight: 700; letter-spacing: -.5px; line-height: 1.2; margin-bottom: 12px; }
     .hero p { color: var(--muted); font-size: 15px; max-width: 560px; }
+    .hero-nav { display: flex; gap: 8px; margin-top: 20px; flex-wrap: wrap; }
+    .hero-nav a {
+      font-size: 12px; font-weight: 500; color: var(--muted); text-decoration: none;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 6px; padding: 5px 12px; transition: color .15s, border-color .15s;
+    }
+    .hero-nav a:hover { color: var(--text); border-color: var(--accent); }
 
     /* ── Section ── */
     section { margin-bottom: 64px; scroll-margin-top: 72px; }
@@ -149,7 +160,8 @@
     /* ── Responsive ── */
     @media (max-width: 640px) {
       nav { padding: 0 16px; gap: 4px; }
-      nav a { display: none; }
+      nav a:not(.page-link):not(.md-link) { display: none; }
+      nav .nav-sep { display: none; }
       .container { padding: 32px 16px 60px; }
       .hero h1 { font-size: 24px; }
       .pattern-meta { grid-template-columns: 1fr; }
@@ -160,6 +172,9 @@
 
 <nav>
   <span class="logo">Бабосік</span>
+  <a href="research.html" class="page-link active">Phase 1</a>
+  <a href="personas.html" class="page-link">Phase 2</a>
+  <span class="nav-sep"></span>
   <a href="#competitors">Конкуренти</a>
   <a href="#patterns">Патерни</a>
   <a href="#jtbd">JTBD</a>
@@ -176,6 +191,10 @@
     <div class="hero-label">Research · Phase 1</div>
     <h1>Конкурентний аналіз<br>та UX-патерни</h1>
     <p>Огляд ринку особистих фінансів, Jobs To Be Done та вибір UX-патерну для Бабосіка.</p>
+    <div class="hero-nav">
+      <a href="personas.html">Phase 2: Персони та JTBD →</a>
+      <a href="research.md">research.md</a>
+    </div>
   </div>
 
   <section id="competitors">
@@ -223,8 +242,8 @@
 
 <div class="container" style="padding-top:0;">
   <footer>
-    <span>Бабосік · Research · <!-- BUILD:date --></span>
-    <a href="research.md">← Переглянути research.md</a>
+    <span>Бабосік · Research Phase 1 · <!-- BUILD:date --></span>
+    <span><a href="personas.html">Phase 2 →</a> · <a href="research.md">research.md</a></span>
   </footer>
 </div>
 

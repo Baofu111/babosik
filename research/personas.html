@@ -44,9 +44,13 @@
       padding: 0 32px;
       display: flex; align-items: center; gap: 8px; height: 52px;
     }
-    nav .logo { font-weight: 700; font-size: 15px; color: var(--accent); margin-right: 16px; letter-spacing: -.3px; }
+    nav .logo { font-weight: 700; font-size: 15px; color: var(--accent); margin-right: 8px; letter-spacing: -.3px; text-decoration: none; }
     nav a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 500; padding: 6px 10px; border-radius: 6px; transition: color .15s, background .15s; }
     nav a:hover { color: var(--text); background: var(--surface2); }
+    nav .page-link { font-weight: 600; }
+    nav .page-link.active { color: var(--accent); background: rgba(52,211,153,.08); }
+    nav .page-link.active:hover { background: rgba(52,211,153,.12); }
+    nav .nav-sep { width: 1px; height: 20px; background: var(--border); margin: 0 4px; flex-shrink: 0; }
     nav .md-link {
       margin-left: auto; display: flex; align-items: center; gap: 6px;
       font-family: 'JetBrains Mono', monospace; font-size: 12px;
@@ -371,7 +375,8 @@
     /* ── Responsive ── */
     @media (max-width: 680px) {
       nav { padding: 0 16px; gap: 4px; }
-      nav a:not(.md-link) { display: none; }
+      nav a:not(.page-link):not(.md-link) { display: none; }
+      nav .nav-sep { display: none; }
       .container { padding: 28px 16px 60px; }
       .hero h1 { font-size: 24px; }
       .persona-two-col { grid-template-columns: 1fr; }
@@ -382,6 +387,9 @@
 
 <nav>
   <span class="logo">Бабосік</span>
+  <a href="research.html" class="page-link">Phase 1</a>
+  <a href="personas.html" class="page-link active">Phase 2</a>
+  <span class="nav-sep"></span>
   <a href="#personas">Персони</a>
   <a href="#jobs">Jobs</a>
   <a href="#matrix">Матриця</a>
@@ -402,7 +410,7 @@
     <p>Хто наш користувач, що ним рухає, де він зривається. Побудовано на research.md.
        Позначки <span class="q-mark">?</span> — гіпотези без підтвердження даними.</p>
     <div class="hero-nav">
-      <a href="research.html">← Research Phase 1</a>
+      <a href="research.html">← Phase 1: Конкурентний аналіз</a>
       <a href="personas.md">personas.md</a>
       <a href="jtbd.md">jtbd.md</a>
       <a href="audit.md">audit.md</a>
@@ -1179,7 +1187,7 @@
 
   <footer>
     <span>Бабосік · Research Phase 2 · Персони та JTBD</span>
-    <span><a href="research.html">← Phase 1</a> · <a href="personas.md">personas.md</a> · <a href="jtbd.md">jtbd.md</a></span>
+    <span><a href="research.html">← Phase 1</a> · <a href="personas.md">personas.md</a> · <a href="jtbd.md">jtbd.md</a> · <a href="audit.md">audit.md</a></span>
   </footer>
 
 </div>
