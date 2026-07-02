@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Вайрфрейм — Порівняння місяців (успіх)</title>
+  <style>
+    /* Grey-box: лише структура. Тільки сірі, без кольору/шрифтів/іконок/тіней.
+       Пунктир = межа зони вайрфрейму. Мітки зон — службові, не UI продукту. */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, sans-serif;   /* системний default, не бренд-шрифт */
+      background: #f4f4f4; color: #222; line-height: 1.5;
+      max-width: 720px; margin: 0 auto; padding: 16px;
+    }
+    /* службові мітки зон */
+    .zone { border: 1px dashed #999; background: #fff; margin: 10px 0; padding: 0; }
+    .zone > .zone-label {
+      font-size: 11px; letter-spacing: .04em; text-transform: uppercase;
+      color: #555; background: #e6e6e6; border-bottom: 1px dashed #999;
+      padding: 4px 8px;
+    }
+    .zone > .zone-label .act { color: #333; text-transform: none; letter-spacing: 0; }
+    .zone-body { padding: 12px; }
+
+    .wf-note { font-size: 12px; color: #444; background: #ddd; border: 1px solid #999;
+      padding: 8px 10px; }
+    .wf-note strong { color: #000; }
+
+    nav ul { list-style: none; display: flex; gap: 8px; flex-wrap: wrap; }
+    nav a { display: inline-block; border: 1px solid #999; background: #fff;
+      padding: 6px 12px; text-decoration: none; color: #222; }
+    nav a[aria-current="page"] { background: #ccc; border-color: #333; }
+
+    h1 { font-size: 18px; margin-bottom: 2px; }
+    h2 { font-size: 15px; margin: 0; }
+    h3 { font-size: 14px; }
+
+    .muted { color: #555; font-size: 13px; }
+
+    button { border: 1px solid #666; background: #eee; color: #111;
+      padding: 6px 12px; cursor: pointer; font: inherit; }
+
+    /* порівняння по категоріях — дельта ТЕКСТОМ, без кольору */
+    ul.cmp { list-style: none; }
+    ul.cmp li { border: 1px solid #bbb; background: #fafafa; margin: 6px 0; padding: 10px 12px; }
+    ul.cmp .cmp-cat { font-size: 14px; }
+    ul.cmp .cmp-nums { font-size: 13px; color: #333; }
+    ul.cmp .cmp-delta { font-size: 13px; color: #444; }
+
+    .state-actions { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
+    a.btn { display: inline-block; border: 1px solid #666; background: #eee; color: #111;
+      padding: 6px 12px; text-decoration: none; }
+
+    footer { margin-top: 16px; border-top: 1px solid #999; padding-top: 10px;
+      font-size: 12px; color: #555; }
+    /* перемикач станів екрана — зверху */
+    .states { display: flex; flex-wrap: wrap; gap: 6px; align-items: baseline;
+      border: 1px solid #999; background: #e2e2e2; padding: 6px 8px; margin-bottom: 10px; font-size: 12px; }
+    .states .lbl { color: #555; }
+    .states a { border: 1px solid #999; background: #fff; padding: 3px 8px; text-decoration: none; color: #222; }
+    .states a[aria-current="page"] { background: #c4c4c4; border-color: #333; font-weight: 700; }
+  </style>
+</head>
+<body>
+
+<header>
+  <!-- зверху: перемикач станів цього екрана -->
+  <nav class="states" aria-label="Стани екрана «Порівняння місяців»">
+    <span class="lbl">Стани екрана:</span>
+    <a href="compare.html" aria-current="page">Успіх</a>
+    <a href="compare-empty.html">Порожній</a>
+    <a href="compare-error.html">Помилка</a>
+    <a href="compare-loading.html">Завантаження</a>
+  </nav>
+
+  <p class="wf-note">
+    <strong>Вайрфрейм · Порівняння місяців · стан «успіх».</strong>
+    Job <strong>RJ-4</strong> — «коли починається новий місяць, хочу порівняти його з попереднім,
+    щоб побачити чи моя поведінка змінюється чи я ходжу по колу».
+    Крок flow: <strong>Flow C → вузол Compare → УСПІХ: бачить динаміку</strong>.
+    Головний вихід — назад в Огляд. Зони — лише зі sitemap.md (S3, «цей місяць проти попереднього»).
+  </p>
+
+  <!-- ЗОНА: глобальна навігація (sitemap.md → Крок 03: 4 входи) -->
+  <nav class="zone" aria-label="Глобальна навігація">
+    <span class="zone-label">Зона: глобальна навігація ·
+      <span class="act">головна дія: перехід між кластерами</span></span>
+    <div class="zone-body">
+      <ul>
+        <li><a href="overview.html" aria-current="page">Огляд</a></li>
+        <li><a href="transactions.html">Транзакції</a></li>
+        <li><a href="categories.html">Категорії</a></li>
+        <li><a href="bank-connect.html">Акаунт</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ЗОНА: вибір місяців (sitemap.md → S3: «цей місяць проти попереднього», RJ-4) -->
+  <section class="zone" aria-label="Вибір місяців">
+    <span class="zone-label">Зона: вибір місяців ·
+      <span class="act">головна дія: обрати пару місяців для порівняння (RJ-4)</span></span>
+    <div class="zone-body">
+      <h1>Червень 2026 проти Травня 2026</h1>
+      <p class="muted">Порівняння цього місяця з попереднім · дані з Mono та Приват</p>
+      <div class="state-actions">
+        <button type="button">Змінити місяці</button>
+        <button type="button">Попередня пара: Травень проти Квітня</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ЗОНА: порівняння по категоріях (sitemap.md → S3: розбивка «проти попереднього», RJ-4);
+       дельта — ТЕКСТОМ, без кольору -->
+  <section class="zone" aria-label="Порівняння по категоріях">
+    <span class="zone-label">Зона: порівняння по категоріях ·
+      <span class="act">головна дія: зчитати різницю по кожній категорії словами (RJ-4)</span></span>
+    <div class="zone-body">
+      <h2>Куди змінились витрати</h2>
+      <p class="muted">Разом: 18 450 ₴ проти 17 250 ₴ — на 1 200 ₴ більше, ніж у травні</p>
+      <ul class="cmp">
+        <li>
+          <p class="cmp-cat"><strong>Кафе та ресторани</strong></p>
+          <p class="cmp-nums">Червень: 3 100 ₴ · Травень: 2 400 ₴</p>
+          <p class="cmp-delta">На 700 ₴ більше, ніж у травні</p>
+        </li>
+        <li>
+          <p class="cmp-cat"><strong>Продукти</strong></p>
+          <p class="cmp-nums">Червень: 5 200 ₴ · Травень: 5 600 ₴</p>
+          <p class="cmp-delta">На 400 ₴ менше, ніж у травні</p>
+        </li>
+        <li>
+          <p class="cmp-cat"><strong>Інше</strong></p>
+          <p class="cmp-nums">Червень: 4 400 ₴ · Травень: 3 200 ₴</p>
+          <p class="cmp-delta">На 1 200 ₴ більше, ніж у травні</p>
+        </li>
+        <li>
+          <p class="cmp-cat"><strong>Комуналка</strong></p>
+          <p class="cmp-nums">Червень: 2 300 ₴ · Травень: 2 300 ₴</p>
+          <p class="cmp-delta">Без змін порівняно з травнем</p>
+        </li>
+        <li>
+          <p class="cmp-cat"><strong>Транспорт</strong></p>
+          <p class="cmp-nums">Червень: 1 450 ₴ · Травень: 1 750 ₴</p>
+          <p class="cmp-delta">На 300 ₴ менше, ніж у травні</p>
+        </li>
+      </ul>
+      <div class="state-actions">
+        <a class="btn" href="overview.html">До огляду за місяць</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Стан: успіх (базова сторінка). Інші стани цього екрана — угорі сторінки та в дереві зліва.
+  Екран: «Порівняння місяців» (sitemap.md).
+</footer>
+
+<script src="wf-nav.js"></script>
+</body>
+</html>

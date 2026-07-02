@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Вайрфрейм — Підключення банків (порожній)</title>
+  <title>Вайрфрейм — Порівняння місяців (помилка)</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: system-ui, sans-serif; background: #f4f4f4; color: #222;
@@ -34,26 +34,24 @@
     .state-actions { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
     a.btn { display: inline-block; border: 1px solid #666; background: #eee; color: #111;
       padding: 6px 12px; text-decoration: none; }
-    fieldset { border: 1px solid #bbb; padding: 10px 12px; }
-    legend { font-size: 13px; color: #333; padding: 0 4px; }
-    .opt { display: block; padding: 3px 0; }
   </style>
 </head>
 <body>
 
 <header>
-  <nav class="states" aria-label="Стани екрана «Підключення банків»">
+  <nav class="states" aria-label="Стани екрана «Порівняння місяців»">
     <span class="lbl">Стани екрана:</span>
-    <a href="bank-connect.html">Успіх</a>
-    <a href="bank-connect-empty.html" aria-current="page">Порожній</a>
-    <a href="bank-connect-error.html">Помилка</a>
-    <a href="bank-connect-loading.html">Завантаження</a>
+    <a href="compare.html">Успіх</a>
+    <a href="compare-empty.html">Порожній</a>
+    <a href="compare-error.html" aria-current="page">Помилка</a>
+    <a href="compare-loading.html">Завантаження</a>
   </nav>
 
   <p class="wf-note">
-    <strong>Вайрфрейм · Підключення банків · стан «порожній»</strong> (ще немає підключень).
-    Закриває job <strong>RJ-1</strong> (jtbd.md) · перший раз також RJ-5. Крок flow:
-    <strong>Flow A → вузол ConnEmpty → Auth</strong>. Вихід: підключити банк — не глухий кут.
+    <strong>Вайрфрейм · Порівняння місяців · стан «помилка»</strong> (не вдалось порахувати).
+    Job <strong>RJ-4</strong> — «чи я змінююсь чи ходжу по колу».
+    Крок flow: <strong>Flow C → вузол CalcErr → повернення в Огляд</strong>.
+    Виходи: «спробувати ще» (перерахунок) і «повернутись до огляду». Не глухий кут.
     Зони — як у стані «успіх».
   </p>
 
@@ -62,52 +60,47 @@
       <span class="act">головна дія: перехід між кластерами</span></span>
     <div class="zone-body">
       <ul>
-        <li><a href="overview.html">Огляд</a></li>
+        <li><a href="overview.html" aria-current="page">Огляд</a></li>
         <li><a href="transactions.html">Транзакції</a></li>
         <li><a href="categories.html">Категорії</a></li>
-        <li><a href="#" aria-current="page">Акаунт</a></li>
+        <li><a href="bank-connect.html">Акаунт</a></li>
       </ul>
     </div>
   </nav>
 </header>
 
 <main>
-  <h1>Підключення банків</h1>
 
-  <section class="zone" aria-label="Підключені банки">
-    <span class="zone-label">Зона: підключені банки ·
-      <span class="act">головна дія: бачити статус підключень (RJ-1)</span></span>
+  <section class="zone" aria-label="Вибір місяців">
+    <span class="zone-label">Зона: вибір місяців ·
+      <span class="act">головна дія: обрати пару місяців для порівняння (RJ-4)</span></span>
     <div class="zone-body">
-      <h2>Ваші банки</h2>
-      <p class="empty-msg">Ще немає підключених банків. Підключіть перший — і транзакції
-        почнуть підтягуватись самі, без ручного введення.</p>
+      <h1>Червень 2026 проти Травня 2026</h1>
+      <p class="muted">Не вдалося порахувати порівняння</p>
+      <button type="button" disabled>Змінити місяці</button>
     </div>
   </section>
 
-  <section class="zone" aria-label="Додати банк">
-    <span class="zone-label">Зона: додати банк ·
-      <span class="act">головна дія (порожній): підключити перший банк (RJ-1)</span></span>
+  <section class="zone" aria-label="Порівняння по категоріях">
+    <span class="zone-label">Зона: порівняння по категоріях ·
+      <span class="act">головна дія (помилка): спробувати ще / повернутись до огляду</span></span>
     <div class="zone-body">
-      <h2>Підключити банк</h2>
-      <form>
-        <fieldset>
-          <legend>Який банк підключити</legend>
-          <label class="opt"><input type="radio" name="bank" value="mono"> Monobank</label>
-          <label class="opt"><input type="radio" name="bank" value="privat"> ПриватБанк</label>
-          <label class="opt"><input type="radio" name="bank" value="other"> Інший банк</label>
-        </fieldset>
-        <div class="state-actions">
-          <a class="btn" href="bank-connect-loading.html">Підключити банк</a>
-          <a class="btn" href="bank-connect-error.html">Банк відхилив доступ</a>
-        </div>
-      </form>
+      <h2>Куди змінились витрати</h2>
+      <p class="empty-msg">Не вдалося порахувати порівняння червня з травнем. Схоже, стався
+        збій під час обчислення. Це можна виправити — спробуйте ще раз або поверніться
+        до огляду за місяць.</p>
+      <div class="state-actions">
+        <a class="btn" href="compare-loading.html">Спробувати ще</a>
+        <a class="btn" href="overview.html">Повернутись до огляду</a>
+      </div>
     </div>
   </section>
+
 </main>
 
 <footer>
-  Стан: порожній. Інші стани цього екрана — угорі сторінки та в дереві зліва.
-  Екран: «Підключення банків» (sitemap.md) · job RJ-1 (jtbd.md).
+  Стан: помилка. Інші стани цього екрана — угорі сторінки та в дереві зліва.
+  Екран: «Порівняння місяців» (sitemap.md).
 </footer>
 
 <script src="wf-nav.js"></script>

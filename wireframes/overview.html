@@ -61,6 +61,8 @@
     .states .lbl { color: #555; }
     .states a { border: 1px solid #999; background: #fff; padding: 3px 8px; text-decoration: none; color: #222; }
     .states a[aria-current="page"] { background: #c4c4c4; border-color: #333; font-weight: 700; }
+    a.btn { display: inline-block; border: 1px solid #666; background: #eee; color: #111;
+      padding: 6px 12px; text-decoration: none; }
   </style>
 </head>
 <body>
@@ -89,9 +91,9 @@
     <div class="zone-body">
       <ul>
         <li><a href="#" aria-current="page">Огляд</a></li>
-        <li><a href="#">Транзакції</a></li>
-        <li><a href="#">Категорії</a></li>
-        <li><a href="#">Акаунт</a></li>
+        <li><a href="transactions.html">Транзакції</a></li>
+        <li><a href="categories.html">Категорії</a></li>
+        <li><a href="bank-connect.html">Акаунт</a></li>
       </ul>
     </div>
   </nav>
@@ -106,7 +108,7 @@
     <div class="zone-body">
       <h1>Огляд за червень 2026</h1>
       <p class="muted">Дані з Mono та Приват · оновлено 30 червня</p>
-      <button type="button">Порівняти з травнем</button>
+      <a class="btn" href="compare.html">Порівняти з травнем</a>
     </div>
   </section>
 
@@ -129,23 +131,23 @@
     <div class="zone-body">
       <h2>Куди пішли гроші</h2>
       <ul class="cards">
-        <li><a class="card-link" href="#">
+        <li><a class="card-link" href="transactions.html">
           <span class="card-main"><span>Інше</span>
             <span class="card-meta">24% від місяця<span class="flag">більше ніж у травні</span></span></span>
           <span class="card-sum">4 400 ₴</span></a></li>
-        <li><a class="card-link" href="#">
+        <li><a class="card-link" href="transactions.html">
           <span class="card-main"><span>Продукти</span>
             <span class="card-meta">28% · Сільпо, АТБ</span></span>
           <span class="card-sum">5 200 ₴</span></a></li>
-        <li><a class="card-link" href="#">
+        <li><a class="card-link" href="transactions.html">
           <span class="card-main"><span>Кафе та ресторани</span>
             <span class="card-meta">17%<span class="flag">більше ніж у травні</span></span></span>
           <span class="card-sum">3 100 ₴</span></a></li>
-        <li><a class="card-link" href="#">
+        <li><a class="card-link" href="transactions.html">
           <span class="card-main"><span>Комуналка</span>
             <span class="card-meta">12%</span></span>
           <span class="card-sum">2 300 ₴</span></a></li>
-        <li><a class="card-link" href="#">
+        <li><a class="card-link" href="transactions.html">
           <span class="card-main"><span>Транспорт</span>
             <span class="card-meta">8% · WOG, метро</span></span>
           <span class="card-sum">1 450 ₴</span></a></li>
@@ -160,19 +162,19 @@
     <div class="zone-body">
       <h2>Найбільші окремі витрати</h2>
       <ul class="cards">
-        <li><article><a class="card-link" href="#">
+        <li><article><a class="card-link" href="transaction-edit.html">
           <span class="card-main"><span>Rozetka</span>
             <span class="card-meta">12 червня · Інше</span></span>
           <span class="card-sum">2 400 ₴</span></a></article></li>
-        <li><article><a class="card-link" href="#">
+        <li><article><a class="card-link" href="transaction-edit.html">
           <span class="card-main"><span>Сільпо</span>
             <span class="card-meta">8 червня · Продукти</span></span>
           <span class="card-sum">1 180 ₴</span></a></article></li>
-        <li><article><a class="card-link" href="#">
+        <li><article><a class="card-link" href="transaction-edit.html">
           <span class="card-main"><span>WOG</span>
             <span class="card-meta">3 червня · Транспорт</span></span>
           <span class="card-sum">900 ₴</span></a></article></li>
-        <li><article><a class="card-link" href="#">
+        <li><article><a class="card-link" href="transaction-edit.html">
           <span class="card-main"><span>Аптека АНЦ</span>
             <span class="card-meta">20 червня · Здоров'я</span></span>
           <span class="card-sum">640 ₴</span></a></article></li>

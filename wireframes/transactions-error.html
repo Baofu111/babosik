@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Вайрфрейм — Підключення банків (помилка)</title>
+  <title>Вайрфрейм — Список транзакцій (помилка)</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: system-ui, sans-serif; background: #f4f4f4; color: #222;
@@ -24,6 +24,10 @@
     .muted { color: #555; font-size: 13px; }
     button { border: 1px solid #666; background: #eee; color: #111; padding: 6px 12px;
       cursor: pointer; font: inherit; }
+    .filter-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    .filter-row input, .filter-row select { border: 1px solid #999; background: #fff;
+      color: #222; padding: 6px 8px; font: inherit; }
+    .filter-row input[type="search"] { flex: 1; min-width: 160px; }
     footer { margin-top: 16px; border-top: 1px solid #999; padding-top: 10px; font-size: 12px; color: #555; }
     .states { display: flex; flex-wrap: wrap; gap: 6px; align-items: baseline;
       border: 1px solid #999; background: #e2e2e2; padding: 6px 8px; margin-bottom: 10px; font-size: 12px; }
@@ -34,32 +38,23 @@
     .state-actions { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
     a.btn { display: inline-block; border: 1px solid #666; background: #eee; color: #111;
       padding: 6px 12px; text-decoration: none; }
-    .bank { border: 1px solid #bbb; background: #fafafa; margin: 6px 0; padding: 10px 12px;
-      display: flex; justify-content: space-between; gap: 12px; align-items: baseline; flex-wrap: wrap; }
-    .bank .b-main { display: flex; flex-direction: column; }
-    .bank .b-meta { font-size: 12px; color: #555; }
-    fieldset { border: 1px solid #bbb; padding: 10px 12px; }
-    legend { font-size: 13px; color: #333; padding: 0 4px; }
-    .opt { display: block; padding: 3px 0; }
   </style>
 </head>
 <body>
 
 <header>
-  <nav class="states" aria-label="Стани екрана «Підключення банків»">
+  <nav class="states" aria-label="Стани екрана «Список транзакцій»">
     <span class="lbl">Стани екрана:</span>
-    <a href="bank-connect.html">Успіх</a>
-    <a href="bank-connect-empty.html">Порожній</a>
-    <a href="bank-connect-error.html" aria-current="page">Помилка</a>
-    <a href="bank-connect-loading.html">Завантаження</a>
+    <a href="transactions.html">Успіх</a>
+    <a href="transactions-empty.html">Порожній</a>
+    <a href="transactions-error.html" aria-current="page">Помилка</a>
+    <a href="transactions-loading.html">Завантаження</a>
   </nav>
 
   <p class="wf-note">
-    <strong>Вайрфрейм · Підключення банків · стан «помилка»</strong> (доступ відхилено /
-    токен невірний або збій синхронізації). Закриває job <strong>RJ-1</strong> (jtbd.md).
-    Крок flow: <strong>Flow A → AuthErr → AuthRetry</strong> (так → знову; ні → допомога /
-    інший банк) та <strong>SyncErr → знову підключення</strong>. Виходи: спробувати ще /
-    інший банк / допомога — не глухий кут. Зони — як у стані «успіх».
+    <strong>Вайрфрейм · Список транзакцій · стан «помилка»</strong> (не вдалось завантажити список).
+    Job <strong>RJ-2</strong>. Крок flow: <strong>Flow B → вузол TxErr → назад у TxLoad</strong> —
+    вихід «спробувати ще» веде в завантаження. Не глухий кут. Зони — як у стані «успіх».
   </p>
 
   <nav class="zone" aria-label="Глобальна навігація">
@@ -68,47 +63,52 @@
     <div class="zone-body">
       <ul>
         <li><a href="overview.html">Огляд</a></li>
-        <li><a href="transactions.html">Транзакції</a></li>
+        <li><a href="transactions.html" aria-current="page">Транзакції</a></li>
         <li><a href="categories.html">Категорії</a></li>
-        <li><a href="#" aria-current="page">Акаунт</a></li>
+        <li><a href="bank-connect.html">Акаунт</a></li>
       </ul>
     </div>
   </nav>
 </header>
 
 <main>
-  <h1>Підключення банків</h1>
 
-  <section class="zone" aria-label="Підключені банки">
-    <span class="zone-label">Зона: підключені банки ·
-      <span class="act">головна дія: бачити статус підключень (RJ-1)</span></span>
+  <section class="zone" aria-label="Пошук і фільтр">
+    <span class="zone-label">Зона: пошук / фільтр ·
+      <span class="act">головна дія: звузити список до потрібної транзакції (RJ-2)</span></span>
     <div class="zone-body">
-      <h2>Ваші банки</h2>
-      <article class="bank">
-        <span class="b-main"><span>Monobank</span>
-          <span class="b-meta">Не вдалося підключити · доступ відхилено</span></span>
-      </article>
+      <h1>Транзакції за червень 2026</h1>
+      <form class="filter-row" role="search">
+        <label for="q" class="muted">Пошук</label>
+        <input id="q" type="search" placeholder="Назва або сума" disabled>
+        <label for="cat" class="muted">Категорія</label>
+        <select id="cat" disabled>
+          <option>Усі категорії</option>
+        </select>
+        <button type="submit" disabled>Застосувати</button>
+      </form>
+      <p class="muted">Не вдалося завантажити список — фільтр тимчасово недоступний</p>
     </div>
   </section>
 
-  <section class="zone" aria-label="Додати банк">
-    <span class="zone-label">Зона: додати банк ·
-      <span class="act">головна дія (помилка): спробувати ще / інший банк / допомога</span></span>
+  <section class="zone" aria-label="Список транзакцій">
+    <span class="zone-label">Зона: список транзакцій ·
+      <span class="act">головна дія (помилка): спробувати завантажити ще раз</span></span>
     <div class="zone-body">
-      <h2>Не вдалося підключити Monobank</h2>
-      <p class="empty-msg">Банк відхилив доступ або токен невірний. Це можна виправити —
-        спробуйте ще раз або підключіть інший банк.</p>
+      <h2>Не вдалося завантажити транзакції</h2>
+      <p class="empty-msg">Схоже, стався збій зв'язку і список не підвантажився.
+        Ваші дані не втрачені — це можна виправити, спробуйте ще раз.</p>
       <div class="state-actions">
-        <a class="btn" href="bank-connect-empty.html">Спробувати ще раз</a>
-        <a class="btn" href="bank-connect-empty.html">Підключити інший банк</a>
+        <a class="btn" href="transactions-loading.html">Спробувати ще</a>
       </div>
     </div>
   </section>
+
 </main>
 
 <footer>
   Стан: помилка. Інші стани цього екрана — угорі сторінки та в дереві зліва.
-  Екран: «Підключення банків» (sitemap.md) · job RJ-1 (jtbd.md).
+  Екран: «Список транзакцій» (sitemap.md S4).
 </footer>
 
 <script src="wf-nav.js"></script>

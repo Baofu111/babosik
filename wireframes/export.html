@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Вайрфрейм — Експорт даних (backlog)</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, sans-serif; background: #f4f4f4; color: #222;
+      line-height: 1.5; max-width: 720px; margin: 0 auto; padding: 16px; }
+    .zone { border: 1px dashed #999; background: #fff; margin: 10px 0; }
+    .zone > .zone-label { font-size: 11px; letter-spacing: .04em; text-transform: uppercase;
+      color: #555; background: #e6e6e6; border-bottom: 1px dashed #999; padding: 4px 8px; }
+    .zone-body { padding: 12px; }
+    .wf-note { font-size: 12px; color: #444; background: #ddd; border: 1px solid #999; padding: 8px 10px; }
+    .wf-note strong { color: #000; }
+    nav ul { list-style: none; display: flex; gap: 8px; flex-wrap: wrap; }
+    nav a { display: inline-block; border: 1px solid #999; background: #fff; padding: 6px 12px;
+      text-decoration: none; color: #222; }
+    nav a[aria-current="page"] { background: #ccc; border-color: #333; }
+    h1 { font-size: 18px; margin-bottom: 2px; }
+    .muted { color: #555; font-size: 13px; }
+    button { border: 1px solid #666; background: #eee; color: #111; padding: 6px 12px; cursor: pointer; font: inherit; }
+    .state-actions { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
+    a.btn { display: inline-block; border: 1px solid #666; background: #eee; color: #111; padding: 6px 12px; text-decoration: none; }
+    footer { margin-top: 16px; border-top: 1px solid #999; padding-top: 10px; font-size: 12px; color: #555; }
+  </style>
+</head>
+<body>
+
+<header>
+  <p class="wf-note">
+    <strong>Вайрфрейм · Експорт даних · BACKLOG (поза MVP-скоупом).</strong>
+    Причина (sitemap.md): гіпотеза Г-4 (vendor lock-in, Максим) — не підтверджена. Додати в
+    Акаунт наступною ітерацією; технічно дешево (CSV). Живе глибоко в Акаунті.
+  </p>
+
+  <nav class="zone" aria-label="Глобальна навігація">
+    <span class="zone-label">Зона: глобальна навігація</span>
+    <div class="zone-body">
+      <ul>
+        <li><a href="overview.html">Огляд</a></li>
+        <li><a href="transactions.html">Транзакції</a></li>
+        <li><a href="categories.html">Категорії</a></li>
+        <li><a href="bank-connect.html" aria-current="page">Акаунт</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <h1>Експорт даних</h1>
+
+  <section class="zone" aria-label="Вивантаження">
+    <span class="zone-label">Зона: вивантаження · головна дія: вивантажити CSV</span>
+    <div class="zone-body">
+      <p class="muted">Заберіть усі свої транзакції у файлі — на випадок, якщо схочете піти.</p>
+      <div class="state-actions">
+        <a class="btn" href="bank-connect.html">Вивантажити CSV</a>
+        <a class="btn" href="bank-connect.html">Назад до Акаунта</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  Backlog · поза MVP-скоупом. Екран: «Експорт даних» (sitemap.md → Backlog).
+</footer>
+
+<script src="wf-nav.js"></script>
+</body>
+</html>

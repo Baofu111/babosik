@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Вайрфрейм — Додати транзакцію вручну (backlog)</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, sans-serif; background: #f4f4f4; color: #222;
+      line-height: 1.5; max-width: 720px; margin: 0 auto; padding: 16px; }
+    .zone { border: 1px dashed #999; background: #fff; margin: 10px 0; }
+    .zone > .zone-label { font-size: 11px; letter-spacing: .04em; text-transform: uppercase;
+      color: #555; background: #e6e6e6; border-bottom: 1px dashed #999; padding: 4px 8px; }
+    .zone-body { padding: 12px; }
+    .wf-note { font-size: 12px; color: #444; background: #ddd; border: 1px solid #999; padding: 8px 10px; }
+    .wf-note strong { color: #000; }
+    nav ul { list-style: none; display: flex; gap: 8px; flex-wrap: wrap; }
+    nav a { display: inline-block; border: 1px solid #999; background: #fff; padding: 6px 12px;
+      text-decoration: none; color: #222; }
+    nav a[aria-current="page"] { background: #ccc; border-color: #333; }
+    h1 { font-size: 18px; margin-bottom: 2px; }
+    h2 { font-size: 15px; margin: 0; }
+    label { display: block; padding: 4px 0; }
+    input, select { font: inherit; padding: 4px 6px; }
+    button { border: 1px solid #666; background: #eee; color: #111; padding: 6px 12px; cursor: pointer; font: inherit; }
+    .state-actions { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
+    a.btn { display: inline-block; border: 1px solid #666; background: #eee; color: #111; padding: 6px 12px; text-decoration: none; }
+    footer { margin-top: 16px; border-top: 1px solid #999; padding-top: 10px; font-size: 12px; color: #555; }
+  </style>
+</head>
+<body>
+
+<header>
+  <p class="wf-note">
+    <strong>Вайрфрейм · Додати транзакцію вручну · BACKLOG (поза MVP-скоупом).</strong>
+    Причина (sitemap.md): сутність «ручна транзакція» під питанням, суперечить духу RJ-1
+    (автоімпорт — люди хочуть <em>не</em> вводити). Якщо лишати — мінімально: сума + категорія.
+    Вхід — контекстний, з порожнього Списку транзакцій («це готівка → додати»).
+  </p>
+
+  <nav class="zone" aria-label="Глобальна навігація">
+    <span class="zone-label">Зона: глобальна навігація</span>
+    <div class="zone-body">
+      <ul>
+        <li><a href="overview.html">Огляд</a></li>
+        <li><a href="transactions.html" aria-current="page">Транзакції</a></li>
+        <li><a href="categories.html">Категорії</a></li>
+        <li><a href="bank-connect.html">Акаунт</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <h1>Додати транзакцію вручну</h1>
+
+  <section class="zone" aria-label="Ручна транзакція">
+    <span class="zone-label">Зона: ручна транзакція · головна дія: додати (мінімально)</span>
+    <div class="zone-body">
+      <form>
+        <label>Сума, ₴ <input type="text" inputmode="decimal" placeholder="480"></label>
+        <label>Категорія
+          <select>
+            <option>Продукти</option>
+            <option>Кафе та ресторани</option>
+            <option>Транспорт</option>
+            <option>Інше</option>
+          </select>
+        </label>
+        <div class="state-actions">
+          <a class="btn" href="transactions.html">Додати</a>
+          <a class="btn" href="transactions.html">Скасувати</a>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  Backlog · поза MVP-скоупом. Екран: «Додати транзакцію вручну» (sitemap.md → Backlog).
+</footer>
+
+<script src="wf-nav.js"></script>
+</body>
+</html>

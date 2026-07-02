@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Вайрфрейм — Вхід / Реєстрація (завантаження)</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, sans-serif; background: #f4f4f4; color: #222;
+      line-height: 1.5; max-width: 720px; margin: 0 auto; padding: 16px; }
+    .zone { border: 1px dashed #999; background: #fff; margin: 10px 0; padding: 0; }
+    .zone > .zone-label { font-size: 11px; letter-spacing: .04em; text-transform: uppercase;
+      color: #555; background: #e6e6e6; border-bottom: 1px dashed #999; padding: 4px 8px; }
+    .zone > .zone-label .act { color: #333; text-transform: none; letter-spacing: 0; }
+    .zone-body { padding: 12px; }
+    .wf-note { font-size: 12px; color: #444; background: #ddd; border: 1px solid #999; padding: 8px 10px; }
+    .wf-note strong { color: #000; }
+    h1 { font-size: 18px; margin-bottom: 2px; }
+    h2 { font-size: 15px; margin: 0; }
+    .muted { color: #555; font-size: 13px; }
+    .lead { font-size: 15px; }
+    button { border: 1px solid #666; background: #eee; color: #111; padding: 6px 12px;
+      cursor: pointer; font: inherit; }
+    .btn-primary { display: block; width: 100%; padding: 10px 12px; text-align: center;
+      border: 2px solid #444; background: #e0e0e0; }
+    footer { margin-top: 16px; border-top: 1px solid #999; padding-top: 10px; font-size: 12px; color: #555; }
+    .states { display: flex; flex-wrap: wrap; gap: 6px; align-items: baseline;
+      border: 1px solid #999; background: #e2e2e2; padding: 6px 8px; margin-bottom: 10px; font-size: 12px; }
+    .states .lbl { color: #555; }
+    .states a { border: 1px solid #999; background: #fff; padding: 3px 8px; text-decoration: none; color: #222; }
+    .states a[aria-current="page"] { background: #c4c4c4; border-color: #333; font-weight: 700; }
+    .state-actions { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
+    a.btn { display: inline-block; border: 1px solid #666; background: #eee; color: #111;
+      padding: 6px 12px; text-decoration: none; }
+    /* сірі заглушки (skeleton) на місці даних */
+    .skel { background: #dcdcdc; border: 1px solid #cfcfcf; }
+    .skel-line { height: 14px; margin: 10px 0; }
+    .skel-line.short { width: 55%; }
+    .skel-btn { height: 40px; margin-top: 6px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <nav class="states" aria-label="Стани екрана «Вхід / Реєстрація»">
+    <span class="lbl">Стани екрана:</span>
+    <a href="signin.html">Успіх</a>
+    <a href="signin-loading.html" aria-current="page">Завантаження</a>
+    <a href="signin-error.html">Помилка</a>
+  </nav>
+
+  <p class="wf-note">
+    <strong>Вайрфрейм · Вхід / Реєстрація · стан «завантаження» (авторизація).</strong>
+    Екран-<strong>SIROTA</strong>: онбординг-шлюз (<strong>RJ-5 / EJ-2</strong>).
+    Крок <strong>Flow A → вузол «loading: авторизація» (RegLoad)</strong>, далі розвилка RegOk.
+    Транзиторний стан — виходи за розвилкою нижче, жодного глухого кута. Зони — як у стані «успіх».
+  </p>
+</header>
+
+<main>
+
+  <!-- ЗОНА: суть продукту (незмінна між станами) -->
+  <section class="zone" aria-label="Суть продукту">
+    <span class="zone-label">Зона: суть продукту ·
+      <span class="act">головна дія: за один рядок зрозуміти, навіщо це (RJ-5)</span></span>
+    <div class="zone-body">
+      <h1>Бабосік</h1>
+      <p class="lead">Повна картина ваших витрат сама, без ручного введення.</p>
+    </div>
+  </section>
+
+  <!-- ЗОНА: вхід — під час авторизації дії заблоковані, на місці форми заглушки -->
+  <section class="zone" aria-label="Вхід">
+    <span class="zone-label">Зона: вхід ·
+      <span class="act">головна дія: увійти через Google (виконується — авторизація)</span></span>
+    <div class="zone-body">
+      <h2>Входимо…</h2>
+      <p class="muted">Перевіряємо ваш акаунт Google. Це займе кілька секунд.</p>
+      <div class="skel skel-line" aria-hidden="true"></div>
+      <div class="skel skel-line short" aria-hidden="true"></div>
+      <div class="skel skel-btn" aria-hidden="true"></div>
+
+      <!-- розвилка RegOk (Flow A): успіх → Підключення банків; невдача → помилка -->
+      <div class="state-actions">
+        <a class="btn" href="bank-connect-empty.html">Успішно → Підключення банків</a>
+        <a class="btn" href="signin-error.html">Не вдалося → помилка</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Стан: завантаження (авторизація). Виходи за розвилкою RegOk: перший вхід ще не має підключень,
+  тож успіх веде в порожній екран Підключення банків. Екран: «Вхід / Реєстрація» (sitemap.md).
+</footer>
+
+<script src="wf-nav.js"></script>
+</body>
+</html>

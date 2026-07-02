@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Вайрфрейм — Список транзакцій (порожній)</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, sans-serif; background: #f4f4f4; color: #222;
+      line-height: 1.5; max-width: 720px; margin: 0 auto; padding: 16px; }
+    .zone { border: 1px dashed #999; background: #fff; margin: 10px 0; padding: 0; }
+    .zone > .zone-label { font-size: 11px; letter-spacing: .04em; text-transform: uppercase;
+      color: #555; background: #e6e6e6; border-bottom: 1px dashed #999; padding: 4px 8px; }
+    .zone > .zone-label .act { color: #333; text-transform: none; letter-spacing: 0; }
+    .zone-body { padding: 12px; }
+    .wf-note { font-size: 12px; color: #444; background: #ddd; border: 1px solid #999; padding: 8px 10px; }
+    .wf-note strong { color: #000; }
+    nav ul { list-style: none; display: flex; gap: 8px; flex-wrap: wrap; }
+    nav a { display: inline-block; border: 1px solid #999; background: #fff; padding: 6px 12px;
+      text-decoration: none; color: #222; }
+    nav a[aria-current="page"] { background: #ccc; border-color: #333; }
+    h1 { font-size: 18px; margin-bottom: 2px; }
+    h2 { font-size: 15px; margin: 0; }
+    .muted { color: #555; font-size: 13px; }
+    button { border: 1px solid #666; background: #eee; color: #111; padding: 6px 12px;
+      cursor: pointer; font: inherit; }
+    .filter-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    .filter-row input, .filter-row select { border: 1px solid #999; background: #fff;
+      color: #222; padding: 6px 8px; font: inherit; }
+    .filter-row input[type="search"] { flex: 1; min-width: 160px; }
+    footer { margin-top: 16px; border-top: 1px solid #999; padding-top: 10px; font-size: 12px; color: #555; }
+    .states { display: flex; flex-wrap: wrap; gap: 6px; align-items: baseline;
+      border: 1px solid #999; background: #e2e2e2; padding: 6px 8px; margin-bottom: 10px; font-size: 12px; }
+    .states .lbl { color: #555; }
+    .states a { border: 1px solid #999; background: #fff; padding: 3px 8px; text-decoration: none; color: #222; }
+    .states a[aria-current="page"] { background: #c4c4c4; border-color: #333; font-weight: 700; }
+    /* вміст порожнього стану */
+    .empty-msg { color: #444; }
+    .state-actions { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
+    a.btn { display: inline-block; border: 1px solid #666; background: #eee; color: #111;
+      padding: 6px 12px; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<header>
+  <nav class="states" aria-label="Стани екрана «Список транзакцій»">
+    <span class="lbl">Стани екрана:</span>
+    <a href="transactions.html">Успіх</a>
+    <a href="transactions-empty.html" aria-current="page">Порожній</a>
+    <a href="transactions-error.html">Помилка</a>
+    <a href="transactions-loading.html">Завантаження</a>
+  </nav>
+
+  <p class="wf-note">
+    <strong>Вайрфрейм · Список транзакцій · стан «порожній»</strong> (за фільтром нічого).
+    Job <strong>RJ-2</strong>. Крок flow: <strong>Flow B → вузол ListEmpty → розвилка Alt</strong> —
+    виходи «уточнити пошук» і «це готівка → додати вручну» (backlog-вихід ManualBL). Не глухий кут.
+    Структура і зони — як у стані «успіх», міняється лише вміст.
+  </p>
+
+  <nav class="zone" aria-label="Глобальна навігація">
+    <span class="zone-label">Зона: глобальна навігація ·
+      <span class="act">головна дія: перехід між кластерами</span></span>
+    <div class="zone-body">
+      <ul>
+        <li><a href="overview.html">Огляд</a></li>
+        <li><a href="transactions.html" aria-current="page">Транзакції</a></li>
+        <li><a href="categories.html">Категорії</a></li>
+        <li><a href="bank-connect.html">Акаунт</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <section class="zone" aria-label="Пошук і фільтр">
+    <span class="zone-label">Зона: пошук / фільтр ·
+      <span class="act">головна дія: звузити список до потрібної транзакції (RJ-2)</span></span>
+    <div class="zone-body">
+      <h1>Транзакції за червень 2026</h1>
+      <form class="filter-row" role="search">
+        <label for="q" class="muted">Пошук</label>
+        <input id="q" type="search" value="Вокзал готівка" placeholder="Назва або сума">
+        <label for="cat" class="muted">Категорія</label>
+        <select id="cat">
+          <option>Усі категорії</option>
+          <option>Продукти</option>
+          <option>Кафе</option>
+          <option selected>Транспорт</option>
+          <option>Інше</option>
+        </select>
+        <button type="submit">Застосувати</button>
+      </form>
+      <p class="muted">Фільтр: «Вокзал готівка» + категорія «Транспорт» · нічого не знайдено</p>
+    </div>
+  </section>
+
+  <section class="zone" aria-label="Список транзакцій">
+    <span class="zone-label">Зона: список транзакцій ·
+      <span class="act">головна дія (порожній): уточнити пошук / додати готівку вручну</span></span>
+    <div class="zone-body">
+      <h2>За цим фільтром транзакцій немає</h2>
+      <p class="empty-msg">Нічого не збіглося з «Вокзал готівка» у категорії «Транспорт».
+        Спробуйте прибрати частину умов пошуку. Якщо це була готівкова оплата — її можна
+        додати вручну, і вона потрапить у картину.</p>
+      <div class="state-actions">
+        <a class="btn" href="transactions.html">Уточнити пошук</a>
+        <a class="btn" href="add-transaction.html">Це готівка → додати вручну</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Стан: порожній. Інші стани цього екрана — угорі сторінки та в дереві зліва.
+  Екран: «Список транзакцій» (sitemap.md S4).
+</footer>
+
+<script src="wf-nav.js"></script>
+</body>
+</html>

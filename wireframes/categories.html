@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Вайрфрейм — Категорії та підкатегорії: керування (успіх)</title>
+  <style>
+    /* Grey-box: лише структура. Тільки сірі, без кольору/шрифтів/іконок/тіней.
+       Пунктир = межа зони вайрфрейму. Мітки зон — службові, не UI продукту. */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, sans-serif;   /* системний default, не бренд-шрифт */
+      background: #f4f4f4; color: #222; line-height: 1.5;
+      max-width: 720px; margin: 0 auto; padding: 16px;
+    }
+    /* службові мітки зон */
+    .zone { border: 1px dashed #999; background: #fff; margin: 10px 0; padding: 0; }
+    .zone > .zone-label {
+      font-size: 11px; letter-spacing: .04em; text-transform: uppercase;
+      color: #555; background: #e6e6e6; border-bottom: 1px dashed #999;
+      padding: 4px 8px;
+    }
+    .zone > .zone-label .act { color: #333; text-transform: none; letter-spacing: 0; }
+    .zone-body { padding: 12px; }
+
+    .wf-note { font-size: 12px; color: #444; background: #ddd; border: 1px solid #999;
+      padding: 8px 10px; }
+    .wf-note strong { color: #000; }
+
+    nav ul { list-style: none; display: flex; gap: 8px; flex-wrap: wrap; }
+    nav a { display: inline-block; border: 1px solid #999; background: #fff;
+      padding: 6px 12px; text-decoration: none; color: #222; }
+    nav a[aria-current="page"] { background: #ccc; border-color: #333; }
+
+    h1 { font-size: 18px; margin-bottom: 2px; }
+    h2 { font-size: 15px; margin: 0; }
+    h3 { font-size: 14px; }
+    .muted { color: #555; font-size: 13px; }
+
+    button { border: 1px solid #666; background: #eee; color: #111;
+      padding: 6px 12px; cursor: pointer; font: inherit; }
+
+    /* список категорій */
+    ul.cats { list-style: none; }
+    ul.cats > li { border: 1px solid #bbb; background: #fafafa; margin: 8px 0; padding: 10px 12px; }
+    .cat-head { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+    .cat-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+    .cat-actions a { border: 1px solid #777; background: #eee; color: #111;
+      padding: 3px 8px; text-decoration: none; font-size: 12px; }
+    ul.subs { list-style: none; margin: 8px 0 0 0; padding-left: 10px; border-left: 1px solid #ccc; }
+    ul.subs li { display: flex; justify-content: space-between; gap: 12px;
+      align-items: baseline; padding: 4px 0; }
+    .sub-actions a { border: 1px solid #888; background: #f0f0f0; color: #111;
+      padding: 2px 6px; text-decoration: none; font-size: 11px; margin-left: 6px; }
+    .add-sub { margin-top: 8px; }
+    .add-sub a { border: 1px solid #777; background: #eee; color: #111;
+      padding: 3px 8px; text-decoration: none; font-size: 12px; }
+
+    /* форма додавання */
+    label { display: block; font-size: 13px; margin-bottom: 4px; }
+    input { font: inherit; border: 1px solid #888; background: #fff; padding: 6px 8px;
+      width: 100%; max-width: 320px; }
+    .field { margin-bottom: 10px; }
+    select { font: inherit; border: 1px solid #888; background: #fff; padding: 6px 8px; }
+
+    footer { margin-top: 16px; border-top: 1px solid #999; padding-top: 10px;
+      font-size: 12px; color: #555; }
+    /* перемикач станів екрана — зверху */
+    .states { display: flex; flex-wrap: wrap; gap: 6px; align-items: baseline;
+      border: 1px solid #999; background: #e2e2e2; padding: 6px 8px; margin-bottom: 10px; font-size: 12px; }
+    .states .lbl { color: #555; }
+    .states a { border: 1px solid #999; background: #fff; padding: 3px 8px; text-decoration: none; color: #222; }
+    .states a[aria-current="page"] { background: #c4c4c4; border-color: #333; font-weight: 700; }
+  </style>
+</head>
+<body>
+
+<header>
+  <!-- зверху: перемикач станів цього екрана -->
+  <nav class="states" aria-label="Стани екрана «Категорії та підкатегорії»">
+    <span class="lbl">Стани екрана:</span>
+    <a href="categories.html" aria-current="page">Успіх</a>
+    <a href="categories-empty.html">Порожній</a>
+    <a href="categories-error.html">Помилка</a>
+    <a href="categories-loading.html">Завантаження</a>
+  </nav>
+
+  <p class="wf-note">
+    <strong>Вайрфрейм · Категорії та підкатегорії: керування · стан «успіх».</strong>
+    Job <strong>RJ-2</strong> — «свої категорії, а не ті що нав'язали»: CRUD власних
+    категорій і підкатегорій (ядро MVP, диференціатор). Зони — лише зі sitemap.md (S6).
+    <br><strong>Примітка:</strong> екран поза діаграмами потоків flows.md; стан за стандартним
+    CRUD-патерном, не з flows.md.
+  </p>
+
+  <!-- ЗОНА: глобальна навігація (sitemap.md → Крок 03: 4 входи) -->
+  <nav class="zone" aria-label="Глобальна навігація">
+    <span class="zone-label">Зона: глобальна навігація ·
+      <span class="act">головна дія: перехід між кластерами</span></span>
+    <div class="zone-body">
+      <ul>
+        <li><a href="overview.html">Огляд</a></li>
+        <li><a href="transactions.html">Транзакції</a></li>
+        <li><a href="categories.html" aria-current="page">Категорії</a></li>
+        <li><a href="bank-connect.html">Акаунт</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <h1>Мої категорії та підкатегорії</h1>
+  <p class="muted">Своя класифікація витрат — щоб транзакції лягали туди, куди треба (RJ-2)</p>
+
+  <!-- ЗОНА: список категорій (sitemap.md S6: «CRUD власних категорій/підкатегорій»)
+       кожна категорія = <article> з підкатегоріями, дії редагувати/видалити -->
+  <section class="zone" aria-label="Список категорій">
+    <span class="zone-label">Зона: список категорій ·
+      <span class="act">головна дія: редагувати / видалити категорію та підкатегорії (RJ-2)</span></span>
+    <div class="zone-body">
+      <h2>Ваші категорії</h2>
+      <ul class="cats">
+
+        <li>
+          <article aria-label="Категорія Продукти">
+            <div class="cat-head">
+              <h3>Продукти</h3>
+              <span class="cat-actions">
+                <a href="categories.html">Редагувати</a>
+                <a href="categories.html">Видалити</a>
+              </span>
+            </div>
+            <ul class="subs">
+              <li><span>Сільпо</span>
+                <span class="sub-actions"><a href="categories.html">Редагувати</a><a href="categories.html">Видалити</a></span></li>
+              <li><span>АТБ</span>
+                <span class="sub-actions"><a href="categories.html">Редагувати</a><a href="categories.html">Видалити</a></span></li>
+              <li><span>Ринок</span>
+                <span class="sub-actions"><a href="categories.html">Редагувати</a><a href="categories.html">Видалити</a></span></li>
+            </ul>
+            <p class="add-sub"><a href="categories.html">+ підкатегорія</a></p>
+          </article>
+        </li>
+
+        <li>
+          <article aria-label="Категорія Кафе та ресторани">
+            <div class="cat-head">
+              <h3>Кафе та ресторани</h3>
+              <span class="cat-actions">
+                <a href="categories.html">Редагувати</a>
+                <a href="categories.html">Видалити</a>
+              </span>
+            </div>
+            <ul class="subs">
+              <li><span>Кав'ярні</span>
+                <span class="sub-actions"><a href="categories.html">Редагувати</a><a href="categories.html">Видалити</a></span></li>
+              <li><span>Ресторани</span>
+                <span class="sub-actions"><a href="categories.html">Редагувати</a><a href="categories.html">Видалити</a></span></li>
+              <li><span>Доставка</span>
+                <span class="sub-actions"><a href="categories.html">Редагувати</a><a href="categories.html">Видалити</a></span></li>
+            </ul>
+            <p class="add-sub"><a href="categories.html">+ підкатегорія</a></p>
+          </article>
+        </li>
+
+        <li>
+          <article aria-label="Категорія Транспорт">
+            <div class="cat-head">
+              <h3>Транспорт</h3>
+              <span class="cat-actions">
+                <a href="categories.html">Редагувати</a>
+                <a href="categories.html">Видалити</a>
+              </span>
+            </div>
+            <ul class="subs">
+              <li><span>Пальне (WOG, OKKO)</span>
+                <span class="sub-actions"><a href="categories.html">Редагувати</a><a href="categories.html">Видалити</a></span></li>
+              <li><span>Метро та маршрутки</span>
+                <span class="sub-actions"><a href="categories.html">Редагувати</a><a href="categories.html">Видалити</a></span></li>
+              <li><span>Таксі (Bolt, Uklon)</span>
+                <span class="sub-actions"><a href="categories.html">Редагувати</a><a href="categories.html">Видалити</a></span></li>
+            </ul>
+            <p class="add-sub"><a href="categories.html">+ підкатегорія</a></p>
+          </article>
+        </li>
+
+        <li>
+          <article aria-label="Категорія Інше">
+            <div class="cat-head">
+              <h3>Інше</h3>
+              <span class="cat-actions">
+                <a href="categories.html">Редагувати</a>
+                <a href="categories.html">Видалити</a>
+              </span>
+            </div>
+            <ul class="subs">
+              <li><span>Без підкатегорій</span></li>
+            </ul>
+            <p class="add-sub"><a href="categories.html">+ підкатегорія</a></p>
+          </article>
+        </li>
+
+      </ul>
+    </div>
+  </section>
+
+  <!-- ЗОНА: додати категорію (sitemap.md S6: створити власну категорію/підкатегорію) -->
+  <section class="zone" aria-label="Додати категорію">
+    <span class="zone-label">Зона: додати категорію ·
+      <span class="act">головна дія: створити власну категорію або підкатегорію (RJ-2)</span></span>
+    <div class="zone-body">
+      <h2>Додати категорію</h2>
+      <form action="categories.html" method="post">
+        <div class="field">
+          <label for="cat-name">Назва категорії</label>
+          <input type="text" id="cat-name" name="cat-name" placeholder="напр. Здоров'я">
+        </div>
+        <button type="submit">Додати категорію</button>
+      </form>
+
+      <h3 style="margin-top:16px">Додати підкатегорію</h3>
+      <form action="categories.html" method="post">
+        <div class="field">
+          <label for="sub-parent">До якої категорії</label>
+          <select id="sub-parent" name="sub-parent">
+            <option>Продукти</option>
+            <option>Кафе та ресторани</option>
+            <option>Транспорт</option>
+            <option>Інше</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="sub-name">Назва підкатегорії</label>
+          <input type="text" id="sub-name" name="sub-name" placeholder="напр. Аптека">
+        </div>
+        <button type="submit">Додати підкатегорію</button>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Стан: успіх (базова сторінка). Інші стани цього екрана — угорі сторінки та в дереві зліва.
+  Екран: «Категорії та підкатегорії: керування» (sitemap.md).
+</footer>
+
+<script src="wf-nav.js"></script>
+</body>
+</html>

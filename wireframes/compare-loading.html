@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Вайрфрейм — Огляд за місяць (завантаження)</title>
+  <title>Вайрфрейм — Порівняння місяців (завантаження)</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: system-ui, sans-serif; background: #f4f4f4; color: #222;
@@ -35,28 +35,28 @@
       padding: 6px 12px; text-decoration: none; }
     /* сірі заглушки (skeleton) на місці даних */
     .skel { background: #dcdcdc; border: 1px solid #cfcfcf; }
-    .skel-num { height: 30px; width: 170px; margin-top: 6px; }
     .skel-line { height: 12px; margin: 8px 0; }
     .skel-line.short { width: 45%; }
-    .skel-card { height: 46px; margin: 8px 0; }
+    .skel-card { height: 62px; margin: 8px 0; }
   </style>
 </head>
 <body>
 
 <header>
-  <nav class="states" aria-label="Стани екрана «Огляд за місяць»">
+  <nav class="states" aria-label="Стани екрана «Порівняння місяців»">
     <span class="lbl">Стани екрана:</span>
-    <a href="overview.html">Успіх</a>
-    <a href="overview-empty.html">Порожній</a>
-    <a href="overview-error.html">Помилка</a>
-    <a href="overview-loading.html" aria-current="page">Завантаження</a>
+    <a href="compare.html">Успіх</a>
+    <a href="compare-empty.html">Порожній</a>
+    <a href="compare-error.html">Помилка</a>
+    <a href="compare-loading.html" aria-current="page">Завантаження</a>
   </nav>
 
   <p class="wf-note">
-    <strong>Вайрфрейм · Огляд за місяць · стан «завантаження».</strong>
-    Сірі заглушки карток на місці списку (порівн. Flow A: Load «тягнемо транзакції»;
-    Flow C: Load «рахуємо порівняння»). Транзиторний стан — виходи за розвилкою:
-    «успіх» / «порожній» / «помилка», жодного глухого кута. Зони — як у стані «успіх».
+    <strong>Вайрфрейм · Порівняння місяців · стан «завантаження».</strong>
+    Job <strong>RJ-4</strong> — «чи я змінююсь чи ходжу по колу».
+    Крок flow: <strong>Flow C → вузол Load «рахуємо порівняння»</strong>.
+    Сірі заглушки на місці порівняння. Транзиторний стан — виходи за розвилкою Calc:
+    «порахувалось → порівняння» / «збій → помилка», жодного глухого кута. Зони — як у стані «успіх».
   </p>
 
   <nav class="zone" aria-label="Глобальна навігація">
@@ -64,7 +64,7 @@
       <span class="act">головна дія: перехід між кластерами</span></span>
     <div class="zone-body">
       <ul>
-        <li><a href="#" aria-current="page">Огляд</a></li>
+        <li><a href="overview.html" aria-current="page">Огляд</a></li>
         <li><a href="transactions.html">Транзакції</a></li>
         <li><a href="categories.html">Категорії</a></li>
         <li><a href="bank-connect.html">Акаунт</a></li>
@@ -75,48 +75,26 @@
 
 <main>
 
-  <section class="zone" aria-label="Період і порівняння">
-    <span class="zone-label">Зона: період і порівняння ·
-      <span class="act">головна дія: перемкнути на порівняння з попереднім місяцем (RJ-4)</span></span>
+  <section class="zone" aria-label="Вибір місяців">
+    <span class="zone-label">Зона: вибір місяців ·
+      <span class="act">головна дія: обрати пару місяців для порівняння (RJ-4)</span></span>
     <div class="zone-body">
-      <h1>Огляд за червень 2026</h1>
-      <p class="muted">Завантаження…</p>
-      <button type="button" disabled>Порівняти з травнем</button>
+      <h1>Червень 2026 проти Травня 2026</h1>
+      <p class="muted">Рахуємо порівняння…</p>
       <div class="state-actions">
-        <a class="btn" href="overview.html">Готово → Огляд за місяць</a>
-        <a class="btn" href="overview-empty.html">Порожній місяць → Огляд (порожній)</a>
-        <a class="btn" href="overview-error.html">Збій оновлення → Помилка</a>
+        <a class="btn" href="compare.html">Порахувалось → порівняння</a>
+        <a class="btn" href="compare-error.html">Збій → помилка</a>
       </div>
     </div>
   </section>
 
-  <section class="zone" aria-label="Підсумок місяця">
-    <span class="zone-label">Зона: підсумок місяця ·
-      <span class="act">головна дія: зчитати повну суму одним поглядом (MJ, лише читання)</span></span>
+  <section class="zone" aria-label="Порівняння по категоріях">
+    <span class="zone-label">Зона: порівняння по категоріях ·
+      <span class="act">головна дія: зчитати різницю по кожній категорії словами (RJ-4)</span></span>
     <div class="zone-body">
-      <h2>Витрачено за місяць</h2>
-      <div class="skel skel-num" aria-hidden="true"></div>
-    </div>
-  </section>
-
-  <section class="zone" aria-label="Розбивка по категоріях">
-    <span class="zone-label">Зона: розбивка по категоріях ·
-      <span class="act">головна дія: тап по категорії → її транзакції (RJ-2 / RJ-3)</span></span>
-    <div class="zone-body">
-      <h2>Куди пішли гроші</h2>
+      <h2>Куди змінились витрати</h2>
+      <div class="skel skel-line short" aria-hidden="true"></div>
       <div class="skel skel-card" aria-hidden="true"></div>
-      <div class="skel skel-card" aria-hidden="true"></div>
-      <div class="skel skel-card" aria-hidden="true"></div>
-      <div class="skel skel-card" aria-hidden="true"></div>
-      <div class="skel skel-card" aria-hidden="true"></div>
-    </div>
-  </section>
-
-  <section class="zone" aria-label="Топ позицій витрат">
-    <span class="zone-label">Зона: топ позицій витрат ·
-      <span class="act">головна дія: тап по позиції → правка транзакції (RJ-2)</span></span>
-    <div class="zone-body">
-      <h2>Найбільші окремі витрати</h2>
       <div class="skel skel-card" aria-hidden="true"></div>
       <div class="skel skel-card" aria-hidden="true"></div>
       <div class="skel skel-card" aria-hidden="true"></div>
@@ -128,7 +106,7 @@
 
 <footer>
   Стан: завантаження. Інші стани цього екрана — угорі сторінки та в дереві зліва.
-  Екран: «Огляд за місяць» (sitemap.md).
+  Екран: «Порівняння місяців» (sitemap.md).
 </footer>
 
 <script src="wf-nav.js"></script>

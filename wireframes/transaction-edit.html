@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Вайрфрейм — Транзакція: правка (успіх)</title>
+  <style>
+    /* Grey-box: лише структура. Тільки сірі, без кольору/шрифтів/іконок/тіней. */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, sans-serif;
+      background: #f4f4f4; color: #222; line-height: 1.5;
+      max-width: 720px; margin: 0 auto; padding: 16px;
+    }
+    .zone { border: 1px dashed #999; background: #fff; margin: 10px 0; padding: 0; }
+    .zone > .zone-label {
+      font-size: 11px; letter-spacing: .04em; text-transform: uppercase;
+      color: #555; background: #e6e6e6; border-bottom: 1px dashed #999; padding: 4px 8px;
+    }
+    .zone > .zone-label .act { color: #333; text-transform: none; letter-spacing: 0; }
+    .zone-body { padding: 12px; }
+
+    .wf-note { font-size: 12px; color: #444; background: #ddd; border: 1px solid #999;
+      padding: 8px 10px; }
+    .wf-note strong { color: #000; }
+
+    nav ul { list-style: none; display: flex; gap: 8px; flex-wrap: wrap; }
+    nav a { display: inline-block; border: 1px solid #999; background: #fff;
+      padding: 6px 12px; text-decoration: none; color: #222; }
+    nav a[aria-current="page"] { background: #ccc; border-color: #333; }
+
+    h1 { font-size: 18px; margin-bottom: 2px; }
+    h2 { font-size: 15px; margin: 0; }
+    .muted { color: #555; font-size: 13px; }
+
+    button { border: 1px solid #666; background: #eee; color: #111;
+      padding: 6px 12px; cursor: pointer; font: inherit; }
+
+    /* форма правки */
+    .field { margin: 10px 0; }
+    .field label { display: block; font-size: 13px; color: #333; margin-bottom: 3px; }
+    .field input, .field select { width: 100%; border: 1px solid #999; background: #fff;
+      color: #222; padding: 8px; font: inherit; }
+    fieldset { border: 1px solid #bbb; background: #fafafa; padding: 10px; }
+    fieldset legend { font-size: 13px; color: #333; padding: 0 4px; }
+    .picker-list { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0; }
+    .picker-list li label { display: inline-block; border: 1px solid #999; background: #fff;
+      padding: 4px 10px; cursor: pointer; font-size: 13px; }
+    .picker-list li input { position: absolute; opacity: 0; }
+    .picker-list li input:checked + span { text-decoration: underline; font-weight: 700; }
+    .inline-newcat { border-top: 1px dashed #999; margin-top: 8px; padding-top: 8px; }
+    .inline-newcat .row { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+    .inline-newcat input { flex: 1; min-width: 140px; border: 1px solid #999; background: #fff;
+      padding: 6px 8px; font: inherit; }
+    .form-actions { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
+    a.btn { display: inline-block; border: 1px solid #666; background: #eee; color: #111;
+      padding: 6px 12px; text-decoration: none; }
+    a.btn.primary { background: #cfcfcf; border-color: #333; }
+    a.back { text-decoration: none; color: #222; border: 1px solid #999; background: #fff;
+      padding: 4px 10px; display: inline-block; font-size: 13px; }
+
+    footer { margin-top: 16px; border-top: 1px solid #999; padding-top: 10px;
+      font-size: 12px; color: #555; }
+    .states { display: flex; flex-wrap: wrap; gap: 6px; align-items: baseline;
+      border: 1px solid #999; background: #e2e2e2; padding: 6px 8px; margin-bottom: 10px; font-size: 12px; }
+    .states .lbl { color: #555; }
+    .states a { border: 1px solid #999; background: #fff; padding: 3px 8px; text-decoration: none; color: #222; }
+    .states a[aria-current="page"] { background: #c4c4c4; border-color: #333; font-weight: 700; }
+  </style>
+</head>
+<body>
+
+<header>
+  <!-- зверху: перемикач станів цього екрана (порожнього нема — завжди редагуємо конкретну) -->
+  <nav class="states" aria-label="Стани екрана «Транзакція: правка»">
+    <span class="lbl">Стани екрана:</span>
+    <a href="transaction-edit.html" aria-current="page">Успіх</a>
+    <a href="transaction-edit-loading.html">Завантаження</a>
+    <a href="transaction-edit-error.html">Помилка</a>
+  </nav>
+
+  <p class="wf-note">
+    <strong>Вайрфрейм · Транзакція: правка · стан «успіх».</strong>
+    Job <strong>RJ-2</strong> — «поставити транзакцію туди, де вона має сенс, і дати назву».
+    Крок flow: <strong>Flow B → вузол TxEdit «Транзакція: правка»</strong> (звідси Зберегти → Save,
+    або інлайн «+ Нова категорія» → NewCat). Зони — лише зі sitemap.md (S5).
+  </p>
+
+  <!-- ЗОНА: глобальна навігація (sitemap.md → Крок 03: 4 входи) -->
+  <nav class="zone" aria-label="Глобальна навігація">
+    <span class="zone-label">Зона: глобальна навігація ·
+      <span class="act">головна дія: перехід між кластерами</span></span>
+    <div class="zone-body">
+      <ul>
+        <li><a href="overview.html">Огляд</a></li>
+        <li><a href="transactions.html" aria-current="page">Транзакції</a></li>
+        <li><a href="categories.html">Категорії</a></li>
+        <li><a href="bank-connect.html">Акаунт</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ЗОНА: контекст / повернення до списку (sitemap.md S5) -->
+  <section class="zone" aria-label="Контекст і повернення">
+    <span class="zone-label">Зона: контекст / повернення ·
+      <span class="act">головна дія: повернутись до списку транзакцій</span></span>
+    <div class="zone-body">
+      <a class="back" href="transactions.html">← До списку транзакцій</a>
+      <h1>Правка транзакції</h1>
+      <p class="muted">Категорія «Інше» → приведіть до ладу (RJ-2)</p>
+    </div>
+  </section>
+
+  <form>
+    <!-- ЗОНА: деталі транзакції — назва, сума, дата (sitemap.md S5) -->
+    <section class="zone" aria-label="Деталі транзакції">
+      <span class="zone-label">Зона: деталі транзакції ·
+        <span class="act">головна дія: дати назву / перевірити суму й дату (RJ-2)</span></span>
+      <div class="zone-body">
+        <h2>Деталі</h2>
+        <div class="field">
+          <label for="name">Назва</label>
+          <input id="name" type="text" value="Rozetka">
+        </div>
+        <div class="field">
+          <label for="sum">Сума, ₴</label>
+          <input id="sum" type="text" value="−2 400">
+        </div>
+        <div class="field">
+          <label for="date">Дата</label>
+          <input id="date" type="text" value="12 червня 2026">
+        </div>
+      </div>
+    </section>
+
+    <!-- ЗОНА: пікер категорії з інлайн «+ Нова категорія» (sitemap.md S5) -->
+    <section class="zone" aria-label="Категорія">
+      <span class="zone-label">Зона: пікер категорії ·
+        <span class="act">головна дія: перенести в потрібну категорію; за потреби «+ Нова категорія» інлайн (RJ-2)</span></span>
+      <div class="zone-body">
+        <fieldset>
+          <legend>Категорія транзакції</legend>
+          <ul class="picker-list">
+            <li><label><input type="radio" name="cat"><span>Продукти</span></label></li>
+            <li><label><input type="radio" name="cat"><span>Кафе</span></label></li>
+            <li><label><input type="radio" name="cat"><span>Транспорт</span></label></li>
+            <li><label><input type="radio" name="cat" checked><span>Інше</span></label></li>
+          </ul>
+          <div class="inline-newcat">
+            <p class="muted">Немає потрібної? Створіть тут же, не виходячи з правки:</p>
+            <div class="row">
+              <input type="text" placeholder="Напр. Техніка та гаджети" aria-label="Назва нової категорії">
+              <a class="btn" href="transaction-edit-loading.html">+ Нова категорія</a>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </section>
+
+    <!-- ЗОНА: зберегти (sitemap.md S5) -->
+    <section class="zone" aria-label="Зберегти">
+      <span class="zone-label">Зона: зберегти ·
+        <span class="act">головна дія: зберегти зміни → картина оновиться (RJ-2)</span></span>
+      <div class="zone-body">
+        <div class="form-actions">
+          <a class="btn primary" href="transaction-edit-loading.html">Зберегти</a>
+          <a class="btn" href="transactions.html">Скасувати</a>
+        </div>
+      </div>
+    </section>
+  </form>
+
+</main>
+
+<footer>
+  Стан: успіх (базова сторінка). Інші стани цього екрана — угорі сторінки та в дереві зліва.
+  Екран: «Транзакція: правка» (sitemap.md S5).
+</footer>
+
+<script src="wf-nav.js"></script>
+</body>
+</html>

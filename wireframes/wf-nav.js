@@ -17,12 +17,20 @@
    решта = <slug>-<стан>.html.
    ───────────────────────────────────────────────────────────────────────── */
 (function () {
-  var ROOT = 'Головний flow · Flow A';
+  var ROOT = 'Екрани продукту · Flow A / B / C';
 
   var SCREENS = [
     {
-      name: 'Підключення банків',            // sitemap.md · RJ-1
-      states: [                              // _screens.md: 4 стани реальні
+      name: 'Вхід / Реєстрація',             // sitemap.md · онбординг (SIROTA)
+      states: [
+        { label: 'Завантаження', file: 'signin-loading.html' },
+        { label: 'Помилка',      file: 'signin-error.html' },
+        { label: 'Успіх',        file: 'signin.html' },
+      ],
+    },
+    {
+      name: 'Підключення банків',            // sitemap.md · RJ-1 (Flow A)
+      states: [
         { label: 'Порожній',     file: 'bank-connect-empty.html' },
         { label: 'Помилка',      file: 'bank-connect-error.html' },
         { label: 'Завантаження', file: 'bank-connect-loading.html' },
@@ -30,12 +38,59 @@
       ],
     },
     {
-      name: 'Огляд за місяць',               // sitemap.md · MJ
-      states: [                              // _screens.md (ревізія крок 07): 4 стани
+      name: 'Огляд за місяць',               // sitemap.md · MJ (Flow A)
+      states: [
         { label: 'Порожній',     file: 'overview-empty.html' },
         { label: 'Помилка',      file: 'overview-error.html' },
         { label: 'Завантаження', file: 'overview-loading.html' },
         { label: 'Успіх',        file: 'overview.html' },
+      ],
+    },
+    {
+      name: 'Список транзакцій',             // sitemap.md · RJ-2 (Flow B)
+      states: [
+        { label: 'Порожній',     file: 'transactions-empty.html' },
+        { label: 'Помилка',      file: 'transactions-error.html' },
+        { label: 'Завантаження', file: 'transactions-loading.html' },
+        { label: 'Успіх',        file: 'transactions.html' },
+      ],
+    },
+    {
+      name: 'Транзакція: правка',            // sitemap.md · RJ-2 (Flow B)
+      states: [
+        { label: 'Завантаження', file: 'transaction-edit-loading.html' },
+        { label: 'Помилка',      file: 'transaction-edit-error.html' },
+        { label: 'Успіх',        file: 'transaction-edit.html' },
+      ],
+    },
+    {
+      name: 'Категорії та підкатегорії',     // sitemap.md · RJ-2 (ядро MVP)
+      states: [
+        { label: 'Порожній',     file: 'categories-empty.html' },
+        { label: 'Помилка',      file: 'categories-error.html' },
+        { label: 'Завантаження', file: 'categories-loading.html' },
+        { label: 'Успіх',        file: 'categories.html' },
+      ],
+    },
+    {
+      name: 'Порівняння місяців',            // sitemap.md · RJ-4 (Flow C)
+      states: [
+        { label: 'Порожній',     file: 'compare-empty.html' },
+        { label: 'Помилка',      file: 'compare-error.html' },
+        { label: 'Завантаження', file: 'compare-loading.html' },
+        { label: 'Успіх',        file: 'compare.html' },
+      ],
+    },
+    {
+      name: 'Додати вручну (backlog)',       // sitemap.md · Backlog
+      states: [
+        { label: 'Заглушка', file: 'add-transaction.html' },
+      ],
+    },
+    {
+      name: 'Експорт даних (backlog)',       // sitemap.md · Backlog
+      states: [
+        { label: 'Заглушка', file: 'export.html' },
       ],
     },
   ];
