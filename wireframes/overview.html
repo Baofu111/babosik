@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Вайрфрейм — Огляд за місяць (успіх)</title>
+  <style>
+    /* Grey-box: лише структура. Тільки сірі, без кольору/шрифтів/іконок/тіней.
+       Пунктир = межа зони вайрфрейму. Мітки зон — службові, не UI продукту. */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, sans-serif;   /* системний default, не бренд-шрифт */
+      background: #f4f4f4; color: #222; line-height: 1.5;
+      max-width: 720px; margin: 0 auto; padding: 16px;
+    }
+    /* службові мітки зон */
+    .zone { border: 1px dashed #999; background: #fff; margin: 10px 0; padding: 0; }
+    .zone > .zone-label {
+      font-size: 11px; letter-spacing: .04em; text-transform: uppercase;
+      color: #555; background: #e6e6e6; border-bottom: 1px dashed #999;
+      padding: 4px 8px;
+    }
+    .zone > .zone-label .act { color: #333; text-transform: none; letter-spacing: 0; }
+    .zone-body { padding: 12px; }
+
+    .wf-note { font-size: 12px; color: #444; background: #ddd; border: 1px solid #999;
+      padding: 8px 10px; }
+    .wf-note strong { color: #000; }
+
+    nav ul { list-style: none; display: flex; gap: 8px; flex-wrap: wrap; }
+    nav a { display: inline-block; border: 1px solid #999; background: #fff;
+      padding: 6px 12px; text-decoration: none; color: #222; }
+    nav a[aria-current="page"] { background: #ccc; border-color: #333; }
+
+    h1 { font-size: 18px; margin-bottom: 2px; }
+    h2 { font-size: 15px; margin: 0; }
+    h3 { font-size: 14px; }
+
+    .total { font-size: 28px; }
+    .muted { color: #555; font-size: 13px; }
+
+    button { border: 1px solid #666; background: #eee; color: #111;
+      padding: 6px 12px; cursor: pointer; font: inherit; }
+
+    ul.cards { list-style: none; }
+    ul.cards li { border: 1px solid #bbb; background: #fafafa; margin: 6px 0; }
+    .card-link { display: flex; justify-content: space-between; gap: 12px;
+      align-items: baseline; text-decoration: none; color: #222; padding: 10px 12px; }
+    .card-link:hover { background: #eee; }
+    .card-main { display: flex; flex-direction: column; }
+    .card-meta { font-size: 12px; color: #555; }
+    .card-sum { white-space: nowrap; }
+    .flag { font-size: 11px; color: #333; border: 1px solid #777; padding: 1px 5px;
+      margin-left: 8px; } /* «підсвітка де більше ніж зазвичай» — текстом, без кольору */
+
+    footer { margin-top: 16px; border-top: 1px solid #999; padding-top: 10px;
+      font-size: 12px; color: #555; }
+  </style>
+</head>
+<body>
+
+<header>
+  <p class="wf-note">
+    <strong>Вайрфрейм · Огляд за місяць · стан «успіх».</strong>
+    Головний job <strong>MJ</strong> — «повна картина одним поглядом».
+    Крок головного flow: <strong>Flow A → вузол «Огляд за місяць» → УСПІХ: бачить свою картину</strong>
+    (кінець головного шляху головної персони). Зони — лише зі sitemap.md.
+  </p>
+
+  <!-- ЗОНА: глобальна навігація (sitemap.md → Крок 03: 4 входи) -->
+  <nav class="zone" aria-label="Глобальна навігація">
+    <span class="zone-label">Зона: глобальна навігація ·
+      <span class="act">головна дія: перехід між кластерами</span></span>
+    <div class="zone-body">
+      <ul>
+        <li><a href="#" aria-current="page">Огляд</a></li>
+        <li><a href="#">Транзакції</a></li>
+        <li><a href="#">Категорії</a></li>
+        <li><a href="#">Акаунт</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ЗОНА: період + перемикач порівняння (sitemap.md → контекстне: перемикач «Порівняння місяців», RJ-4) -->
+  <section class="zone" aria-label="Період і порівняння">
+    <span class="zone-label">Зона: період і порівняння ·
+      <span class="act">головна дія: перемкнути на порівняння з попереднім місяцем (RJ-4)</span></span>
+    <div class="zone-body">
+      <h1>Огляд за червень 2026</h1>
+      <p class="muted">Дані з Mono та Приват · оновлено 30 червня</p>
+      <button type="button">Порівняти з травнем</button>
+    </div>
+  </section>
+
+  <!-- ЗОНА: підсумок місяця — загальна сума (sitemap.md: «загальна сума», MJ) -->
+  <section class="zone" aria-label="Підсумок місяця">
+    <span class="zone-label">Зона: підсумок місяця ·
+      <span class="act">головна дія: зчитати повну суму одним поглядом (MJ, лише читання)</span></span>
+    <div class="zone-body">
+      <h2>Витрачено за місяць</h2>
+      <p class="total">18 450 ₴</p>
+      <p class="muted">На 1 200 ₴ більше, ніж у травні (17 250 ₴)</p>
+    </div>
+  </section>
+
+  <!-- ЗОНА: розбивка по категоріях (sitemap.md: «розбивка по категоріях» + «підсвітка де більше ніж зазвичай», RJ-3;
+       вхід у картку → транзакції категорії, Flow B контекст, RJ-2) -->
+  <section class="zone" aria-label="Розбивка по категоріях">
+    <span class="zone-label">Зона: розбивка по категоріях ·
+      <span class="act">головна дія: тап по категорії → її транзакції (RJ-2 / RJ-3)</span></span>
+    <div class="zone-body">
+      <h2>Куди пішли гроші</h2>
+      <ul class="cards">
+        <li><a class="card-link" href="#">
+          <span class="card-main"><span>Інше</span>
+            <span class="card-meta">24% від місяця<span class="flag">більше ніж у травні</span></span></span>
+          <span class="card-sum">4 400 ₴</span></a></li>
+        <li><a class="card-link" href="#">
+          <span class="card-main"><span>Продукти</span>
+            <span class="card-meta">28% · Сільпо, АТБ</span></span>
+          <span class="card-sum">5 200 ₴</span></a></li>
+        <li><a class="card-link" href="#">
+          <span class="card-main"><span>Кафе та ресторани</span>
+            <span class="card-meta">17%<span class="flag">більше ніж у травні</span></span></span>
+          <span class="card-sum">3 100 ₴</span></a></li>
+        <li><a class="card-link" href="#">
+          <span class="card-main"><span>Комуналка</span>
+            <span class="card-meta">12%</span></span>
+          <span class="card-sum">2 300 ₴</span></a></li>
+        <li><a class="card-link" href="#">
+          <span class="card-main"><span>Транспорт</span>
+            <span class="card-meta">8% · WOG, метро</span></span>
+          <span class="card-sum">1 450 ₴</span></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ЗОНА: топ позицій витрат (sitemap.md: «топ позицій»; вхід у картку → правка транзакції, RJ-2) -->
+  <section class="zone" aria-label="Топ позицій витрат">
+    <span class="zone-label">Зона: топ позицій витрат ·
+      <span class="act">головна дія: тап по позиції → правка транзакції (RJ-2)</span></span>
+    <div class="zone-body">
+      <h2>Найбільші окремі витрати</h2>
+      <ul class="cards">
+        <li><article><a class="card-link" href="#">
+          <span class="card-main"><span>Rozetka</span>
+            <span class="card-meta">12 червня · Інше</span></span>
+          <span class="card-sum">2 400 ₴</span></a></article></li>
+        <li><article><a class="card-link" href="#">
+          <span class="card-main"><span>Сільпо</span>
+            <span class="card-meta">8 червня · Продукти</span></span>
+          <span class="card-sum">1 180 ₴</span></a></article></li>
+        <li><article><a class="card-link" href="#">
+          <span class="card-main"><span>WOG</span>
+            <span class="card-meta">3 червня · Транспорт</span></span>
+          <span class="card-sum">900 ₴</span></a></article></li>
+        <li><article><a class="card-link" href="#">
+          <span class="card-main"><span>Аптека АНЦ</span>
+            <span class="card-meta">20 червня · Здоров'я</span></span>
+          <span class="card-sum">640 ₴</span></a></article></li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Стан: успіх (базова сторінка). Інші стани цього екрана — окремими сторінками:
+  overview-empty.html (наступний крок). Екран: «Огляд за місяць» (sitemap.md).
+</footer>
+
+</body>
+</html>
