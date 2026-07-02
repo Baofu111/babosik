@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Вайрфрейм — Підключення банків (порожній)</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, sans-serif; background: #f4f4f4; color: #222;
+      line-height: 1.5; max-width: 720px; margin: 0 auto; padding: 16px; }
+    .zone { border: 1px dashed #999; background: #fff; margin: 10px 0; padding: 0; }
+    .zone > .zone-label { font-size: 11px; letter-spacing: .04em; text-transform: uppercase;
+      color: #555; background: #e6e6e6; border-bottom: 1px dashed #999; padding: 4px 8px; }
+    .zone > .zone-label .act { color: #333; text-transform: none; letter-spacing: 0; }
+    .zone-body { padding: 12px; }
+    .wf-note { font-size: 12px; color: #444; background: #ddd; border: 1px solid #999; padding: 8px 10px; }
+    .wf-note strong { color: #000; }
+    nav ul { list-style: none; display: flex; gap: 8px; flex-wrap: wrap; }
+    nav a { display: inline-block; border: 1px solid #999; background: #fff; padding: 6px 12px;
+      text-decoration: none; color: #222; }
+    nav a[aria-current="page"] { background: #ccc; border-color: #333; }
+    h1 { font-size: 18px; margin-bottom: 2px; }
+    h2 { font-size: 15px; margin: 0; }
+    .muted { color: #555; font-size: 13px; }
+    button { border: 1px solid #666; background: #eee; color: #111; padding: 6px 12px;
+      cursor: pointer; font: inherit; }
+    footer { margin-top: 16px; border-top: 1px solid #999; padding-top: 10px; font-size: 12px; color: #555; }
+    .states { display: flex; flex-wrap: wrap; gap: 6px; align-items: baseline;
+      border: 1px solid #999; background: #e2e2e2; padding: 6px 8px; margin-bottom: 10px; font-size: 12px; }
+    .states .lbl { color: #555; }
+    .states a { border: 1px solid #999; background: #fff; padding: 3px 8px; text-decoration: none; color: #222; }
+    .states a[aria-current="page"] { background: #c4c4c4; border-color: #333; font-weight: 700; }
+    .empty-msg { color: #444; }
+    .state-actions { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
+    a.btn { display: inline-block; border: 1px solid #666; background: #eee; color: #111;
+      padding: 6px 12px; text-decoration: none; }
+    fieldset { border: 1px solid #bbb; padding: 10px 12px; }
+    legend { font-size: 13px; color: #333; padding: 0 4px; }
+    .opt { display: block; padding: 3px 0; }
+  </style>
+</head>
+<body>
+
+<header>
+  <nav class="states" aria-label="Стани екрана «Підключення банків»">
+    <span class="lbl">Стани екрана:</span>
+    <a href="bank-connect.html">Успіх</a>
+    <a href="bank-connect-empty.html" aria-current="page">Порожній</a>
+    <a href="bank-connect-error.html">Помилка</a>
+    <a href="bank-connect-loading.html">Завантаження</a>
+  </nav>
+
+  <p class="wf-note">
+    <strong>Вайрфрейм · Підключення банків · стан «порожній»</strong> (ще немає підключень).
+    Закриває job <strong>RJ-1</strong> (jtbd.md) · перший раз також RJ-5. Крок flow:
+    <strong>Flow A → вузол ConnEmpty → Auth</strong>. Вихід: підключити банк — не глухий кут.
+    Зони — як у стані «успіх».
+  </p>
+
+  <nav class="zone" aria-label="Глобальна навігація">
+    <span class="zone-label">Зона: глобальна навігація ·
+      <span class="act">головна дія: перехід між кластерами</span></span>
+    <div class="zone-body">
+      <ul>
+        <li><a href="overview.html">Огляд</a></li>
+        <li><a href="#">Транзакції</a></li>
+        <li><a href="#">Категорії</a></li>
+        <li><a href="#" aria-current="page">Акаунт</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <h1>Підключення банків</h1>
+
+  <section class="zone" aria-label="Підключені банки">
+    <span class="zone-label">Зона: підключені банки ·
+      <span class="act">головна дія: бачити статус підключень (RJ-1)</span></span>
+    <div class="zone-body">
+      <h2>Ваші банки</h2>
+      <p class="empty-msg">Ще немає підключених банків. Підключіть перший — і транзакції
+        почнуть підтягуватись самі, без ручного введення.</p>
+    </div>
+  </section>
+
+  <section class="zone" aria-label="Додати банк">
+    <span class="zone-label">Зона: додати банк ·
+      <span class="act">головна дія (порожній): підключити перший банк (RJ-1)</span></span>
+    <div class="zone-body">
+      <h2>Підключити банк</h2>
+      <form>
+        <fieldset>
+          <legend>Який банк підключити</legend>
+          <label class="opt"><input type="radio" name="bank" value="mono"> Monobank</label>
+          <label class="opt"><input type="radio" name="bank" value="privat"> ПриватБанк</label>
+          <label class="opt"><input type="radio" name="bank" value="other"> Інший банк</label>
+        </fieldset>
+        <div class="state-actions">
+          <button type="submit">Підключити банк</button>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  Стан: порожній. Інші стани цього екрана — угорі сторінки та в дереві зліва.
+  Екран: «Підключення банків» (sitemap.md) · job RJ-1 (jtbd.md).
+</footer>
+
+<script src="wf-nav.js"></script>
+</body>
+</html>
