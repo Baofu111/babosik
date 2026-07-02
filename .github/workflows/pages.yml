@@ -1,22 +1,25 @@
-name: Deploy Research to GitHub Pages
+# Публікацію робить вбудований Pages-білд із гілки master (Settings → Pages →
+# «Deploy from a branch», master / root). Він віддає ВЕСЬ репозиторій, тож
+# сторінки живуть за /babosik/research/*.html — як і всі посилання в репо.
+#
+# Цей workflow лише перезбирає research.html з research.md і комітить його.
+# Коміт [skip ci] тригерить легасі Pages-білд, який і публікує зміни.
+# НЕ додавати сюди actions/deploy-pages — воно конфліктує з легасі-білдом
+# (гонка «in progress deployment» → сайт падає в 404).
+
+name: Rebuild research.html
 
 on:
   push:
     branches: [master, main]
     paths:
-      - "research/**"
+      - "research/research.md"
       - "scripts/build_research.py"
 
   workflow_dispatch:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: true
 
 jobs:
   build:
@@ -43,20 +46,3 @@ jobs:
           git add research/research.html
           git diff --staged --quiet || git commit -m "chore: auto-rebuild research.html [skip ci]"
           git push
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: research
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
