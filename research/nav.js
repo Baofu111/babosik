@@ -23,6 +23,16 @@
       ],
       mdLink: { href: 'personas.md', label: 'personas.md' },
     },
+    {
+      label: 'Phase 3',
+      href: 'ia.html',
+      sections: [
+        { href: '#sitemap', label: 'Sitemap' },
+        { href: '#flows',   label: 'Потоки' },
+        { href: '#matrix',  label: 'Матриця' },
+      ],
+      mdLink: { href: '../concept/sitemap.md', label: 'sitemap.md' },
+    },
   ];
 
   var nav = document.getElementById('site-nav');

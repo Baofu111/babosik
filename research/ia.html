@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Бабосік — Інформаційна архітектура</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0c0c0e;
+      --surface:   #141417;
+      --surface2:  #1c1c20;
+      --border:    #27272c;
+      --text:      #e8e8ed;
+      --muted:     #6e6e78;
+      --accent:    #34d399;
+      --accent2:   #818cf8;
+      --warn:      #f87171;
+      --amber:     #fbbf24;
+      --tag-bg:    #1e2a22;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(12,12,14,.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+      display: flex; align-items: center; gap: 8px; height: 52px;
+    }
+    nav .logo { font-weight: 700; font-size: 15px; color: var(--accent); margin-right: 8px; letter-spacing: -.3px; text-decoration: none; }
+    nav a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 500; padding: 6px 10px; border-radius: 6px; transition: color .15s, background .15s; }
+    nav a:hover { color: var(--text); background: var(--surface2); }
+    nav .page-link { font-weight: 600; }
+    nav .page-link.active { color: var(--accent); background: rgba(52,211,153,.08); }
+    nav .page-link.active:hover { background: rgba(52,211,153,.12); }
+    nav .nav-sep { width: 1px; height: 20px; background: var(--border); margin: 0 4px; flex-shrink: 0; }
+    nav .md-link {
+      margin-left: auto; display: flex; align-items: center; gap: 6px;
+      font-family: 'JetBrains Mono', monospace; font-size: 12px;
+      color: var(--muted); background: var(--surface); border: 1px solid var(--border);
+      border-radius: 6px; padding: 5px 10px; text-decoration: none;
+      transition: color .15s, border-color .15s;
+    }
+    nav .md-link:hover { color: var(--text); border-color: var(--accent); }
+    nav .md-link svg { flex-shrink: 0; }
+
+    /* ── Layout ── */
+    .container { max-width: 960px; margin: 0 auto; padding: 48px 32px 80px; }
+
+    /* ── Hero ── */
+    .hero { margin-bottom: 56px; padding-bottom: 40px; border-bottom: 1px solid var(--border); }
+    .hero-label {
+      display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--accent); background: var(--tag-bg);
+      border: 1px solid rgba(52,211,153,.2); border-radius: 4px; padding: 3px 8px; margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 32px; font-weight: 700; letter-spacing: -.5px; line-height: 1.2; margin-bottom: 12px; }
+    .hero p { color: var(--muted); font-size: 15px; max-width: 620px; }
+    .hero-nav { display: flex; gap: 8px; margin-top: 20px; flex-wrap: wrap; }
+    .hero-nav a {
+      font-size: 12px; font-weight: 500; color: var(--muted); text-decoration: none;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 6px; padding: 5px 12px; transition: color .15s, border-color .15s;
+    }
+    .hero-nav a:hover { color: var(--text); border-color: var(--accent); }
+
+    /* ── Section ── */
+    section { margin-bottom: 72px; scroll-margin-top: 72px; }
+    .section-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 24px; }
+    .section-num { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); min-width: 28px; }
+    .section-header h2 { font-size: 20px; font-weight: 700; letter-spacing: -.3px; }
+    .section-intro { color: var(--muted); font-size: 13.5px; margin-bottom: 24px; max-width: 680px; }
+
+    /* ── Badges ── */
+    .badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 10px; font-weight: 600; letter-spacing: .04em;
+      border-radius: 4px; padding: 2px 7px; white-space: nowrap;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .badge-job    { background: rgba(52,211,153,.12);  color: var(--accent); }
+    .badge-job-s  { background: rgba(129,140,248,.12); color: var(--accent2); }
+    .badge-p      { background: rgba(52,211,153,.15);  color: var(--accent); }
+    .badge-s      { background: rgba(129,140,248,.15); color: var(--accent2); }
+    .badge-orphan { background: rgba(248,113,113,.14); color: var(--warn); border: 1px solid rgba(248,113,113,.3); }
+
+    /* ── Tree ── */
+    .tree { display: grid; gap: 4px; }
+    .tree-root {
+      font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 14px;
+      color: var(--accent); margin-bottom: 6px;
+    }
+    .cluster {
+      border-left: 2px solid var(--border); padding: 10px 0 10px 16px; margin-left: 6px;
+      display: grid; gap: 6px;
+    }
+    .cluster.backlog { border-left-color: rgba(248,113,113,.3); }
+    .cluster-title {
+      font-size: 12px; font-weight: 700; letter-spacing: .04em; color: var(--text);
+      display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+    }
+    .cluster.backlog .cluster-title { color: var(--warn); }
+    .cluster-sub {
+      font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--muted);
+      font-weight: 400; letter-spacing: 0;
+    }
+    .screen {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      padding: 9px 14px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+      font-size: 13.5px;
+    }
+    .screen.orphan { border-color: rgba(248,113,113,.25); background: #1a1010; }
+    .screen .s-name { font-weight: 600; }
+    .screen .note { width: 100%; font-size: 11.5px; color: var(--muted); line-height: 1.45; }
+    .legend { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 20px; font-size: 12px; color: var(--muted); }
+    .legend span { display: inline-flex; align-items: center; gap: 6px; }
+
+    /* ── Mermaid ── */
+    .flow { margin-bottom: 40px; }
+    .flow-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; flex-wrap: wrap; }
+    .flow-head h3 { font-size: 15px; font-weight: 700; }
+    .flow-head .flow-job { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); }
+    .flow-note { font-size: 12.5px; color: var(--muted); margin-bottom: 14px; max-width: 680px; }
+    .mermaid-wrap {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+      padding: 18px; overflow-x: auto;
+    }
+    pre.mermaid { background: transparent; margin: 0; text-align: center; min-width: 600px; }
+
+    /* ── Matrix ── */
+    .matrix-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); }
+    table.matrix { width: 100%; border-collapse: collapse; font-size: 12.5px; min-width: 720px; }
+    table.matrix thead { background: var(--surface); }
+    table.matrix th, table.matrix td { padding: 9px 8px; border-bottom: 1px solid var(--border); text-align: center; }
+    table.matrix th.job-col, table.matrix td.job-col { text-align: left; min-width: 220px; white-space: nowrap; }
+    table.matrix thead th {
+      font-size: 11px; font-weight: 600; color: var(--muted);
+      font-family: 'JetBrains Mono', monospace; letter-spacing: .03em;
+    }
+    table.matrix tbody td.hit { color: var(--accent); font-weight: 700; }
+    table.matrix tbody tr:hover { background: var(--surface); }
+    table.matrix .col-orphan { background: rgba(248,113,113,.07); }
+    table.matrix thead .col-orphan { color: var(--warn); }
+    table.matrix tr.row-orphan { background: rgba(248,113,113,.07); }
+    table.matrix tr.row-orphan .job-col { color: var(--warn); }
+    table.matrix tfoot td { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); border-top: 1px solid var(--border); border-bottom: none; }
+    .job-id { font-family: 'JetBrains Mono', monospace; font-weight: 600; color: var(--text); }
+    table.matrix tr.row-orphan .job-id { color: var(--warn); }
+
+    .callout {
+      background: var(--surface); border-left: 3px solid var(--accent2); border-radius: 0 10px 10px 0;
+      padding: 14px 18px; font-size: 13px; color: var(--muted); margin-top: 20px;
+    }
+    .callout strong { color: var(--text); }
+    .callout.warn { border-left-color: var(--warn); }
+
+    /* ── Footer ── */
+    footer {
+      margin-top: 80px; padding-top: 24px; border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 12px; color: var(--muted); flex-wrap: wrap; gap: 8px;
+    }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--text); }
+
+    /* ── Responsive ── */
+    @media (max-width: 680px) {
+      nav { padding: 0 16px; gap: 4px; }
+      nav a:not(.page-link):not(.md-link) { display: none; }
+      nav .nav-sep { display: none; }
+      .container { padding: 28px 16px 60px; }
+      .hero h1 { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="site-nav"></nav>
+
+<div class="container">
+
+  <!-- ── Hero ── -->
+  <div class="hero">
+    <div class="hero-label">Research · Phase 3</div>
+    <h1>Інформаційна<br>архітектура</h1>
+    <p>Від jobs до екранів: сутності → sitemap → навігація → потоки → трасування.
+       Усе виведено з того, що людина намагається зробити, а не зі структури конкурентів.
+       Потоки оновлені після власного розбору дефектів (стани, виходи з тупиків, глибина RJ-2).</p>
+    <div class="hero-nav">
+      <a href="research.html">← Phase 1: Аналіз</a>
+      <a href="personas.html">← Phase 2: Персони</a>
+      <a href="../concept/sitemap.md">sitemap.md</a>
+      <a href="../concept/flows.md">flows.md</a>
+    </div>
+  </div>
+
+  <!-- ══ 01 — SITEMAP ══ -->
+  <section id="sitemap">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Sitemap — дерево екранів</h2>
+    </div>
+    <p class="section-intro">
+      Групування за об'єктами і логікою людини. Біля кожного екрана — job, який він обслуговує.
+      Глибина мінімальна свідомо.
+    </p>
+    <div class="legend">
+      <span><span class="badge badge-job">JOB</span> який job закриває</span>
+      <span><span class="badge badge-p">P</span> критично для primary (Олена)</span>
+      <span><span class="badge badge-s">S</span> критично для secondary</span>
+      <span><span class="badge badge-orphan">SIROTA</span> екран без job</span>
+    </div>
+
+    <div class="tree">
+      <div class="tree-root">Бабосік</div>
+
+      <div class="cluster">
+        <div class="screen orphan">
+          <span class="s-name">Вхід / Реєстрація</span>
+          <span class="badge badge-orphan">SIROTA</span>
+          <span class="note">Жоден job не прагне реєстрації — у jobs вона тертя (RJ-5, EJ-2).
+          Рішення: прив'язано до onboarding (Flow A) як мінімальний крок, не самостійне призначення.</span>
+        </div>
+      </div>
+
+      <div class="cluster">
+        <div class="cluster-title">① Моя картина витрат <span class="cluster-sub">об'єкт: Місячна картина</span></div>
+        <div class="screen">
+          <span class="s-name">Огляд за місяць</span>
+          <span class="badge badge-job">MJ · RJ-3</span>
+          <span class="badge badge-p">P</span>
+          <span class="note">Домашній екран. Загальна сума, розбивка по категоріях, топ позицій, підсвітка перевищень.</span>
+        </div>
+        <div class="screen">
+          <span class="s-name">Порівняння місяців</span>
+          <span class="badge badge-job-s">RJ-4</span>
+          <span class="badge badge-s">S</span>
+          <span class="note">Цей місяць проти попереднього.</span>
+        </div>
+      </div>
+
+      <div class="cluster">
+        <div class="cluster-title">② Транзакції <span class="cluster-sub">об'єкт: Транзакція</span></div>
+        <div class="screen">
+          <span class="s-name">Список транзакцій</span>
+          <span class="badge badge-job">RJ-2</span>
+          <span class="badge badge-p">P</span>
+          <span class="note">Знайти те, що «потрапило не туди» / без назви.</span>
+        </div>
+        <div class="screen">
+          <span class="s-name">Транзакція: правка</span>
+          <span class="badge badge-job">RJ-2</span>
+          <span class="badge badge-p">P</span>
+          <span class="note">Перенести в категорію, дати назву. Створення категорії — інлайн у пікері.</span>
+        </div>
+      </div>
+
+      <div class="cluster">
+        <div class="cluster-title">③ Мої категорії <span class="cluster-sub">об'єкти: Категорія, Підкатегорія</span></div>
+        <div class="screen">
+          <span class="s-name">Категорії та підкатегорії: керування</span>
+          <span class="badge badge-job">RJ-2</span>
+          <span class="badge badge-p">P</span>
+          <span class="note">CRUD власних категорій/підкатегорій. Ядро MVP, пріоритет №1 (диференціатор).</span>
+        </div>
+      </div>
+
+      <div class="cluster">
+        <div class="cluster-title">④ Джерела даних <span class="cluster-sub">об'єкт: Підключення банку</span></div>
+        <div class="screen">
+          <span class="s-name">Підключення банків</span>
+          <span class="badge badge-job">RJ-1</span>
+          <span class="badge badge-p">P</span>
+          <span class="note">Додати банк, бачити статус. Перший раз — також RJ-5 (перший екран з даними).</span>
+        </div>
+      </div>
+
+      <div class="cluster backlog">
+        <div class="cluster-title">Backlog — поза MVP-скоупом</div>
+        <div class="screen orphan">
+          <span class="s-name">Додати транзакцію вручну</span>
+          <span class="badge badge-orphan">SIROTA → backlog</span>
+          <span class="note">Сутність «ручна транзакція» під питанням, суперечить духу RJ-1.
+          Повернути, коли підтвердиться готівковий сценарій (доресерч: ~34,6% суми — готівка).</span>
+        </div>
+        <div class="screen orphan">
+          <span class="s-name">Експорт даних</span>
+          <span class="badge badge-orphan">Г-4 → backlog</span>
+          <span class="note">Гіпотеза vendor lock-in (Максим). Додати в Акаунт наступною ітерацією.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Наскрізне (не екрани):</strong> перший прохід (onboarding) — послідовність ④ → ①
+      без проміжного «налаштуй спочатку». Тон «контроль, не провина» (EJ-1) — наскрізна
+      non-functional якість усіх екранів, не екран і не клітинка матриці.
+    </div>
+  </section>
+
+  <!-- ══ 02 — FLOWS ══ -->
+  <section id="flows">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Потоки</h2>
+    </div>
+    <p class="section-intro">
+      Три ключові related jobs. Кожен має happy-path, стани (empty/error/loading) і обидва кінці —
+      успіх і тупик. Версія після ревізії: додано виходи з тупиків і відсутні стани.
+    </p>
+
+    <div class="flow">
+      <div class="flow-head"><h3>Flow A — Зібрати картину без рутини</h3><span class="flow-job">RJ-1 (+ RJ-5, EJ-2)</span></div>
+      <p class="flow-note">Реєстрація → підключив банк → одразу бачу картину. Порожній Огляд тепер пропонує дію; помилка доступу має escape.</p>
+      <div class="mermaid-wrap">
+<pre class="mermaid">
+flowchart TD
+  Start(("Старт: перший вхід")) --> Reg["Вхід / Реєстрація"]
+  Reg --> RegLoad(["loading: авторизація"])
+  RegLoad --> RegOk{"Вхід успішний?"}
+  RegOk -->|ні| RegErr(["error: вхід не вдався"])
+  RegErr --> Reg
+  RegOk -->|так| Conn["Підключення банків"]
+  Conn --> ConnEmpty(["empty: ще немає підключень"])
+  ConnEmpty --> Auth{"Доступ до банку надано?"}
+  Auth -->|ні| AuthErr(["error: доступ відхилено / токен невірний"])
+  AuthErr --> AuthRetry{"Спробувати ще раз?"}
+  AuthRetry -->|так| Conn
+  AuthRetry -->|ні| Help(("ВИХІД: допомога / інший банк / пізніше"))
+  Auth -->|так| Load(["loading: тягнемо транзакції"])
+  Load --> Sync{"Синхронізація успішна?"}
+  Sync -->|ні| SyncErr(["error: збій синхронізації"])
+  SyncErr --> Conn
+  Sync -->|так| HasTx{"Є транзакції за період?"}
+  HasTx -->|ні| OvEmpty(["empty: Огляд ще порожній — дані тягнуться"])
+  OvEmpty --> OvAction{"Дія з порожнього стану?"}
+  OvAction -->|"оновити / зачекати"| Load
+  OvAction -->|"підключити ще банк"| Conn
+  OvAction -->|"проігнорував"| Drop(("ТУПИК: закрив, не повернувся"))
+  HasTx -->|так| Overview["Огляд за місяць"]
+  Overview --> Done(("УСПІХ: бачить свою картину"))
+  classDef happy fill:#0e1e18,stroke:#34d399,color:#e8e8ed;
+  classDef dead fill:#1d1010,stroke:#f87171,color:#e8e8ed;
+  classDef exit fill:#111220,stroke:#818cf8,color:#e8e8ed;
+  class Overview,Done happy;
+  class Drop dead;
+  class Help exit;
+</pre>
+      </div>
+    </div>
+
+    <div class="flow">
+      <div class="flow-head"><h3>Flow B — Привести картину до свого життя</h3><span class="flow-job">RJ-2</span></div>
+      <p class="flow-note">Контекстний тап по «Інше» = 2 тапи. Категорію створює інлайн у пікері, без переходу на екран керування → happy-path ≤ 3 тапів.</p>
+      <div class="mermaid-wrap">
+<pre class="mermaid">
+flowchart TD
+  Start(("Старт")) --> Overview["Огляд за місяць"]
+  Overview -->|"тап по «Інше» (контекст, 2 тапи)"| TxLoad(["loading: вантажимо транзакції"])
+  Overview -->|"вкладка Транзакції"| TxLoad
+  TxLoad --> TxLoadOk{"Список завантажився?"}
+  TxLoadOk -->|ні| TxErr(["error: не вдалось завантажити"])
+  TxErr --> TxLoad
+  TxLoadOk -->|так| TxList["Список транзакцій"]
+  TxList --> Found{"Знайшла потрібну транзакцію?"}
+  Found -->|ні| ListEmpty(["empty: за фільтром нічого"])
+  ListEmpty --> Alt{"Що далі?"}
+  Alt -->|"уточнити пошук"| TxList
+  Alt -->|"готівка - додати"| ManualBL(("ВИХІД: ручне додавання (backlog)"))
+  Alt -->|"здалась"| GiveUp(("ТУПИК: не знайшла, покинула"))
+  Found -->|так| TxEdit["Транзакція: правка"]
+  TxEdit --> CatExists{"Категорія вже існує?"}
+  CatExists -->|ні| NewCat(["контекст: + Нова категорія інлайн"])
+  NewCat --> NewCatOk{"Створилась?"}
+  NewCatOk -->|ні| CatErr(["error: не вдалось створити"])
+  CatErr --> TxEdit
+  NewCatOk -->|так| Save(["loading: зберігаємо"])
+  CatExists -->|так| Save
+  Save --> Saved{"Збереглось?"}
+  Saved -->|ні| SaveErr(["error: не вдалось зберегти"])
+  SaveErr --> TxEdit
+  Saved -->|так| Overview2["Огляд за місяць"]
+  Overview2 --> Done(("УСПІХ: картина = реальне життя"))
+  classDef happy fill:#0e1e18,stroke:#34d399,color:#e8e8ed;
+  classDef dead fill:#1d1010,stroke:#f87171,color:#e8e8ed;
+  classDef exit fill:#111220,stroke:#818cf8,color:#e8e8ed;
+  class Overview2,Done happy;
+  class GiveUp dead;
+  class ManualBL exit;
+</pre>
+      </div>
+    </div>
+
+    <div class="flow">
+      <div class="flow-head"><h3>Flow C — Зрозуміти чи я змінююсь</h3><span class="flow-job">RJ-4</span></div>
+      <p class="flow-note">Порожній стан (один місяць даних) повертає в Огляд, а не лишає в тупику.</p>
+      <div class="mermaid-wrap">
+<pre class="mermaid">
+flowchart TD
+  Start(("Старт")) --> Overview["Огляд за місяць"]
+  Overview -->|"перемикач «Порівняння»"| HasPrev{"Є попередній місяць даних?"}
+  HasPrev -->|ні| CompEmpty(["empty: лише один місяць"])
+  CompEmpty --> Wait(("М'який вихід: прийти за місяць"))
+  Wait --> Overview
+  HasPrev -->|так| Load(["loading: рахуємо порівняння"])
+  Load --> Calc{"Дані дорахувались?"}
+  Calc -->|ні| CalcErr(["error: не вдалось порахувати"])
+  CalcErr --> Overview
+  Calc -->|так| Compare["Порівняння місяців"]
+  Compare --> Done(("УСПІХ: бачить динаміку"))
+  classDef happy fill:#0e1e18,stroke:#34d399,color:#e8e8ed;
+  classDef exit fill:#111220,stroke:#818cf8,color:#e8e8ed;
+  class Compare,Done happy;
+  class Wait exit;
+</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 03 — MATRIX ══ -->
+  <section id="matrix">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Матриця трасування</h2>
+    </div>
+    <p class="section-intro">
+      Рядки — jobs, колонки — екрани. <span style="color:var(--accent)">✓</span> — екран бере участь
+      у закритті job. Сироти підсвічені червоним: порожні стовпці (екран без job) і порожні рядки
+      (job без екрана).
+    </p>
+
+    <div class="matrix-wrap">
+      <table class="matrix">
+        <thead>
+          <tr>
+            <th class="job-col">Job</th>
+            <th class="col-orphan">S1</th>
+            <th>S2</th>
+            <th>S3</th>
+            <th>S4</th>
+            <th>S5</th>
+            <th>S6</th>
+            <th>S7</th>
+            <th class="col-orphan">S8</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="job-col"><span class="job-id">MJ</span> Повна картина одним поглядом</td><td class="col-orphan"></td><td class="hit">✓</td><td></td><td></td><td></td><td></td><td></td><td class="col-orphan"></td></tr>
+          <tr><td class="job-col"><span class="job-id">RJ-1</span> Зібрати без рутини</td><td class="col-orphan"></td><td class="hit">✓</td><td></td><td class="hit">✓</td><td></td><td></td><td class="hit">✓</td><td class="col-orphan"></td></tr>
+          <tr><td class="job-col"><span class="job-id">RJ-2</span> Привести до свого життя</td><td class="col-orphan"></td><td></td><td></td><td class="hit">✓</td><td class="hit">✓</td><td class="hit">✓</td><td></td><td class="col-orphan"></td></tr>
+          <tr><td class="job-col"><span class="job-id">RJ-3</span> Де виходжу за рамки</td><td class="col-orphan"></td><td class="hit">✓</td><td></td><td></td><td></td><td></td><td></td><td class="col-orphan"></td></tr>
+          <tr><td class="job-col"><span class="job-id">RJ-4</span> Чи я змінююсь</td><td class="col-orphan"></td><td></td><td class="hit">✓</td><td></td><td></td><td></td><td></td><td class="col-orphan"></td></tr>
+          <tr><td class="job-col"><span class="job-id">RJ-5</span> Чи інструмент підходить</td><td class="col-orphan"></td><td class="hit">✓</td><td></td><td></td><td></td><td></td><td class="hit">✓</td><td class="col-orphan"></td></tr>
+          <tr><td class="job-col"><span class="job-id">EJ-2</span> Цього разу впораюсь</td><td class="col-orphan"></td><td class="hit">✓</td><td></td><td></td><td></td><td></td><td class="hit">✓</td><td class="col-orphan"></td></tr>
+          <tr class="row-orphan"><td class="job-col"><span class="job-id">Г-1</span> Соціальний: мати «систему»</td><td class="col-orphan"></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="col-orphan"></td></tr>
+          <tr><td class="job-col"><span class="job-id">Г-2</span> Пояснити собі велику трату</td><td class="col-orphan"></td><td class="hit">✓</td><td></td><td class="hit">✓</td><td class="hit">✓</td><td></td><td></td><td class="col-orphan"></td></tr>
+          <tr><td class="job-col"><span class="job-id">Г-3</span> Чи мій рівень «нормальний»</td><td class="col-orphan"></td><td></td><td class="hit">✓</td><td></td><td></td><td></td><td></td><td class="col-orphan"></td></tr>
+          <tr class="row-orphan"><td class="job-col"><span class="job-id">Г-4</span> Не втратити дані</td><td class="col-orphan"></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="col-orphan"></td></tr>
+        </tbody>
+        <tfoot>
+          <tr><td class="job-col">Покрито колонкою</td><td class="col-orphan">0</td><td>6</td><td>2</td><td>3</td><td>2</td><td>1</td><td>3</td><td class="col-orphan">0</td></tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <p class="section-intro" style="margin-top:14px;">
+      <strong style="color:var(--text)">Екрани:</strong>
+      S1 Вхід/Реєстрація · S2 Огляд за місяць · S3 Порівняння місяців · S4 Список транзакцій ·
+      S5 Транзакція: правка · S6 Категорії та підкатегорії · S7 Підключення банків · S8 Додати вручну
+    </p>
+
+    <div class="callout warn">
+      <strong>Сироти → рішення.</strong> S1 Вхід/Реєстрація — прив'язано до onboarding (технічний шлюз).
+      S8 Додати вручну — backlog. Г-1 (соціальний) — backlog. Г-4 (експорт) — backlog → Акаунт пізніше.
+      Після рішень у живому MVP-скоупі (S2–S7 × MJ–EJ-2, Г-2) порожніх рядків і стовпців немає.
+    </div>
+    <div class="callout">
+      <strong>EJ-1 «контроль, не провина»</strong> прибрано з матриці: це наскрізна non-functional
+      якість (тон), яку жоден екран не закриває дією. Винесено в наскрізні критерії, щоб не створювати
+      хибне відчуття покриття.
+    </div>
+    <div class="callout">
+      <strong>Найгустіша колонка — S2 Огляд за місяць (6 jobs).</strong> Несуча конструкція продукту
+      й домашній екран. Ризик перевантаження — стежити на вайрфреймах.
+    </div>
+  </section>
+
+  <footer>
+    <span>Бабосік · Research Phase 3 · Інформаційна архітектура</span>
+    <span><a href="research.html">Phase 1</a> · <a href="personas.html">Phase 2</a> · <a href="../concept/sitemap.md">sitemap.md</a> · <a href="../concept/flows.md">flows.md</a></span>
+  </footer>
+
+</div>
+
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'dark',
+    themeVariables: { fontFamily: 'Inter, system-ui, sans-serif', fontSize: '13px' }
+  });
+</script>
+<script src="nav.js"></script>
+</body>
+</html>

@@ -12,7 +12,7 @@
 |-------|--------|
 | [`research/`](./research/) | Конкурентний аналіз, JTBD, UX-патерни, референси |
 | [`research/screens/`](./research/screens/) | Скріншоти конкурентів з посиланнями |
-| [`concept/`](./concept/) | Концептуальні рішення, moodboard |
+| [`concept/`](./concept/) | Інформаційна архітектура: `sitemap.md`, `flows.md` |
 | [`tokens/`](./tokens/) | Design tokens: кольори, типографіка, відступи |
 | [`components/`](./components/) | Документація UI-компонентів |
 | [`design-system/`](./design-system/) | Дизайн-система в зібраному вигляді |
@@ -22,9 +22,17 @@
 
 ## Ключові документи
 
-- [`CLAUDE.md`](./CLAUDE.md) — повний продуктовий бриф, стек, архітектура БД, висновки дослідження
+- [`CLAUDE.md`](./CLAUDE.md) — повний продуктовий бриф, стек, архітектура БД, висновки дослідження, ІА
 - [`research/research.md`](./research/research.md) — конкуренти, JTBD, UX-патерни, висновки *(для Claude)*
 - [`research/research.html`](https://baofu111.github.io/babosik/research/research.html) — візуальна версія research *(для людини)*
+
+### Інформаційна архітектура (`concept/`)
+
+| Файл | Що тут |
+|------|--------|
+| [`concept/sitemap.md`](./concept/sitemap.md) | Сутності → екрани (дерево з jobs) → навігація і глибина → матриця трасування. Кожен екран прив'язаний до job; сироти позначені |
+| [`concept/flows.md`](./concept/flows.md) | 3 потоки (Mermaid) для ключових jobs `RJ-1` / `RJ-2` / `RJ-4`: happy-path, стани empty/error/loading, виходи з тупиків |
+| [`research/ia.html`](https://baofu111.github.io/babosik/research/ia.html) | Візуальна версія ІА: sitemap + потоки + матриця *(для людини)* |
 
 ---
 
@@ -68,6 +76,7 @@
 |------|--------|
 | Бриф та стек | ✅ Готово |
 | Research | ✅ Готово |
+| Інформаційна архітектура | ✅ Готово |
 | Wireframes | ⬜ Не розпочато |
 | Design tokens | ⬜ Не розпочато |
 | Концепт | ⬜ Не розпочато |
