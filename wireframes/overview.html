@@ -55,11 +55,26 @@
 
     footer { margin-top: 16px; border-top: 1px solid #999; padding-top: 10px;
       font-size: 12px; color: #555; }
+    /* перемикач станів екрана — зверху */
+    .states { display: flex; flex-wrap: wrap; gap: 6px; align-items: baseline;
+      border: 1px solid #999; background: #e2e2e2; padding: 6px 8px; margin-bottom: 10px; font-size: 12px; }
+    .states .lbl { color: #555; }
+    .states a { border: 1px solid #999; background: #fff; padding: 3px 8px; text-decoration: none; color: #222; }
+    .states a[aria-current="page"] { background: #c4c4c4; border-color: #333; font-weight: 700; }
   </style>
 </head>
 <body>
 
 <header>
+  <!-- зверху: перемикач станів цього екрана -->
+  <nav class="states" aria-label="Стани екрана «Огляд за місяць»">
+    <span class="lbl">Стани екрана:</span>
+    <a href="overview.html" aria-current="page">Успіх</a>
+    <a href="overview-empty.html">Порожній</a>
+    <a href="overview-error.html">Помилка</a>
+    <a href="overview-loading.html">Завантаження</a>
+  </nav>
+
   <p class="wf-note">
     <strong>Вайрфрейм · Огляд за місяць · стан «успіх».</strong>
     Головний job <strong>MJ</strong> — «повна картина одним поглядом».

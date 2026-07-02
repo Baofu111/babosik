@@ -31,9 +31,11 @@
     },
     {
       name: 'Огляд за місяць',               // sitemap.md · MJ
-      states: [                              // _screens.md: порожній + успіх
-        { label: 'Порожній', file: 'overview-empty.html' },
-        { label: 'Успіх',    file: 'overview.html' },
+      states: [                              // _screens.md (ревізія крок 07): 4 стани
+        { label: 'Порожній',     file: 'overview-empty.html' },
+        { label: 'Помилка',      file: 'overview-error.html' },
+        { label: 'Завантаження', file: 'overview-loading.html' },
+        { label: 'Успіх',        file: 'overview.html' },
       ],
     },
   ];

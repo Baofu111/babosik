@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Вайрфрейм — Огляд за місяць (порожній)</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, sans-serif; background: #f4f4f4; color: #222;
+      line-height: 1.5; max-width: 720px; margin: 0 auto; padding: 16px; }
+    .zone { border: 1px dashed #999; background: #fff; margin: 10px 0; padding: 0; }
+    .zone > .zone-label { font-size: 11px; letter-spacing: .04em; text-transform: uppercase;
+      color: #555; background: #e6e6e6; border-bottom: 1px dashed #999; padding: 4px 8px; }
+    .zone > .zone-label .act { color: #333; text-transform: none; letter-spacing: 0; }
+    .zone-body { padding: 12px; }
+    .wf-note { font-size: 12px; color: #444; background: #ddd; border: 1px solid #999; padding: 8px 10px; }
+    .wf-note strong { color: #000; }
+    nav ul { list-style: none; display: flex; gap: 8px; flex-wrap: wrap; }
+    nav a { display: inline-block; border: 1px solid #999; background: #fff; padding: 6px 12px;
+      text-decoration: none; color: #222; }
+    nav a[aria-current="page"] { background: #ccc; border-color: #333; }
+    h1 { font-size: 18px; margin-bottom: 2px; }
+    h2 { font-size: 15px; margin: 0; }
+    .total { font-size: 28px; }
+    .muted { color: #555; font-size: 13px; }
+    button { border: 1px solid #666; background: #eee; color: #111; padding: 6px 12px;
+      cursor: pointer; font: inherit; }
+    footer { margin-top: 16px; border-top: 1px solid #999; padding-top: 10px; font-size: 12px; color: #555; }
+    /* перемикач станів екрана — зверху */
+    .states { display: flex; flex-wrap: wrap; gap: 6px; align-items: baseline;
+      border: 1px solid #999; background: #e2e2e2; padding: 6px 8px; margin-bottom: 10px; font-size: 12px; }
+    .states .lbl { color: #555; }
+    .states a { border: 1px solid #999; background: #fff; padding: 3px 8px; text-decoration: none; color: #222; }
+    .states a[aria-current="page"] { background: #c4c4c4; border-color: #333; font-weight: 700; }
+    /* вміст порожнього стану */
+    .empty-msg { color: #444; }
+    .state-actions { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
+    a.btn { display: inline-block; border: 1px solid #666; background: #eee; color: #111;
+      padding: 6px 12px; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<header>
+  <!-- зверху: перемикач станів цього екрана -->
+  <nav class="states" aria-label="Стани екрана «Огляд за місяць»">
+    <span class="lbl">Стани екрана:</span>
+    <a href="overview.html">Успіх</a>
+    <a href="overview-empty.html" aria-current="page">Порожній</a>
+    <a href="overview-error.html">Помилка</a>
+    <a href="overview-loading.html">Завантаження</a>
+  </nav>
+
+  <p class="wf-note">
+    <strong>Вайрфрейм · Огляд за місяць · стан «порожній»</strong> (нічого не знайшлось).
+    Крок flow: <strong>Flow A → вузол OvEmpty → розгалуження OvAction</strong> — виходи
+    «оновити» і «підключити ще банк». Порожній Огляд ніколи не глухий кут (RJ-5).
+    Структура і зони — як у стані «успіх», міняється лише вміст.
+  </p>
+
+  <nav class="zone" aria-label="Глобальна навігація">
+    <span class="zone-label">Зона: глобальна навігація ·
+      <span class="act">головна дія: перехід між кластерами</span></span>
+    <div class="zone-body">
+      <ul>
+        <li><a href="#" aria-current="page">Огляд</a></li>
+        <li><a href="#">Транзакції</a></li>
+        <li><a href="#">Категорії</a></li>
+        <li><a href="#">Акаунт</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <section class="zone" aria-label="Період і порівняння">
+    <span class="zone-label">Зона: період і порівняння ·
+      <span class="act">головна дія: перемкнути на порівняння з попереднім місяцем (RJ-4)</span></span>
+    <div class="zone-body">
+      <h1>Огляд за червень 2026</h1>
+      <p class="muted">Немає транзакцій за цей період</p>
+      <button type="button" disabled>Порівняти з травнем</button>
+    </div>
+  </section>
+
+  <section class="zone" aria-label="Підсумок місяця">
+    <span class="zone-label">Зона: підсумок місяця ·
+      <span class="act">головна дія: зчитати повну суму одним поглядом (MJ, лише читання)</span></span>
+    <div class="zone-body">
+      <h2>Витрачено за місяць</h2>
+      <p class="total">0 ₴</p>
+      <p class="muted">Ще немає даних за червень</p>
+    </div>
+  </section>
+
+  <section class="zone" aria-label="Розбивка по категоріях">
+    <span class="zone-label">Зона: розбивка по категоріях ·
+      <span class="act">головна дія (порожній): оновити / підключити ще банк</span></span>
+    <div class="zone-body">
+      <h2>Куди пішли гроші</h2>
+      <p class="empty-msg">Тут з'явиться розбивка по категоріях, щойно надійдуть транзакції.
+        Схоже, за червень ще нічого не підтягнулось.</p>
+      <div class="state-actions">
+        <button type="button">Оновити</button>
+        <a class="btn" href="bank-connect.html">Підключити ще банк</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="zone" aria-label="Топ позицій витрат">
+    <span class="zone-label">Зона: топ позицій витрат ·
+      <span class="act">головна дія: тап по позиції → правка транзакції (RJ-2)</span></span>
+    <div class="zone-body">
+      <h2>Найбільші окремі витрати</h2>
+      <p class="empty-msg">Найбільші витрати з'являться після першої синхронізації.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Стан: порожній. Інші стани цього екрана — угорі сторінки та в дереві зліва.
+  Екран: «Огляд за місяць» (sitemap.md).
+</footer>
+
+<script src="wf-nav.js"></script>
+</body>
+</html>
