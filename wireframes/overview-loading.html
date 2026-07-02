@@ -30,6 +30,9 @@
     .states .lbl { color: #555; }
     .states a { border: 1px solid #999; background: #fff; padding: 3px 8px; text-decoration: none; color: #222; }
     .states a[aria-current="page"] { background: #c4c4c4; border-color: #333; font-weight: 700; }
+    .state-actions { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
+    a.btn { display: inline-block; border: 1px solid #666; background: #eee; color: #111;
+      padding: 6px 12px; text-decoration: none; }
     /* сірі заглушки (skeleton) на місці даних */
     .skel { background: #dcdcdc; border: 1px solid #cfcfcf; }
     .skel-num { height: 30px; width: 170px; margin-top: 6px; }
@@ -52,8 +55,8 @@
   <p class="wf-note">
     <strong>Вайрфрейм · Огляд за місяць · стан «завантаження».</strong>
     Сірі заглушки карток на місці списку (порівн. Flow A: Load «тягнемо транзакції»;
-    Flow C: Load «рахуємо порівняння»). Транзиторний стан — без дії-виходу; веде в
-    «успіх» / «порожній» / «помилка». Зони — як у стані «успіх».
+    Flow C: Load «рахуємо порівняння»). Транзиторний стан — виходи за розвилкою:
+    «успіх» / «порожній» / «помилка», жодного глухого кута. Зони — як у стані «успіх».
   </p>
 
   <nav class="zone" aria-label="Глобальна навігація">
@@ -79,6 +82,11 @@
       <h1>Огляд за червень 2026</h1>
       <p class="muted">Завантаження…</p>
       <button type="button" disabled>Порівняти з травнем</button>
+      <div class="state-actions">
+        <a class="btn" href="overview.html">Готово → Огляд за місяць</a>
+        <a class="btn" href="overview-empty.html">Порожній місяць → Огляд (порожній)</a>
+        <a class="btn" href="overview-error.html">Збій оновлення → Помилка</a>
+      </div>
     </div>
   </section>
 

@@ -53,7 +53,7 @@
   <p class="wf-note">
     <strong>Вайрфрейм · Підключення банків · стан «завантаження»</strong> (тягнемо транзакції).
     Закриває job <strong>RJ-1</strong> (jtbd.md). Крок flow: <strong>Flow A → вузол Load
-    «тягнемо транзакції»</strong> після наданого доступу. Вихід: скасувати — не глухий кут.
+    «тягнемо транзакції»</strong> після наданого доступу. Виходи за розвилкою Sync → HasTx: успіх / порожній місяць / збій.
     Зони — як у стані «успіх».
   </p>
 
@@ -86,14 +86,16 @@
 
   <section class="zone" aria-label="Додати банк">
     <span class="zone-label">Зона: додати банк ·
-      <span class="act">головна дія (завантаження): зачекати; вихід — скасувати</span></span>
+      <span class="act">головна дія (завантаження): далі за розвилкою Sync → HasTx</span></span>
     <div class="zone-body">
       <h2>Підключаємо Monobank</h2>
       <p class="muted">Тягнемо транзакції — це може зайняти кілька секунд…</p>
       <div class="skel skel-line" aria-hidden="true"></div>
       <div class="skel skel-line short" aria-hidden="true"></div>
       <div class="state-actions">
-        <button type="button">Скасувати</button>
+        <a class="btn" href="overview.html">Синхронізація успішна → Огляд</a>
+        <a class="btn" href="overview-empty.html">Порожній місяць → Огляд (порожній)</a>
+        <a class="btn" href="bank-connect-error.html">Збій синхронізації → Помилка</a>
       </div>
     </div>
   </section>
