@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Бабосік — Голос продукту</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0c0c0e;
+      --surface:   #141417;
+      --surface2:  #1c1c20;
+      --border:    #27272c;
+      --text:      #e8e8ed;
+      --muted:     #6e6e78;
+      --accent:    #34d399;
+      --accent2:   #818cf8;
+      --warn:      #f87171;
+      --tag-bg:    #1e2a22;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; font-size: 15px; line-height: 1.65; }
+
+    /* ── Nav ── */
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(12,12,14,.88); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 32px; display: flex; align-items: center; gap: 8px; height: 52px; }
+    nav .logo { font-weight: 700; font-size: 15px; color: var(--accent); margin-right: 8px; letter-spacing: -.3px; text-decoration: none; }
+    nav a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 500; padding: 6px 10px; border-radius: 6px; transition: color .15s, background .15s; }
+    nav a:hover { color: var(--text); background: var(--surface2); }
+    nav .md-link { margin-left: auto; display: flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 5px 10px; }
+    nav .md-link:hover { color: var(--text); border-color: var(--accent); background: var(--surface); }
+    @media (max-width: 720px) { nav { padding: 0 14px; gap: 2px; } nav .sec { display: none; } }
+
+    /* ── Layout ── */
+    .container { max-width: 920px; margin: 0 auto; padding: 48px 32px 80px; }
+    @media (max-width: 640px) { .container { padding: 32px 16px 60px; } }
+
+    /* ── Hero ── */
+    .hero { margin-bottom: 56px; padding-bottom: 40px; border-bottom: 1px solid var(--border); }
+    .hero-label { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); background: var(--tag-bg); border: 1px solid rgba(52,211,153,.2); border-radius: 4px; padding: 3px 8px; margin-bottom: 16px; }
+    .hero h1 { font-size: 32px; font-weight: 700; letter-spacing: -.5px; line-height: 1.2; margin-bottom: 12px; }
+    .hero p { color: var(--muted); font-size: 15px; max-width: 620px; }
+    .hero-meta { display: flex; gap: 8px; margin-top: 20px; flex-wrap: wrap; }
+    .hero-meta span { font-size: 12px; color: var(--muted); background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 5px 12px; }
+    .hero-meta b { color: var(--text); font-weight: 600; }
+
+    /* ── Section ── */
+    section { margin-bottom: 64px; scroll-margin-top: 72px; }
+    .section-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 8px; }
+    .section-num { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); min-width: 28px; }
+    .section-header h2 { font-size: 20px; font-weight: 700; letter-spacing: -.3px; }
+    .section-lede { color: var(--muted); font-size: 14px; margin: 0 0 24px 40px; }
+    @media (max-width: 640px) { .section-lede { margin-left: 0; } }
+
+    /* ── Principle cards ── */
+    .principles { display: grid; gap: 16px; }
+    .principle { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px 24px; display: grid; grid-template-columns: 40px 1fr; gap: 0 16px; }
+    .p-num { font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 600; color: var(--accent); padding-top: 2px; }
+    .p-body h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+    .p-rule { font-size: 14.5px; margin-bottom: 14px; }
+    .ex { font-size: 13.5px; border-radius: 8px; padding: 9px 12px 9px 14px; margin-bottom: 8px; position: relative; border-left: 3px solid var(--border); background: var(--surface2); }
+    .ex-good { border-left-color: var(--accent); background: #0e1e18; }
+    .ex-bad  { border-left-color: var(--warn);  background: #1d1010; }
+    .ex-label { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; margin-right: 8px; vertical-align: 1px; }
+    .ex-good .ex-label { color: var(--accent); }
+    .ex-bad .ex-label { color: var(--warn); }
+    .ex .cite { color: var(--muted); font-size: 12px; }
+    .p-why { font-size: 13px; color: var(--muted); margin-top: 10px; }
+    .p-why strong { color: var(--text); font-weight: 600; }
+
+    /* ── Tables ── */
+    .table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); margin-bottom: 16px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    thead { background: var(--surface); }
+    thead th { padding: 11px 14px; text-align: left; font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--border); white-space: nowrap; }
+    tbody tr { border-bottom: 1px solid var(--border); }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: var(--surface); }
+    tbody td { padding: 11px 14px; vertical-align: top; line-height: 1.5; }
+    tbody td:first-child { color: var(--text); font-weight: 500; }
+    code { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px; color: var(--accent); }
+
+    /* ── Callout ── */
+    .callout { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent2); border-radius: 0 10px 10px 0; padding: 14px 18px; margin-bottom: 16px; font-size: 14px; }
+    .callout b { color: var(--text); }
+    .callout.warn { border-left-color: var(--warn); }
+
+    /* ── Forbidden list ── */
+    .forbidden { display: grid; gap: 10px; }
+    .forbidden .fitem { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; }
+    .forbidden h4 { font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+    .swap { display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; align-items: center; font-size: 13.5px; }
+    @media (max-width: 560px) { .swap { grid-template-columns: 1fr; } .swap .arrow { display: none; } }
+    .was { color: var(--warn); background: #1d1010; border: 1px solid rgba(248,113,113,.2); border-radius: 6px; padding: 6px 10px; text-decoration: line-through; text-decoration-color: rgba(248,113,113,.5); }
+    .now { color: var(--accent); background: #0e1e18; border: 1px solid rgba(52,211,153,.2); border-radius: 6px; padding: 6px 10px; }
+    .arrow { color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+
+    /* ── Verbatim competitor rows ── */
+    .verbatim td:nth-child(2) { font-style: italic; }
+    .tag { display: inline-block; font-size: 10.5px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; border-radius: 4px; padding: 2px 7px; }
+    .tag-cmd { background: rgba(129,140,248,.14); color: var(--accent2); }
+    .tag-judge { background: rgba(248,113,113,.14); color: var(--warn); }
+    .tag-wit { background: rgba(52,211,153,.14); color: var(--accent); }
+
+    /* ── Footer ── */
+    footer { margin-top: 80px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: var(--muted); flex-wrap: wrap; gap: 8px; }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--text); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="voices.html">Бабосік</a>
+  <a class="sec" href="#principles">Принципи</a>
+  <a class="sec" href="#dictionary">Словник</a>
+  <a class="sec" href="#forbidden">Заборонене</a>
+  <a class="sec" href="#competitors">Конкуренти</a>
+  <a class="sec" href="#microcopy">Мікрокопі</a>
+  <a class="md-link" href="docs/voice.md">voice.md</a>
+</nav>
+
+<div class="container">
+
+  <div class="hero">
+    <div class="hero-label">Voice · крок 04</div>
+    <h1>Голос Бабосіка</h1>
+    <p>Як продукт говорить. Виведено з персон і мови конкурентів, а не з натхнення. Контекст, що
+       переважує все: це гроші й — надалі — спільний доступ між людьми. <b style="color:var(--text)">Довіра
+       важливіша за дотепність.</b></p>
+    <div class="hero-meta">
+      <span><b>4</b> принципи</span>
+      <span><b>28</b> сторінок переписано</span>
+      <span><b>9</b> конкурентів · verbatim</span>
+      <span>Звертання <b>«ти»</b></span>
+    </div>
+  </div>
+
+  <!-- 01 ПРИНЦИПИ -->
+  <section id="principles">
+    <div class="section-header"><span class="section-num">01</span><h2>Принципи</h2></div>
+    <p class="section-lede">Чотири правила. Кожне взято лише тому, що має пояснення з даних — краще 3 чесних, ніж 5 гарних.</p>
+
+    <div class="principles">
+      <div class="principle">
+        <div class="p-num">01</div>
+        <div class="p-body">
+          <h3>Описуємо, не судимо</h3>
+          <p class="p-rule">Продукт називає факти про гроші й <b>ніколи не оцінює</b> людину чи її витрати — ні докором, ні похвалою.</p>
+          <div class="ex ex-good"><span class="ex-label">Так</span>«Куди пішли гроші» · «На 1 200 ₴ більше, ніж у травні (17 250 ₴)»</div>
+          <div class="ex ex-bad"><span class="ex-label">Ні</span>«Bad at money? YNAB can help.» <span class="cite">(YNAB)</span> · «brutally honest spending advice» <span class="cite">(Cleo)</span></div>
+          <p class="p-why"><strong>Звідки:</strong> EJ-1 (jtbd.md) — «тримаю ситуацію під контролем, а не що мене оцінюють чи засуджують»; research → Висновки «дружній, не банківський».</p>
+        </div>
+      </div>
+
+      <div class="principle">
+        <div class="p-num">02</div>
+        <div class="p-body">
+          <h3>Роботу робить продукт, а не наказ користувачу</h3>
+          <p class="p-rule">Підмет дії — <b>продукт</b>: він сам збирає й показує картину. Не командуємо «візьми контроль» — контроль це наслідок, а не домашнє завдання.</p>
+          <div class="ex ex-good"><span class="ex-label">Так</span>«Повна картина твоїх витрат — без рутини. Банк заповнює її сам.»</div>
+          <div class="ex ex-bad"><span class="ex-label">Ні</span>«Take control of your money» <span class="cite">(Emma)</span> · «Get good at money» <span class="cite">(YNAB)</span></div>
+          <p class="p-why"><strong>Звідки:</strong> RJ-5 (jtbd.md) — «одразу побачити щось осмислене, ще до того як я щось налаштовую»; 4 з 9 конкурентів наказують «take control».</p>
+        </div>
+      </div>
+
+      <div class="principle">
+        <div class="p-num">03</div>
+        <div class="p-body">
+          <h3>Довіра важливіша за дотепність</h3>
+          <p class="p-rule">Це гроші й — надалі — спільний доступ між людьми. Говоримо <b>просто і спокійно</b>, а не сипемо «особистістю» чи сарказмом. Ясність &gt; жарт.</p>
+          <div class="ex ex-good"><span class="ex-label">Так</span>«Входимо… Перевіряємо твій акаунт Google. Це займе кілька секунд.»</div>
+          <div class="ex ex-bad"><span class="ex-label">Ні</span>«Unlike your bank, Cleo has a good personality. Talk to her like a human.» <span class="cite">(Cleo)</span></div>
+          <p class="p-why"><strong>Звідки:</strong> контекст (гроші + мультиюзер) + EJ-1; CLAUDE.md «без зайвого фінтех-пафосу». <em>Чесно:</em> «дружній для UA» у даних не підтверджено — тримається на EJ-1 і контексті довіри.</p>
+        </div>
+      </div>
+
+      <div class="principle">
+        <div class="p-num">04</div>
+        <div class="p-body">
+          <h3>У помилці — що сталось і що вціліло</h3>
+          <p class="p-rule">Коли щось ламається: <b>що саме</b> сталось, що <b>дані в безпеці</b>, і <b>один вихід</b> — без паніки й без порожнього «щось пішло не так».</p>
+          <div class="ex ex-good"><span class="ex-label">Так</span>«Не вдалося зберегти зміни транзакції. Твій ввід не втрачено.» + [ Спробувати ще ]</div>
+          <div class="ex ex-bad"><span class="ex-label">Ні</span>«…to stop financial anxiety…» <span class="cite">(PocketGuard)</span> · «Ой, щось пішло не так»</div>
+          <p class="p-why"><strong>Звідки:</strong> EJ-2 (jtbd.md) — «не кинути знову на першому кроці — як вже було»; Катя й Олена кидали інструменти на першому збої.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 СЛОВНИК -->
+  <section id="dictionary">
+    <div class="section-header"><span class="section-num">02</span><h2>Словник</h2></div>
+    <p class="section-lede">Одне поняття — одне слово. Терміни з мови персон, нових не вигадуємо.</p>
+
+    <div class="callout"><b>Звертання — «ти», однаково скрізь.</b> Аудиторія 25–45, тон не банківський; Fealthy теж на «ти». Уникаємо родозалежного минулого часу: не «ти не створив» → «тут немає жодної твоєї категорії».</div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Дія</th><th>Одне слово</th><th>Замість різнобою</th></tr></thead>
+        <tbody>
+          <tr><td>Повтор після збою</td><td>Спробувати ще</td><td>«Спробувати ще раз» / «повторіть спробу»</td></tr>
+          <tr><td>Повернення на домашній екран</td><td>До огляду</td><td>«До огляду за місяць» / «Повернутись до огляду»</td></tr>
+          <tr><td>Під'єднати банк</td><td>Підключити банк / ще банк</td><td>«Додати ще банк» / «Підключити ще банк»</td></tr>
+          <tr><td>Створити категорію</td><td>Додати категорію</td><td>«Створити першу» / «+ Нова категорія»</td></tr>
+          <tr><td>Зберегти vs створити нове</td><td>Зберегти vs Додати</td><td>плуталось між собою</td></tr>
+          <tr><td>Завантаження</td><td>активне «ми-» дієслово + «…»</td><td>іменникове «Завантаження…»</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Предмет</th><th>Одне ім'я</th><th>Чому</th></tr></thead>
+        <tbody>
+          <tr><td>Банки</td><td>Monobank · ПриватБанк</td><td>Це назва на твоїй картці — повно й точно, це про довіру</td></tr>
+          <tr><td>Категорія «їмо не вдома»</td><td>Кафе та ресторани</td><td>Один гаманець: кав'ярні, ресторани, доставка</td></tr>
+          <tr><td>Дефолтний набір категорій</td><td>Продукти · Кафе та ресторани · Транспорт · Комуналка · Здоров'я · Інше</td><td>Той самий у фільтрі, пікері, формі. «Інше» останнє</td></tr>
+          <tr><td>Дата · місяці</td><td>«30 червня 2026» · місяці з малої</td><td>Одна форма скрізь (укр. правопис)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout"><b>Англіцизми.</b> Можна: власні назви (Google, Monobank) + усталені (транзакція, категорія, синхронізація, CSV). Не можна: <code>email</code> → «пошта», <code>токен</code> → «доступ», маркетингові (онбординг, апка).</div>
+  </section>
+
+  <!-- 03 ЗАБОРОНЕНЕ -->
+  <section id="forbidden">
+    <div class="section-header"><span class="section-num">03</span><h2>Заборонене</h2></div>
+    <p class="section-lede">Чого не пишемо ніколи. «Було → треба» на «ти». Цих кліше в копі не було — список тримає їх відсутніми.</p>
+
+    <div class="forbidden">
+      <div class="fitem"><h4>1 · AI-кліше й порожні фрази</h4><div class="swap"><span class="was">Ой, щось пішло не так</span><span class="arrow">→</span><span class="now">Не вдалося зберегти зміни. Твій ввід не втрачено.</span></div></div>
+      <div class="fitem"><h4>2 · Вітальний тон</h4><div class="swap"><span class="was">Ласкаво просимо до Бабосіка!</span><span class="arrow">→</span><span class="now">Твоя картина за червень. (одразу дані)</span></div></div>
+      <div class="fitem"><h4>3 · Мотиваційний / коучинговий тон</h4><div class="swap"><span class="was">Візьми контроль над своїми грошима!</span><span class="arrow">→</span><span class="now">Ось куди пішли твої гроші цього місяця.</span></div></div>
+      <div class="fitem"><h4>4 · Зайві оклики</h4><div class="swap"><span class="was">Банк підключено!</span><span class="arrow">→</span><span class="now">Monobank підключено.</span></div></div>
+      <div class="fitem"><h4>5 · Емодзі в системних повідомленнях</h4><div class="swap"><span class="was">Не вдалося підключити банк 😔</span><span class="arrow">→</span><span class="now">Не вдалося підключити Monobank.</span></div></div>
+      <div class="fitem"><h4>6 · Слово «успішно»</h4><div class="swap"><span class="was">Транзакцію успішно збережено</span><span class="arrow">→</span><span class="now">Зміни збережено.</span></div></div>
+      <div class="fitem"><h4>7 · Службові коди й жаргон</h4><div class="swap"><span class="was">постав туди, де сенс (RJ-2)</span><span class="arrow">→</span><span class="now">Постав туди, де для тебе має сенс.</span></div></div>
+    </div>
+  </section>
+
+  <!-- 04 МОВА КОНКУРЕНТІВ -->
+  <section id="competitors">
+    <div class="section-header"><span class="section-num">04</span><h2>Мова конкурентів</h2></div>
+    <p class="section-lede">Verbatim з лендінгів (2026-07-17). Де ринок пише однаково — там наша відмінність через голос.</p>
+
+    <div class="table-wrap">
+      <table class="verbatim">
+        <thead><tr><th>Продукт</th><th>Рядок</th><th>Патерн</th></tr></thead>
+        <tbody>
+          <tr><td>YNAB</td><td>«Bad at money? YNAB can help.»</td><td><span class="tag tag-judge">присуд</span></td></tr>
+          <tr><td>YNAB</td><td>«Get YNAB. Get good at money.»</td><td><span class="tag tag-cmd">наказ</span></td></tr>
+          <tr><td>Spendee</td><td>«The only app that gets your money into shape»</td><td><span class="tag tag-judge">присуд</span></td></tr>
+          <tr><td>PocketGuard</td><td>«…to stop financial anxiety and improve your life»</td><td><span class="tag tag-judge">тривога</span></td></tr>
+          <tr><td>Rocket Money</td><td>«Take control of my finances»</td><td><span class="tag tag-cmd">наказ</span></td></tr>
+          <tr><td>Emma</td><td>«Take control of your money»</td><td><span class="tag tag-cmd">наказ</span></td></tr>
+          <tr><td>Monzo</td><td>«Get clear on your spending. Unlock smarter ways to save.»</td><td><span class="tag tag-cmd">наказ</span></td></tr>
+          <tr><td>Cleo</td><td>«Unlike your bank, Cleo has a good personality. Talk to her like a human.»</td><td><span class="tag tag-wit">дотепність</span></td></tr>
+          <tr><td>Cleo</td><td>«…the smart, brutally honest spending advice you need to hear.»</td><td><span class="tag tag-judge">присуд</span></td></tr>
+          <tr><td>Fealthy <span class="cite">(UA)</span></td><td>«Всі твої витрати. В одному місці.» · «дає тобі контроль»</td><td><span class="tag tag-cmd">наказ</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout"><b>Три патерни, від яких відбудовуємось тоном:</b> команда «візьми контроль» (4 з 9), присуд/тривога (YNAB, Spendee, Cleo, PocketGuard), дотепність (Cleo). «Все в одному місці» — табличні ставки, не голос. Повний перелік — <a href="../research/research.md" style="color:var(--accent)">research.md → Мова конкурентів</a>.</div>
+  </section>
+
+  <!-- 05 МІКРОКОПІ -->
+  <section id="microcopy">
+    <div class="section-header"><span class="section-num">05</span><h2>Мікрокопі</h2></div>
+    <p class="section-lede">Голос застосовано до всіх 28 сторінок. Наскрізна звірка: та сама дія = одне ім'я на кожному екрані.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Дія / предмет</th><th>Єдине ім'я</th></tr></thead>
+        <tbody>
+          <tr><td>Повтор після збою</td><td>Спробувати ще</td></tr>
+          <tr><td>Повернення на домашній екран</td><td>До огляду</td></tr>
+          <tr><td>Під'єднати банк</td><td>Підключити банк / Підключити ще банк</td></tr>
+          <tr><td>Створити категорію</td><td>Додати категорію / Додати підкатегорію</td></tr>
+          <tr><td>Завантаження</td><td>Входимо… · Вантажимо… · Рахуємо… · Збираємо…</td></tr>
+          <tr><td>Запевнення в помилці</td><td>Дані не втрачено / Твій ввід не втрачено</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout"><b>Повний інвентар тексту</b> (екран · зона · рядок, поточний стан + журнал змін) — <a href="docs/microcopy.md" style="color:var(--accent)">docs/microcopy.md</a>. Це джерело правди для всього тексту продукту.</div>
+  </section>
+
+  <footer>
+    <span>Бабосік · Голос продукту · 2026-07-17</span>
+    <span><a href="docs/voice.md">voice.md</a> · <a href="docs/microcopy.md">microcopy.md</a> · <a href="../research/research.html">research →</a></span>
+  </footer>
+
+</div>
+
+</body>
+</html>
