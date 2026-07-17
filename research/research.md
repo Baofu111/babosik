@@ -174,6 +174,60 @@ Fealthy (єдиний знайдений UA-конкурент) обирає «�
 
 ---
 
+### 8. Мова конкурентів (verbatim)
+
+**Джерело:** лендінги продуктів, зібрано 2026-07-17 (web fetch). Рядки наведені **дослівно**,
+мовою оригіналу. Мета — почути, як ринок говорить про гроші, щоб знайти свою відмінність
+**через голос**: де всі пишуть однаково, там нам є чим відрізнятись.
+
+| Продукт | Рядок (verbatim) | Тип | Джерело |
+|---------|------------------|-----|---------|
+| YNAB | «Bad at money? YNAB can help.» | заголовок | ynab.com |
+| YNAB | «Get YNAB. Get good at money.» | підзаголовок | ynab.com |
+| YNAB | «Start Your Free Trial» | кнопка | ynab.com |
+| Spendee | «The only app that gets your money into shape» | заголовок | spendee.com |
+| Spendee | «Manage money on the go in the app» | підзаголовок | spendee.com |
+| PocketGuard | «Know where your money goes» | заголовок | pocketguard.com |
+| PocketGuard | «to control your finances to stop financial anxiety and improve your life» | підзаголовок | pocketguard.com |
+| PocketGuard | «Get started» | кнопка | pocketguard.com |
+| Rocket Money | «The money app that works for you» | заголовок | rocketmoney.com |
+| Rocket Money | «Managing money is hard, but you don't have to do it alone… take back control of your financial life.» | підзаголовок | rocketmoney.com |
+| Rocket Money | «Take control of my finances» | кнопка | rocketmoney.com |
+| Emma | «Take control of your money» | заголовок | emma-app.com |
+| Emma | «…build your credit, save more and spend less with the all-in-one financial membership.» | підзаголовок | emma-app.com |
+| Monzo | «Monzo for all your money» | заголовок | monzo.com |
+| Monzo | «Get clear on your spending. Unlock smarter ways to save. Invest with confidence.» | підзаголовок | monzo.com |
+| Money Lover | «Your personal finance manager on browser» | заголовок | moneylover.me |
+| Cleo | «Cleo makes money better.» | слоган | web.meetcleo.com |
+| Cleo | «Unlike your bank, Cleo has a good personality. Talk to her like a human.» | опис | web.meetcleo.com |
+| Cleo | «Cleo gives you the smart, brutally honest spending advice you need to hear.» | опис | web.meetcleo.com |
+| Fealthy *(UA)* | «Всі твої витрати. В одному місці.» | заголовок | fealthy.app |
+| Fealthy *(UA)* | «Fealthy автоматизує облік витрат, аналітику та дає тобі контроль.» | підзаголовок | fealthy.app |
+| Fealthy *(UA)* | «Скачати в App Store» | кнопка | fealthy.app |
+
+> Cleo — рядки зведено через пошук (web.meetcleo.com віддає 403 на прямий fetch); слоган і
+> «brutally honest» широко задокументовані. Решта — з прямого fetch лендінгів.
+
+**Де ринок пише однаково (там наша відмінність через голос):**
+
+- **«Візьми контроль» як команда користувачу.** PocketGuard («control your finances»),
+  Rocket Money (кнопка «Take control of my finances» + «take back control»), Emma («Take control
+  of your money»), Fealthy («дає тобі контроль»). Слово *контроль/control* — майже в кожного, і
+  здебільшого як **наказ людині щось зробити**.
+- **Присуд або тривога.** YNAB («Bad at money?», «get good at money»), Spendee («into shape»),
+  Cleo («brutally honest»), PocketGuard («financial anxiety»). Гроші подають через **сором,
+  форму або тривогу**.
+- **Особистість / дотепність.** Cleo — крайній полюс («good personality», «talk to her like a
+  human», «brutally honest»). Вісь, за якою можна свідомо **не** йти.
+- **«Все в одному місці / автоматично».** Fealthy, Monzo («for all your money»), Emma
+  («all-in-one») — це вже **не** диференціатор голосу (табличні ставки, а не відмінність).
+
+⚡ **Вплив:** три з чотирьох патернів (команда «візьми контроль», присуд/тривога, дотепність)
+— це те, від чого Бабосік може відбудуватись **тоном**, не фічами. Використано як основу
+принципів голосу у [`../voices/docs/voice.md`](../voices/docs/voice.md).
+
+---
+
 ## Питання, відкриті інформаційною архітектурою
 
 > Зібрано під час побудови ІА (`concept/sitemap.md`, `concept/flows.md`).

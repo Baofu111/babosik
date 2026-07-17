@@ -108,9 +108,9 @@
     <span class="zone-label">Зона: контекст / повернення ·
       <span class="act">головна дія: повернутись до списку транзакцій</span></span>
     <div class="zone-body">
-      <a class="back" href="transactions.html">← До списку транзакцій</a>
+      <a class="back" href="transactions.html">← До транзакцій</a>
       <h1>Правка транзакції</h1>
-      <p class="muted">Категорія «Інше» → приведіть до ладу (RJ-2)</p>
+      <p class="muted">Ця витрата поки в категорії «Інше» — постав її туди, де для тебе має сенс.</p>
     </div>
   </section>
 
@@ -145,15 +145,17 @@
           <legend>Категорія транзакції</legend>
           <ul class="picker-list">
             <li><label><input type="radio" name="cat"><span>Продукти</span></label></li>
-            <li><label><input type="radio" name="cat"><span>Кафе</span></label></li>
+            <li><label><input type="radio" name="cat"><span>Кафе та ресторани</span></label></li>
             <li><label><input type="radio" name="cat"><span>Транспорт</span></label></li>
+            <li><label><input type="radio" name="cat"><span>Комуналка</span></label></li>
+            <li><label><input type="radio" name="cat"><span>Здоров'я</span></label></li>
             <li><label><input type="radio" name="cat" checked><span>Інше</span></label></li>
           </ul>
           <div class="inline-newcat">
-            <p class="muted">Немає потрібної? Створіть тут же, не виходячи з правки:</p>
+            <p class="muted">Немає потрібної? Додай свою, не виходячи з правки:</p>
             <div class="row">
-              <input type="text" placeholder="Напр. Техніка та гаджети" aria-label="Назва нової категорії">
-              <a class="btn" href="transaction-edit-loading.html">+ Нова категорія</a>
+              <input type="text" placeholder="напр. Техніка та гаджети" aria-label="Назва нової категорії">
+              <a class="btn" href="transaction-edit-loading.html">Додати категорію</a>
             </div>
           </div>
         </fieldset>
