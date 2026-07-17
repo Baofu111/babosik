@@ -51,6 +51,19 @@
       ],
       mdLink: { href: '../concept/sitemap.md', label: 'sitemap.md' },
     },
+    {
+      label: 'Voice',
+      title: 'Голос',
+      href: '../voices/voices.html',
+      sections: [
+        { href: '#principles',  label: 'Принципи' },
+        { href: '#dictionary',  label: 'Словник' },
+        { href: '#forbidden',   label: 'Заборонене' },
+        { href: '#competitors', label: 'Конкуренти' },
+        { href: '#microcopy',   label: 'Мікрокопі' },
+      ],
+      mdLink: { href: '../voices/docs/voice.md', label: 'voice.md' },
+    },
   ];
 
   var host = document.getElementById('site-nav');
