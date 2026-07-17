@@ -1,36 +1,37 @@
 /* ─────────────────────────────────────────────────────────────────────────
    Бабосік — спільна навігація (back-office сайдбар зі складками).
 
-   Одне джерело правди для ВСІХ сторінок research/ (наявних і майбутніх).
+   Одне джерело правди для ВСІХ візуалізацій (research/ і voices/).
    Нова сторінка отримує сайдбар автоматично — достатньо двох рядків:
 
        <nav id="site-nav"></nav>            десь на початку <body>
        <script src="nav.js"></script>       перед </body>
+       (з voices/ шлях — "../research/nav.js")
 
-   Скрипт сам інжектить CSS і розмітку. Стилі скрузь із префіксом #site-nav
-   (специфічність id), тож вони перебивають будь-які старі правила `nav {…}`
-   на сторінці — редагувати самі HTML-файли не потрібно.
+   Шляхи в PAGES — ВІД КОРЕНЯ репо (напр. 'research/research.html',
+   'voices/voices.html'). Усі сторінки лежать на один рівень під коренем, тож
+   скрипт додає префікс '../' і однаково працює з будь-якої папки.
 
-   Щоб додати сторінку в навігацію — допиши об'єкт у PAGES нижче.
+   Щоб додати сторінку — допиши об'єкт у PAGES нижче (href і mdLink — від кореня).
    ───────────────────────────────────────────────────────────────────────── */
 (function () {
   var PAGES = [
     {
       label: 'Phase 1',
       title: 'Аналіз',
-      href: 'research.html',
+      href: 'research/research.html',
       sections: [
         { href: '#competitors', label: 'Конкуренти' },
         { href: '#patterns',    label: 'Патерни' },
         { href: '#jtbd',        label: 'JTBD' },
         { href: '#conclusions', label: 'Висновки' },
       ],
-      mdLink: { href: 'research.md', label: 'research.md' },
+      mdLink: { href: 'research/research.md', label: 'research.md' },
     },
     {
       label: 'Phase 2',
       title: 'Персони',
-      href: 'personas.html',
+      href: 'research/personas.html',
       sections: [
         { href: '#personas',    label: 'Персони' },
         { href: '#jobs',        label: 'Jobs' },
@@ -38,23 +39,23 @@
         { href: '#conclusions', label: 'Висновок' },
         { href: '#gaps',        label: 'Прогалини' },
       ],
-      mdLink: { href: 'personas.md', label: 'personas.md' },
+      mdLink: { href: 'research/personas.md', label: 'personas.md' },
     },
     {
       label: 'Phase 3',
       title: 'Архітектура',
-      href: 'ia.html',
+      href: 'research/ia.html',
       sections: [
         { href: '#sitemap', label: 'Sitemap' },
         { href: '#flows',   label: 'Потоки' },
         { href: '#matrix',  label: 'Матриця' },
       ],
-      mdLink: { href: '../concept/sitemap.md', label: 'sitemap.md' },
+      mdLink: { href: 'concept/sitemap.md', label: 'sitemap.md' },
     },
     {
       label: 'Voice',
       title: 'Голос',
-      href: '../voices/voices.html',
+      href: 'voices/voices.html',
       sections: [
         { href: '#principles',  label: 'Принципи' },
         { href: '#dictionary',  label: 'Словник' },
@@ -62,12 +63,15 @@
         { href: '#competitors', label: 'Конкуренти' },
         { href: '#microcopy',   label: 'Мікрокопі' },
       ],
-      mdLink: { href: '../voices/docs/voice.md', label: 'voice.md' },
+      mdLink: { href: 'voices/docs/voice.md', label: 'voice.md' },
     },
   ];
 
   var host = document.getElementById('site-nav');
   if (!host) return;
+
+  /* усі сторінки — на один рівень під коренем репо, тож до кореня завжди '../' */
+  var PREFIX = '../';
 
   /* ── 1. Інжект стилів (один раз) ─────────────────────────────────────── */
   var CSS = '' +
@@ -142,11 +146,11 @@
   style.textContent = CSS;
   document.head.appendChild(style);
 
-  /* ── 2. Яка сторінка активна ─────────────────────────────────────────── */
+  /* ── 2. Яка сторінка активна (за іменем файлу) ───────────────────────── */
   var currentFile = window.location.pathname.split('/').pop() || 'research.html';
   var currentPage = null;
   for (var i = 0; i < PAGES.length; i++) {
-    if (PAGES[i].href === currentFile) { currentPage = PAGES[i]; break; }
+    if (PAGES[i].href.split('/').pop() === currentFile) { currentPage = PAGES[i]; break; }
   }
 
   var mdSvg = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" ' +
@@ -157,14 +161,14 @@
   function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
 
   var html =
-    '<div class="sb-head"><a class="sb-logo" href="research.html">Бабосік</a>' +
-    '<span class="sb-sub">Research</span></div><div class="sb-nav">';
+    '<div class="sb-head"><a class="sb-logo" href="' + PREFIX + 'research/research.html">Бабосік</a>' +
+    '<span class="sb-sub">Docs</span></div><div class="sb-nav">';
 
   for (var i = 0; i < PAGES.length; i++) {
     var p = PAGES[i];
     var isCur = p === currentPage;
     var gcls = 'sb-group' + (isCur ? ' current open' : '');
-    html += '<div class="' + gcls + '" data-href="' + p.href + '">';
+    html += '<div class="' + gcls + '" data-href="' + PREFIX + p.href + '">';
     html += '<button class="sb-head-btn" type="button">' +
               '<span class="sb-caret">▶</span>' +
               '<span class="sb-title">' + esc(p.title) + '</span>' +
@@ -172,11 +176,11 @@
     html += '<div class="sb-sections">';
     for (var j = 0; j < p.sections.length; j++) {
       var s = p.sections[j];
-      var href = isCur ? s.href : (p.href + s.href);
+      var href = isCur ? s.href : (PREFIX + p.href + s.href);
       html += '<a href="' + href + '">' + esc(s.label) + '</a>';
     }
     if (p.mdLink) {
-      html += '<a class="sb-md" href="' + p.mdLink.href + '">' + mdSvg +
+      html += '<a class="sb-md" href="' + PREFIX + p.mdLink.href + '">' + mdSvg +
               esc(p.mdLink.label) + '</a>';
     }
     html += '</div></div>';
