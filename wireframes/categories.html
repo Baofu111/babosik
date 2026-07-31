@@ -4,74 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Вайрфрейм — Категорії та підкатегорії: керування (успіх)</title>
-  <style>
-    /* Grey-box: лише структура. Тільки сірі, без кольору/шрифтів/іконок/тіней.
-       Пунктир = межа зони вайрфрейму. Мітки зон — службові, не UI продукту. */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: system-ui, sans-serif;   /* системний default, не бренд-шрифт */
-      background: #f4f4f4; color: #222; line-height: 1.5;
-      max-width: 720px; margin: 0 auto; padding: 16px;
-    }
-    /* службові мітки зон */
-    .zone { border: 1px dashed #999; background: #fff; margin: 10px 0; padding: 0; }
-    .zone > .zone-label {
-      font-size: 11px; letter-spacing: .04em; text-transform: uppercase;
-      color: #555; background: #e6e6e6; border-bottom: 1px dashed #999;
-      padding: 4px 8px;
-    }
-    .zone > .zone-label .act { color: #333; text-transform: none; letter-spacing: 0; }
-    .zone-body { padding: 12px; }
 
-    .wf-note { font-size: 12px; color: #444; background: #ddd; border: 1px solid #999;
-      padding: 8px 10px; }
-    .wf-note strong { color: #000; }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../tokens/tokens.css">
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@2/dist/iconify-icon.min.js"></script>
 
-    nav ul { list-style: none; display: flex; gap: 8px; flex-wrap: wrap; }
-    nav a { display: inline-block; border: 1px solid #999; background: #fff;
-      padding: 6px 12px; text-decoration: none; color: #222; }
-    nav a[aria-current="page"] { background: #ccc; border-color: #333; }
-
-    h1 { font-size: 18px; margin-bottom: 2px; }
-    h2 { font-size: 15px; margin: 0; }
-    h3 { font-size: 14px; }
-    .muted { color: #555; font-size: 13px; }
-
-    button { border: 1px solid #666; background: #eee; color: #111;
-      padding: 6px 12px; cursor: pointer; font: inherit; }
-
-    /* список категорій */
-    ul.cats { list-style: none; }
-    ul.cats > li { border: 1px solid #bbb; background: #fafafa; margin: 8px 0; padding: 10px 12px; }
-    .cat-head { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
-    .cat-actions { display: flex; gap: 6px; flex-wrap: wrap; }
-    .cat-actions a { border: 1px solid #777; background: #eee; color: #111;
-      padding: 3px 8px; text-decoration: none; font-size: 12px; }
-    ul.subs { list-style: none; margin: 8px 0 0 0; padding-left: 10px; border-left: 1px solid #ccc; }
-    ul.subs li { display: flex; justify-content: space-between; gap: 12px;
-      align-items: baseline; padding: 4px 0; }
-    .sub-actions a { border: 1px solid #888; background: #f0f0f0; color: #111;
-      padding: 2px 6px; text-decoration: none; font-size: 11px; margin-left: 6px; }
-    .add-sub { margin-top: 8px; }
-    .add-sub a { border: 1px solid #777; background: #eee; color: #111;
-      padding: 3px 8px; text-decoration: none; font-size: 12px; }
-
-    /* форма додавання */
-    label { display: block; font-size: 13px; margin-bottom: 4px; }
-    input { font: inherit; border: 1px solid #888; background: #fff; padding: 6px 8px;
-      width: 100%; max-width: 320px; }
-    .field { margin-bottom: 10px; }
-    select { font: inherit; border: 1px solid #888; background: #fff; padding: 6px 8px; }
-
-    footer { margin-top: 16px; border-top: 1px solid #999; padding-top: 10px;
-      font-size: 12px; color: #555; }
-    /* перемикач станів екрана — зверху */
-    .states { display: flex; flex-wrap: wrap; gap: 6px; align-items: baseline;
-      border: 1px solid #999; background: #e2e2e2; padding: 6px 8px; margin-bottom: 10px; font-size: 12px; }
-    .states .lbl { color: #555; }
-    .states a { border: 1px solid #999; background: #fff; padding: 3px 8px; text-decoration: none; color: #222; }
-    .states a[aria-current="page"] { background: #c4c4c4; border-color: #333; font-weight: 700; }
-  </style>
+  <link rel="stylesheet" href="_wf.css">
 </head>
 <body>
 
@@ -94,15 +34,15 @@
   </p>
 
   <!-- ЗОНА: глобальна навігація (sitemap.md → Крок 03: 4 входи) -->
-  <nav class="zone" aria-label="Глобальна навігація">
+  <nav class="zone navmain" aria-label="Глобальна навігація">
     <span class="zone-label">Зона: глобальна навігація ·
       <span class="act">головна дія: перехід між кластерами</span></span>
     <div class="zone-body">
       <ul>
-        <li><a href="overview.html">Огляд</a></li>
-        <li><a href="transactions.html">Транзакції</a></li>
-        <li><a href="categories.html" aria-current="page">Категорії</a></li>
-        <li><a href="bank-connect.html">Акаунт</a></li>
+        <li><a href="overview.html"><iconify-icon class="i-linear" icon="solar:pie-chart-2-linear"></iconify-icon><iconify-icon class="i-bold" icon="solar:pie-chart-2-bold"></iconify-icon>Огляд</a></li>
+        <li><a href="transactions.html"><iconify-icon class="i-linear" icon="solar:bill-list-linear"></iconify-icon><iconify-icon class="i-bold" icon="solar:bill-list-bold"></iconify-icon>Транзакції</a></li>
+        <li><a href="categories.html" aria-current="page"><iconify-icon class="i-linear" icon="solar:widget-5-linear"></iconify-icon><iconify-icon class="i-bold" icon="solar:widget-5-bold"></iconify-icon>Категорії</a></li>
+        <li><a href="bank-connect.html"><iconify-icon class="i-linear" icon="solar:user-circle-linear"></iconify-icon><iconify-icon class="i-bold" icon="solar:user-circle-bold"></iconify-icon>Акаунт</a></li>
       </ul>
     </div>
   </nav>
@@ -120,24 +60,34 @@
       <span class="act">головна дія: редагувати / видалити категорію та підкатегорії (RJ-2)</span></span>
     <div class="zone-body">
       <h2>Твої категорії</h2>
+      <details class="add-cat">
+        <summary>Додати категорію</summary>
+        <form class="add-cat-row" action="categories.html" method="post">
+          <label for="cat-name" class="visually-hidden">Назва категорії</label>
+          <input type="text" id="cat-name" name="cat-name" placeholder="Назва нової категорії">
+          <button type="submit" class="btn-primary">Додати</button>
+          <a class="add-cancel" href="categories.html" aria-label="Скасувати"><iconify-icon icon="solar:close-circle-linear"></iconify-icon></a>
+        </form>
+      </details>
       <ul class="cats">
 
         <li>
           <article aria-label="Категорія Продукти">
             <div class="cat-head">
+              <span class="disc food"><iconify-icon icon="solar:cart-3-bold"></iconify-icon></span>
               <h3>Продукти</h3>
               <span class="cat-actions">
-                <a href="categories.html">Редагувати</a>
-                <a href="categories.html">Видалити</a>
+                <a href="categories.html"><iconify-icon icon="solar:pen-2-linear"></iconify-icon>Редагувати</a>
+                <a href="categories.html"><iconify-icon icon="solar:trash-bin-trash-linear"></iconify-icon>Видалити</a>
               </span>
             </div>
             <ul class="subs">
               <li><span>Сільпо</span>
-                <span class="sub-actions"><a href="categories.html">Редагувати</a><a href="categories.html">Видалити</a></span></li>
+                <span class="sub-actions"><a href="categories.html" aria-label="Редагувати підкатегорію"><iconify-icon icon="solar:pen-2-linear"></iconify-icon></a><a href="categories.html" aria-label="Видалити підкатегорію"><iconify-icon icon="solar:trash-bin-trash-linear"></iconify-icon></a></span></li>
               <li><span>АТБ</span>
-                <span class="sub-actions"><a href="categories.html">Редагувати</a><a href="categories.html">Видалити</a></span></li>
+                <span class="sub-actions"><a href="categories.html" aria-label="Редагувати підкатегорію"><iconify-icon icon="solar:pen-2-linear"></iconify-icon></a><a href="categories.html" aria-label="Видалити підкатегорію"><iconify-icon icon="solar:trash-bin-trash-linear"></iconify-icon></a></span></li>
               <li><span>Ринок</span>
-                <span class="sub-actions"><a href="categories.html">Редагувати</a><a href="categories.html">Видалити</a></span></li>
+                <span class="sub-actions"><a href="categories.html" aria-label="Редагувати підкатегорію"><iconify-icon icon="solar:pen-2-linear"></iconify-icon></a><a href="categories.html" aria-label="Видалити підкатегорію"><iconify-icon icon="solar:trash-bin-trash-linear"></iconify-icon></a></span></li>
             </ul>
             <p class="add-sub"><a href="categories.html">Додати підкатегорію</a></p>
           </article>
@@ -146,19 +96,20 @@
         <li>
           <article aria-label="Категорія Кафе та ресторани">
             <div class="cat-head">
+              <span class="disc cafe"><iconify-icon icon="solar:cup-hot-bold"></iconify-icon></span>
               <h3>Кафе та ресторани</h3>
               <span class="cat-actions">
-                <a href="categories.html">Редагувати</a>
-                <a href="categories.html">Видалити</a>
+                <a href="categories.html"><iconify-icon icon="solar:pen-2-linear"></iconify-icon>Редагувати</a>
+                <a href="categories.html"><iconify-icon icon="solar:trash-bin-trash-linear"></iconify-icon>Видалити</a>
               </span>
             </div>
             <ul class="subs">
               <li><span>Кав'ярні</span>
-                <span class="sub-actions"><a href="categories.html">Редагувати</a><a href="categories.html">Видалити</a></span></li>
+                <span class="sub-actions"><a href="categories.html" aria-label="Редагувати підкатегорію"><iconify-icon icon="solar:pen-2-linear"></iconify-icon></a><a href="categories.html" aria-label="Видалити підкатегорію"><iconify-icon icon="solar:trash-bin-trash-linear"></iconify-icon></a></span></li>
               <li><span>Ресторани</span>
-                <span class="sub-actions"><a href="categories.html">Редагувати</a><a href="categories.html">Видалити</a></span></li>
+                <span class="sub-actions"><a href="categories.html" aria-label="Редагувати підкатегорію"><iconify-icon icon="solar:pen-2-linear"></iconify-icon></a><a href="categories.html" aria-label="Видалити підкатегорію"><iconify-icon icon="solar:trash-bin-trash-linear"></iconify-icon></a></span></li>
               <li><span>Доставка</span>
-                <span class="sub-actions"><a href="categories.html">Редагувати</a><a href="categories.html">Видалити</a></span></li>
+                <span class="sub-actions"><a href="categories.html" aria-label="Редагувати підкатегорію"><iconify-icon icon="solar:pen-2-linear"></iconify-icon></a><a href="categories.html" aria-label="Видалити підкатегорію"><iconify-icon icon="solar:trash-bin-trash-linear"></iconify-icon></a></span></li>
             </ul>
             <p class="add-sub"><a href="categories.html">Додати підкатегорію</a></p>
           </article>
@@ -167,19 +118,20 @@
         <li>
           <article aria-label="Категорія Транспорт">
             <div class="cat-head">
+              <span class="disc transport"><iconify-icon icon="solar:bus-bold"></iconify-icon></span>
               <h3>Транспорт</h3>
               <span class="cat-actions">
-                <a href="categories.html">Редагувати</a>
-                <a href="categories.html">Видалити</a>
+                <a href="categories.html"><iconify-icon icon="solar:pen-2-linear"></iconify-icon>Редагувати</a>
+                <a href="categories.html"><iconify-icon icon="solar:trash-bin-trash-linear"></iconify-icon>Видалити</a>
               </span>
             </div>
             <ul class="subs">
               <li><span>Пальне (WOG, OKKO)</span>
-                <span class="sub-actions"><a href="categories.html">Редагувати</a><a href="categories.html">Видалити</a></span></li>
+                <span class="sub-actions"><a href="categories.html" aria-label="Редагувати підкатегорію"><iconify-icon icon="solar:pen-2-linear"></iconify-icon></a><a href="categories.html" aria-label="Видалити підкатегорію"><iconify-icon icon="solar:trash-bin-trash-linear"></iconify-icon></a></span></li>
               <li><span>Метро та маршрутки</span>
-                <span class="sub-actions"><a href="categories.html">Редагувати</a><a href="categories.html">Видалити</a></span></li>
+                <span class="sub-actions"><a href="categories.html" aria-label="Редагувати підкатегорію"><iconify-icon icon="solar:pen-2-linear"></iconify-icon></a><a href="categories.html" aria-label="Видалити підкатегорію"><iconify-icon icon="solar:trash-bin-trash-linear"></iconify-icon></a></span></li>
               <li><span>Таксі (Bolt, Uklon)</span>
-                <span class="sub-actions"><a href="categories.html">Редагувати</a><a href="categories.html">Видалити</a></span></li>
+                <span class="sub-actions"><a href="categories.html" aria-label="Редагувати підкатегорію"><iconify-icon icon="solar:pen-2-linear"></iconify-icon></a><a href="categories.html" aria-label="Видалити підкатегорію"><iconify-icon icon="solar:trash-bin-trash-linear"></iconify-icon></a></span></li>
             </ul>
             <p class="add-sub"><a href="categories.html">Додати підкатегорію</a></p>
           </article>
@@ -188,10 +140,11 @@
         <li>
           <article aria-label="Категорія Комуналка">
             <div class="cat-head">
+              <span class="disc utility"><iconify-icon icon="solar:home-2-bold"></iconify-icon></span>
               <h3>Комуналка</h3>
               <span class="cat-actions">
-                <a href="categories.html">Редагувати</a>
-                <a href="categories.html">Видалити</a>
+                <a href="categories.html"><iconify-icon icon="solar:pen-2-linear"></iconify-icon>Редагувати</a>
+                <a href="categories.html"><iconify-icon icon="solar:trash-bin-trash-linear"></iconify-icon>Видалити</a>
               </span>
             </div>
             <ul class="subs">
@@ -204,15 +157,16 @@
         <li>
           <article aria-label="Категорія Здоров'я">
             <div class="cat-head">
+              <span class="disc health"><iconify-icon icon="solar:health-bold"></iconify-icon></span>
               <h3>Здоров'я</h3>
               <span class="cat-actions">
-                <a href="categories.html">Редагувати</a>
-                <a href="categories.html">Видалити</a>
+                <a href="categories.html"><iconify-icon icon="solar:pen-2-linear"></iconify-icon>Редагувати</a>
+                <a href="categories.html"><iconify-icon icon="solar:trash-bin-trash-linear"></iconify-icon>Видалити</a>
               </span>
             </div>
             <ul class="subs">
               <li><span>Аптека</span>
-                <span class="sub-actions"><a href="categories.html">Редагувати</a><a href="categories.html">Видалити</a></span></li>
+                <span class="sub-actions"><a href="categories.html" aria-label="Редагувати підкатегорію"><iconify-icon icon="solar:pen-2-linear"></iconify-icon></a><a href="categories.html" aria-label="Видалити підкатегорію"><iconify-icon icon="solar:trash-bin-trash-linear"></iconify-icon></a></span></li>
             </ul>
             <p class="add-sub"><a href="categories.html">Додати підкатегорію</a></p>
           </article>
@@ -221,10 +175,11 @@
         <li>
           <article aria-label="Категорія Інше">
             <div class="cat-head">
+              <span class="disc other"><iconify-icon icon="solar:menu-dots-bold"></iconify-icon></span>
               <h3>Інше</h3>
               <span class="cat-actions">
-                <a href="categories.html">Редагувати</a>
-                <a href="categories.html">Видалити</a>
+                <a href="categories.html"><iconify-icon icon="solar:pen-2-linear"></iconify-icon>Редагувати</a>
+                <a href="categories.html"><iconify-icon icon="solar:trash-bin-trash-linear"></iconify-icon>Видалити</a>
               </span>
             </div>
             <ul class="subs">
@@ -238,41 +193,6 @@
     </div>
   </section>
 
-  <!-- ЗОНА: додати категорію (sitemap.md S6: створити власну категорію/підкатегорію) -->
-  <section class="zone" aria-label="Додати категорію">
-    <span class="zone-label">Зона: додати категорію ·
-      <span class="act">головна дія: створити власну категорію або підкатегорію (RJ-2)</span></span>
-    <div class="zone-body">
-      <h2>Додати категорію</h2>
-      <form action="categories.html" method="post">
-        <div class="field">
-          <label for="cat-name">Назва категорії</label>
-          <input type="text" id="cat-name" name="cat-name" placeholder="напр. Здоров'я">
-        </div>
-        <button type="submit">Додати категорію</button>
-      </form>
-
-      <h3 style="margin-top:16px">Додати підкатегорію</h3>
-      <form action="categories.html" method="post">
-        <div class="field">
-          <label for="sub-parent">До якої категорії</label>
-          <select id="sub-parent" name="sub-parent">
-            <option>Продукти</option>
-            <option>Кафе та ресторани</option>
-            <option>Транспорт</option>
-            <option>Комуналка</option>
-            <option>Здоров'я</option>
-            <option>Інше</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="sub-name">Назва підкатегорії</label>
-          <input type="text" id="sub-name" name="sub-name" placeholder="напр. Аптека">
-        </div>
-        <button type="submit">Додати підкатегорію</button>
-      </form>
-    </div>
-  </section>
 
 </main>
 

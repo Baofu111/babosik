@@ -4,41 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Вайрфрейм — Категорії та підкатегорії: керування (порожній)</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: system-ui, sans-serif; background: #f4f4f4; color: #222;
-      line-height: 1.5; max-width: 720px; margin: 0 auto; padding: 16px; }
-    .zone { border: 1px dashed #999; background: #fff; margin: 10px 0; padding: 0; }
-    .zone > .zone-label { font-size: 11px; letter-spacing: .04em; text-transform: uppercase;
-      color: #555; background: #e6e6e6; border-bottom: 1px dashed #999; padding: 4px 8px; }
-    .zone > .zone-label .act { color: #333; text-transform: none; letter-spacing: 0; }
-    .zone-body { padding: 12px; }
-    .wf-note { font-size: 12px; color: #444; background: #ddd; border: 1px solid #999; padding: 8px 10px; }
-    .wf-note strong { color: #000; }
-    nav ul { list-style: none; display: flex; gap: 8px; flex-wrap: wrap; }
-    nav a { display: inline-block; border: 1px solid #999; background: #fff; padding: 6px 12px;
-      text-decoration: none; color: #222; }
-    nav a[aria-current="page"] { background: #ccc; border-color: #333; }
-    h1 { font-size: 18px; margin-bottom: 2px; }
-    h2 { font-size: 15px; margin: 0; }
-    h3 { font-size: 14px; }
-    .muted { color: #555; font-size: 13px; }
-    button { border: 1px solid #666; background: #eee; color: #111; padding: 6px 12px;
-      cursor: pointer; font: inherit; }
-    label { display: block; font-size: 13px; margin-bottom: 4px; }
-    input { font: inherit; border: 1px solid #888; background: #fff; padding: 6px 8px; width: 100%; max-width: 320px; }
-    .field { margin-bottom: 10px; }
-    footer { margin-top: 16px; border-top: 1px solid #999; padding-top: 10px; font-size: 12px; color: #555; }
-    .states { display: flex; flex-wrap: wrap; gap: 6px; align-items: baseline;
-      border: 1px solid #999; background: #e2e2e2; padding: 6px 8px; margin-bottom: 10px; font-size: 12px; }
-    .states .lbl { color: #555; }
-    .states a { border: 1px solid #999; background: #fff; padding: 3px 8px; text-decoration: none; color: #222; }
-    .states a[aria-current="page"] { background: #c4c4c4; border-color: #333; font-weight: 700; }
-    .empty-msg { color: #444; }
-    .state-actions { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
-    a.btn { display: inline-block; border: 1px solid #666; background: #eee; color: #111;
-      padding: 6px 12px; text-decoration: none; }
-  </style>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../tokens/tokens.css">
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@2/dist/iconify-icon.min.js"></script>
+
+  <link rel="stylesheet" href="_wf.css">
 </head>
 <body>
 
@@ -61,15 +34,15 @@
     CRUD-патерном, не з flows.md.
   </p>
 
-  <nav class="zone" aria-label="Глобальна навігація">
+  <nav class="zone navmain" aria-label="Глобальна навігація">
     <span class="zone-label">Зона: глобальна навігація ·
       <span class="act">головна дія: перехід між кластерами</span></span>
     <div class="zone-body">
       <ul>
-        <li><a href="overview.html">Огляд</a></li>
-        <li><a href="transactions.html">Транзакції</a></li>
-        <li><a href="categories.html" aria-current="page">Категорії</a></li>
-        <li><a href="bank-connect.html">Акаунт</a></li>
+        <li><a href="overview.html"><iconify-icon class="i-linear" icon="solar:pie-chart-2-linear"></iconify-icon><iconify-icon class="i-bold" icon="solar:pie-chart-2-bold"></iconify-icon>Огляд</a></li>
+        <li><a href="transactions.html"><iconify-icon class="i-linear" icon="solar:bill-list-linear"></iconify-icon><iconify-icon class="i-bold" icon="solar:bill-list-bold"></iconify-icon>Транзакції</a></li>
+        <li><a href="categories.html" aria-current="page"><iconify-icon class="i-linear" icon="solar:widget-5-linear"></iconify-icon><iconify-icon class="i-bold" icon="solar:widget-5-bold"></iconify-icon>Категорії</a></li>
+        <li><a href="bank-connect.html"><iconify-icon class="i-linear" icon="solar:user-circle-linear"></iconify-icon><iconify-icon class="i-bold" icon="solar:user-circle-bold"></iconify-icon>Акаунт</a></li>
       </ul>
     </div>
   </nav>
@@ -86,32 +59,21 @@
       <span class="act">головна дія (порожній): створити першу власну категорію (RJ-2)</span></span>
     <div class="zone-body">
       <h2>Твої категорії</h2>
-      <p class="empty-msg">Тут з'являться твої категорії з підкатегоріями (напр.
+      <p class="empty-msg"><iconify-icon icon="solar:widget-5-linear"></iconify-icon>Тут з'являться твої категорії з підкатегоріями (напр.
         «Продукти → Сільпо, АТБ, ринок»). Поки що тут немає жодної власної категорії —
         почни зі своєї першої, а не з нав'язаної банком.</p>
-      <div class="state-actions">
-        <a class="btn" href="categories.html">Додати категорію</a>
-      </div>
+      <details class="add-cat">
+        <summary class="btn btn-primary">Додати категорію</summary>
+        <form class="add-cat-row" action="categories.html" method="post">
+          <label for="cat-name" class="visually-hidden">Назва категорії</label>
+          <input type="text" id="cat-name" name="cat-name" placeholder="Назва першої категорії">
+          <button type="submit" class="btn-primary">Додати</button>
+          <a class="add-cancel" href="categories-empty.html" aria-label="Скасувати"><iconify-icon icon="solar:close-circle-linear"></iconify-icon></a>
+        </form>
+      </details>
     </div>
   </section>
 
-  <!-- ЗОНА: додати категорію — зона на місці, форма готова до першого вводу -->
-  <section class="zone" aria-label="Додати категорію">
-    <span class="zone-label">Зона: додати категорію ·
-      <span class="act">головна дія: створити власну категорію (RJ-2)</span></span>
-    <div class="zone-body">
-      <h2>Додати категорію</h2>
-      <form action="categories.html" method="post">
-        <div class="field">
-          <label for="cat-name">Назва категорії</label>
-          <input type="text" id="cat-name" name="cat-name" placeholder="напр. Продукти">
-        </div>
-        <button type="submit">Додати категорію</button>
-      </form>
-      <p class="muted" style="margin-top:10px">Підкатегорії можна буде додати одразу після
-        створення першої категорії.</p>
-    </div>
-  </section>
 
 </main>
 

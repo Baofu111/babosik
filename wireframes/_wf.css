@@ -1,0 +1,271 @@
+/* ============================================================================
+   Бабосік — компонентна мова вайрфреймів «Ясність» (Напрям 3, concept.md).
+   Єдине джерело правди для СТИЛІВ вайрфреймів; значення — з ../tokens/tokens.css.
+
+   Кожна сторінка підключає:
+     <link rel="stylesheet" href="../tokens/tokens.css">
+     <link rel="stylesheet" href="_wf.css">
+   і НЕ дублює ці правила inline. Службові мітки зон (.zone-label, .wf-note,
+   .states) — анотації вайрфрейму, не UI продукту.
+
+   ЗАКОН КОЛЬОРУ (voices/docs/voice.md): колір не судить значення. Семантика
+   (success/danger/warning) — лише системні стани (підключення, збій мережі),
+   ніколи не суми транзакцій. Суми завжди нейтральні (--n-900).
+   ========================================================================== */
+
+/* --- База ----------------------------------------------------------------- */
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--font-body);background:var(--bg);color:var(--n-700);
+  line-height:1.5;font-size:15px;-webkit-font-smoothing:antialiased;
+  max-width:760px;margin:0 auto;padding:var(--sp-4);
+}
+h1,h2,h3{font-family:var(--font-display);color:var(--n-900);letter-spacing:-0.02em}
+h1{font-size:1.75rem;margin-bottom:2px}
+h2{font-size:1.125rem;margin:0}
+h3{font-size:1.05rem}
+.muted{color:var(--n-500);font-size:.8125rem}
+.lead{font-size:1.0625rem;color:var(--n-700);max-width:52ch}
+:focus-visible{outline:none;box-shadow:var(--ring);border-radius:var(--r-sm)}
+
+/* --- Службові анотації вайрфрейму (не UI продукту) ------------------------ */
+.zone{background:var(--surface);border:1px solid var(--n-200);border-radius:var(--r-lg);
+  box-shadow:var(--shadow-sm);margin:var(--sp-4) 0;overflow:hidden}
+.zone > .zone-label{
+  font-size:11px;letter-spacing:.04em;text-transform:uppercase;
+  color:var(--n-500);background:var(--n-100);border-bottom:1px solid var(--n-200);padding:6px 12px;
+}
+.zone > .zone-label .act{color:var(--n-700);text-transform:none;letter-spacing:0}
+.zone-body{padding:var(--sp-5)}
+.wf-note{font-size:12px;color:var(--n-700);background:var(--petrol-50);
+  border:1px solid var(--petrol-100);border-radius:var(--r-md);padding:10px 12px}
+.wf-note strong{color:var(--n-900);font-weight:600}
+
+/* перемикач станів екрана — службова анотація зверху */
+.states{display:flex;flex-wrap:wrap;gap:6px;align-items:center;background:var(--surface);
+  border:1px solid var(--n-200);border-radius:var(--r-md);padding:6px 10px;margin-bottom:var(--sp-4);font-size:12px}
+.states .lbl{color:var(--n-500)}
+.states a{border:1px solid var(--n-200);background:var(--surface);padding:3px 10px;border-radius:var(--r-sm);
+  text-decoration:none;color:var(--n-700)}
+.states a:hover{background:var(--n-100)}
+.states a[aria-current="page"]{background:var(--petrol-100);border-color:var(--petrol-100);
+  color:var(--petrol-600);font-weight:600}
+
+/* --- Глобальна навігація (вага іконки за станом) -------------------------- */
+nav.zone ul{list-style:none;display:flex;gap:var(--sp-2);flex-wrap:wrap}
+.navmain a{display:inline-flex;align-items:center;gap:.45rem;border:1px solid var(--n-200);
+  background:var(--surface);padding:.5rem .8rem;border-radius:var(--r-md);text-decoration:none;
+  color:var(--n-500);font-weight:500;font-size:.9rem;transition:background .18s,color .18s,border-color .18s}
+.navmain a iconify-icon{font-size:18px}
+.navmain a:hover{background:var(--n-100);color:var(--n-700)}
+.navmain a[aria-current="page"]{background:var(--petrol-100);color:var(--petrol-600);border-color:var(--petrol-100)}
+.navmain a .i-bold{display:none}
+.navmain a[aria-current="page"] .i-linear{display:none}
+.navmain a[aria-current="page"] .i-bold{display:inline-block}
+
+/* --- Кнопки --------------------------------------------------------------- */
+button,a.btn{font-family:var(--font-body);font-size:.9rem;font-weight:600;cursor:pointer;
+  display:inline-flex;align-items:center;gap:.5rem;text-decoration:none;
+  border:1px solid var(--n-200);background:var(--surface);color:var(--n-900);
+  padding:.55rem 1rem;border-radius:var(--r-md);transition:background .18s,border-color .18s,box-shadow .18s}
+button:hover,a.btn:hover{background:var(--n-100);border-color:var(--n-300)}
+button iconify-icon,a.btn iconify-icon{font-size:18px;color:var(--n-500)}
+button:disabled,button[disabled]{background:var(--n-100);color:var(--n-300);cursor:not-allowed;border-color:transparent}
+button:disabled iconify-icon{color:var(--n-300)}
+.btn-primary{background:var(--petrol-600);color:#fff;border-color:var(--petrol-600)}
+.btn-primary:hover{background:var(--petrol-700);border-color:var(--petrol-700)}
+.btn-primary iconify-icon{color:#fff}
+/* уніфікований недоступний контрол — той самий <a>, лише aria-disabled (не окремий <button>) */
+a.btn[aria-disabled="true"]{background:var(--n-100);color:var(--n-300);border-color:transparent;
+  cursor:not-allowed;pointer-events:none}
+a.btn[aria-disabled="true"] iconify-icon{color:var(--n-300)}
+/* тихий ghost — вторинна дія в шапці зони (напр. «Оновити») */
+.btn-ghost{background:transparent;border-color:transparent;color:var(--petrol-600);padding:.4rem .6rem}
+.btn-ghost:hover{background:var(--petrol-100);border-color:transparent}
+.btn-ghost iconify-icon{color:var(--petrol-600)}
+
+/* --- Суми ----------------------------------------------------------------- */
+.total{font-family:var(--font-display);font-size:2.75rem;line-height:1;color:var(--n-900);
+  font-variant-numeric:tabular-nums;letter-spacing:-0.03em;margin:.3rem 0}
+
+/* --- Диски категорій ------------------------------------------------------ */
+.disc{width:34px;height:34px;border-radius:50%;flex:none;display:grid;place-items:center;color:#fff}
+.disc iconify-icon{font-size:18px}
+.disc.food{background:var(--c-food)} .disc.cafe{background:var(--c-cafe)}
+.disc.other{background:var(--c-other)} .disc.utility{background:var(--c-utility)}
+.disc.transport{background:var(--c-transport)} .disc.health{background:var(--c-health)}
+
+/* --- Рядки-картки (розбивка / топ / список транзакцій) -------------------- */
+ul.cards{list-style:none}
+ul.cards li{border-top:1px solid var(--n-200)}
+ul.cards li:first-child{border-top:0}
+ul.cards li article{display:contents}
+.card-link{display:flex;align-items:center;gap:.75rem;
+  text-decoration:none;color:var(--n-900);padding:.7rem 0;transition:background .18s}
+.card-link:hover{background:var(--n-100)}
+.card-main{display:flex;flex-direction:column;min-width:0;gap:2px}
+.card-main > span:first-child{font-weight:600;color:var(--n-900);font-size:.95rem}
+.card-meta{font-size:.78rem;color:var(--n-500);display:flex;align-items:center;gap:.4rem;flex-wrap:wrap}
+.card-sum{margin-left:auto;white-space:nowrap;font-weight:600;color:var(--n-900);font-variant-numeric:tabular-nums}
+
+/* прапорець «увага без присуду» (coral-600 на coral-100 = 4.62) */
+.flag{font-size:.72rem;font-weight:500;color:var(--coral-600);background:var(--coral-100);
+  border-radius:var(--r-sm);padding:.14rem .45rem;display:inline-flex;align-items:center;gap:.25rem}
+.flag iconify-icon{font-size:12px}
+/* нейтральний прапорець якості даних (без назви / не та категорія) — золото/tertiary */
+.flag.data{color:var(--gold-600);background:var(--gold-100)}
+
+/* --- Список категорій (керування) ---------------------------------------- */
+ul.cats{list-style:none}
+ul.cats > li{border-top:1px solid var(--n-200);padding:var(--sp-4) 0}
+ul.cats > li:first-child{border-top:0;padding-top:var(--sp-1)}
+.cat-head{display:flex;align-items:center;gap:.7rem}
+.cat-head h3{font-family:var(--font-display);font-size:1.05rem;color:var(--n-900);flex:1;margin:0;letter-spacing:-0.01em}
+.cat-actions{display:flex;gap:6px;flex-wrap:wrap}
+.cat-actions a,.sub-actions a{display:inline-flex;align-items:center;gap:.3rem;
+  border:1px solid var(--n-200);background:var(--surface);color:var(--n-700);text-decoration:none;
+  border-radius:var(--r-sm);font-weight:500;transition:background .18s,border-color .18s}
+.cat-actions a iconify-icon,.sub-actions a iconify-icon{font-size:14px;color:var(--n-500)}
+.cat-actions a{font-size:.78rem;padding:.28rem .55rem}
+.sub-actions{display:inline-flex;gap:6px}
+.sub-actions a{width:30px;height:30px;padding:0;justify-content:center;margin-left:0}
+.sub-actions a iconify-icon{font-size:16px}
+.cat-actions a:hover,.sub-actions a:hover{background:var(--n-100);border-color:var(--n-300)}
+ul.subs{list-style:none;margin:.7rem 0 0 calc(34px + .7rem);padding-left:var(--sp-4);border-left:1px solid var(--n-200)}
+ul.subs li{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:.35rem 0}
+ul.subs li span:first-child{color:var(--n-700);font-size:.9rem}
+.add-sub{margin:.6rem 0 0 calc(34px + .7rem)}
+.add-sub a{display:inline-flex;align-items:center;gap:.35rem;color:var(--petrol-600);
+  text-decoration:none;font-weight:500;font-size:.82rem;transition:color .18s}
+.add-sub a iconify-icon{font-size:16px}
+.add-sub a:hover{color:var(--petrol-700)}
+
+/* --- Форми ---------------------------------------------------------------- */
+label{display:block;font-size:.8125rem;font-weight:500;color:var(--n-700);margin-bottom:6px}
+input,select{font-family:var(--font-body);font-size:.9rem;color:var(--n-900);
+  border:1px solid var(--n-200);background:var(--surface);border-radius:var(--r-md);
+  padding:.55rem .7rem;width:100%;max-width:340px}
+select{cursor:pointer}
+input::placeholder{color:var(--n-500)}
+input:focus-visible,select:focus-visible{border-color:var(--petrol-600)}
+input:disabled{background:var(--n-100);color:var(--n-300);cursor:not-allowed}
+input:disabled::placeholder{color:var(--n-300)}
+.field{margin-bottom:var(--sp-4);max-width:340px}
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* fieldset (пікер категорії / вибір банку) */
+fieldset{border:1px solid var(--n-200);border-radius:var(--r-md);padding:var(--sp-4);background:var(--surface)}
+legend{font-size:.8125rem;font-weight:600;color:var(--n-700);padding:0 6px}
+.opt{display:flex;align-items:center;gap:.5rem;padding:.35rem 0;max-width:none}
+.opt input{width:auto}
+
+/* пікер-чипи (radio як таблетки) */
+.picker-list{list-style:none;display:flex;flex-wrap:wrap;gap:var(--sp-2);margin:var(--sp-3) 0}
+.picker-list li label{display:inline-flex;align-items:center;gap:.4rem;border:1px solid var(--n-200);
+  background:var(--surface);color:var(--n-700);padding:.4rem .8rem;border-radius:var(--r-pill);
+  cursor:pointer;font-size:.85rem;font-weight:500;margin:0;transition:background .18s,border-color .18s,color .18s}
+.picker-list li label:hover{background:var(--n-100);border-color:var(--n-300)}
+.picker-list li input{position:absolute;opacity:0;width:1px;height:1px}
+.picker-list li input:checked + span{color:var(--petrol-600)}
+.picker-list li label:has(input:checked){background:var(--petrol-100);border-color:var(--petrol-100);color:var(--petrol-600)}
+.inline-newcat{border-top:1px solid var(--n-200);margin-top:var(--sp-3);padding-top:var(--sp-3)}
+.inline-newcat .row{display:flex;gap:var(--sp-2);flex-wrap:wrap;align-items:center;margin-top:var(--sp-2)}
+.inline-newcat input{flex:1 1 200px}
+
+.form-actions{margin-top:var(--sp-4);display:flex;gap:var(--sp-2);flex-wrap:wrap}
+a.back{display:inline-flex;align-items:center;gap:.35rem;text-decoration:none;color:var(--n-500);
+  font-size:.85rem;font-weight:500;margin-bottom:var(--sp-2);transition:color .18s}
+a.back:hover{color:var(--petrol-600)}
+a.back iconify-icon{font-size:16px}
+
+/* інлайн-додавання (details/summary) */
+.add-cat{margin:0 0 var(--sp-4)}
+.add-cat > summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:.35rem;
+  color:var(--petrol-600);font-weight:500;font-size:.9rem;width:max-content;transition:color .18s}
+.add-cat > summary:hover{color:var(--petrol-700)}
+.add-cat > summary::-webkit-details-marker{display:none}
+.add-cat > summary::marker{content:""}
+.add-cat-row{display:flex;gap:var(--sp-2);align-items:center;flex-wrap:wrap;margin-top:var(--sp-3)}
+.add-cat-row input{flex:1 1 220px;max-width:300px}
+.add-cancel{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;flex:none;
+  border:1px solid var(--n-200);border-radius:var(--r-md);color:var(--n-500);text-decoration:none;
+  transition:background .18s,border-color .18s}
+.add-cancel:hover{background:var(--n-100);border-color:var(--n-300)}
+.add-cancel iconify-icon{font-size:20px}
+
+/* --- Фільтр / пошук (список транзакцій) ----------------------------------- */
+.filter-row{display:flex;gap:var(--sp-2);flex-wrap:wrap;align-items:end;margin-top:var(--sp-3)}
+.filter-row label{margin-bottom:4px}
+.filter-row .fg{display:flex;flex-direction:column}
+.filter-row input[type="search"]{min-width:200px}
+.filter-row input,.filter-row select{max-width:none}
+
+/* --- Порівняння місяців --------------------------------------------------- */
+ul.cmp{list-style:none;margin-top:var(--sp-3)}
+ul.cmp > li{border-top:1px solid var(--n-200);padding:.8rem 0;display:flex;align-items:center;gap:.75rem}
+ul.cmp > li:first-child{border-top:0}
+.cmp-main{display:flex;flex-direction:column;min-width:0;gap:2px;flex:1}
+.cmp-cat{font-weight:600;color:var(--n-900);font-size:.95rem}
+.cmp-nums{font-size:.78rem;color:var(--n-500);font-variant-numeric:tabular-nums}
+.cmp-delta{margin-left:auto;text-align:right;white-space:nowrap;display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+.cmp-delta .d-sum{font-weight:600;color:var(--n-900);font-variant-numeric:tabular-nums}
+.cmp-delta .d-word{font-size:.75rem;color:var(--n-500);display:inline-flex;align-items:center;gap:.2rem}
+.cmp-delta .d-word iconify-icon{font-size:13px}
+/* напрям дельти — нейтральний (колір не судить): стрілка лише вказує бік */
+.cmp-delta.up .d-word{color:var(--coral-600)}     /* більше — увага без присуду */
+.cmp-delta.flat .d-word{color:var(--n-500)}
+
+/* --- Підключені банки ----------------------------------------------------- */
+.bank{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;
+  border-top:1px solid var(--n-200);padding:.8rem 0}
+.bank:first-of-type{border-top:0}
+.b-main{display:flex;align-items:center;gap:.7rem;min-width:0}
+.b-main > iconify-icon{font-size:26px;color:var(--petrol-600);flex:none}
+.b-name{display:flex;flex-direction:column;gap:2px;min-width:0}
+.b-name > span:first-child{font-weight:600;color:var(--n-900)}
+.b-meta{font-size:.78rem;color:var(--n-500)}
+.b-actions{display:flex;gap:6px;flex-wrap:wrap}
+.b-actions a.btn,.b-actions button{font-size:.78rem;padding:.35rem .7rem}
+/* статус-таблетка — легітимний системний стан (не сума) */
+.status{display:inline-flex;align-items:center;gap:.3rem;font-size:.72rem;font-weight:600;
+  padding:.16rem .5rem;border-radius:var(--r-pill)}
+.status iconify-icon{font-size:13px}
+.status.ok{color:var(--success-600);background:var(--success-100)}
+.status.warn{color:var(--warning-600);background:var(--warning-100)}
+.status.err{color:var(--danger-600);background:var(--danger-100)}
+
+/* --- Вхід / реєстрація ---------------------------------------------------- */
+.btn-block{display:flex;width:100%;justify-content:center;padding:.75rem 1rem;margin-top:var(--sp-3)}
+.signin-form input{max-width:none}
+.signin-form .field{max-width:none}
+.divider{display:flex;align-items:center;gap:.6rem;margin:var(--sp-4) 0;color:var(--n-500);font-size:.78rem}
+.divider::before,.divider::after{content:"";flex:1;border-top:1px solid var(--n-200)}
+
+/* --- Стани: помилка / порожньо -------------------------------------------- */
+/* порожній стан — нейтральна підказка, «вчить», не збій */
+.empty-msg{display:flex;gap:.5rem;align-items:flex-start;color:var(--n-700);font-size:.9rem;max-width:60ch;margin-top:var(--sp-3)}
+.empty-msg iconify-icon{flex:none;font-size:20px;color:var(--n-300);margin-top:1px}
+/* системний збій — danger-callout (не глухий кут) */
+.error-msg{display:flex;gap:.5rem;align-items:flex-start;color:var(--n-700);font-size:.9rem;max-width:60ch;
+  margin-top:var(--sp-3);background:var(--danger-100);border:1px solid var(--danger-edge);
+  border-radius:var(--r-md);padding:.7rem .8rem}
+.error-msg iconify-icon{flex:none;font-size:20px;color:var(--danger-600);margin-top:1px}
+.state-actions{margin-top:var(--sp-4);display:flex;gap:var(--sp-2);flex-wrap:wrap}
+
+/* --- Скелетони (завантаження) --------------------------------------------- */
+.skel{background:var(--n-100);border-radius:var(--r-sm)}
+.skel-line{height:12px;margin:8px 0}
+.skel-line.short{width:45%}
+.skel-num{height:44px;width:190px;margin-top:8px;border-radius:var(--r-md)}
+.skel-card{height:56px;margin:10px 0;border-radius:var(--r-md)}
+.skel-field{height:38px;margin:8px 0;border-radius:var(--r-md)}
+.skel-pulse{animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.55}}
+
+/* --- Футер ---------------------------------------------------------------- */
+footer{margin-top:var(--sp-6);border-top:1px solid var(--n-200);padding-top:var(--sp-4);
+  font-size:12px;color:var(--n-500)}
+
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}

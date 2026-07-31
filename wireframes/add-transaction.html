@@ -3,30 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Вайрфрейм — Додати транзакцію вручну (backlog)</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: system-ui, sans-serif; background: #f4f4f4; color: #222;
-      line-height: 1.5; max-width: 720px; margin: 0 auto; padding: 16px; }
-    .zone { border: 1px dashed #999; background: #fff; margin: 10px 0; }
-    .zone > .zone-label { font-size: 11px; letter-spacing: .04em; text-transform: uppercase;
-      color: #555; background: #e6e6e6; border-bottom: 1px dashed #999; padding: 4px 8px; }
-    .zone-body { padding: 12px; }
-    .wf-note { font-size: 12px; color: #444; background: #ddd; border: 1px solid #999; padding: 8px 10px; }
-    .wf-note strong { color: #000; }
-    nav ul { list-style: none; display: flex; gap: 8px; flex-wrap: wrap; }
-    nav a { display: inline-block; border: 1px solid #999; background: #fff; padding: 6px 12px;
-      text-decoration: none; color: #222; }
-    nav a[aria-current="page"] { background: #ccc; border-color: #333; }
-    h1 { font-size: 18px; margin-bottom: 2px; }
-    h2 { font-size: 15px; margin: 0; }
-    label { display: block; padding: 4px 0; }
-    input, select { font: inherit; padding: 4px 6px; }
-    button { border: 1px solid #666; background: #eee; color: #111; padding: 6px 12px; cursor: pointer; font: inherit; }
-    .state-actions { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
-    a.btn { display: inline-block; border: 1px solid #666; background: #eee; color: #111; padding: 6px 12px; text-decoration: none; }
-    footer { margin-top: 16px; border-top: 1px solid #999; padding-top: 10px; font-size: 12px; color: #555; }
-  </style>
+  <title>Вайрфрейм — Додати транзакцію вручну</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../tokens/tokens.css">
+  <link rel="stylesheet" href="_wf.css">
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@2/dist/iconify-icon.min.js"></script>
 </head>
 <body>
 
@@ -38,14 +22,15 @@
     Списку транзакцій («це готівка → додати»).
   </p>
 
-  <nav class="zone" aria-label="Глобальна навігація">
-    <span class="zone-label">Зона: глобальна навігація · головна дія: перехід між кластерами</span>
+  <nav class="zone navmain" aria-label="Глобальна навігація">
+    <span class="zone-label">Зона: глобальна навігація ·
+      <span class="act">головна дія: перехід між кластерами</span></span>
     <div class="zone-body">
       <ul>
-        <li><a href="overview.html">Огляд</a></li>
-        <li><a href="transactions.html" aria-current="page">Транзакції</a></li>
-        <li><a href="categories.html">Категорії</a></li>
-        <li><a href="bank-connect.html">Акаунт</a></li>
+        <li><a href="overview.html"><iconify-icon class="i-linear" icon="solar:pie-chart-2-linear"></iconify-icon><iconify-icon class="i-bold" icon="solar:pie-chart-2-bold"></iconify-icon>Огляд</a></li>
+        <li><a href="transactions.html" aria-current="page"><iconify-icon class="i-linear" icon="solar:bill-list-linear"></iconify-icon><iconify-icon class="i-bold" icon="solar:bill-list-bold"></iconify-icon>Транзакції</a></li>
+        <li><a href="categories.html"><iconify-icon class="i-linear" icon="solar:widget-5-linear"></iconify-icon><iconify-icon class="i-bold" icon="solar:widget-5-bold"></iconify-icon>Категорії</a></li>
+        <li><a href="bank-connect.html"><iconify-icon class="i-linear" icon="solar:user-circle-linear"></iconify-icon><iconify-icon class="i-bold" icon="solar:user-circle-bold"></iconify-icon>Акаунт</a></li>
       </ul>
     </div>
   </nav>
@@ -53,14 +38,20 @@
 
 <main>
   <h1>Додати транзакцію вручну</h1>
+  <p class="muted">Готівкова оплата, якої немає у виписці — щоб картина була повна</p>
 
   <section class="zone" aria-label="Ручна транзакція">
-    <span class="zone-label">Зона: ручна транзакція · головна дія: додати (мінімально)</span>
+    <span class="zone-label">Зона: ручна транзакція ·
+      <span class="act">головна дія: додати (мінімально — сума + категорія)</span></span>
     <div class="zone-body">
       <form>
-        <label>Сума, ₴ <input type="text" inputmode="decimal" placeholder="480"></label>
-        <label>Категорія
-          <select>
+        <div class="field">
+          <label for="sum">Сума, ₴</label>
+          <input id="sum" type="text" inputmode="decimal" placeholder="480">
+        </div>
+        <div class="field">
+          <label for="cat">Категорія</label>
+          <select id="cat">
             <option>Продукти</option>
             <option>Кафе та ресторани</option>
             <option>Транспорт</option>
@@ -68,9 +59,9 @@
             <option>Здоров'я</option>
             <option>Інше</option>
           </select>
-        </label>
-        <div class="state-actions">
-          <a class="btn" href="transactions.html">Додати</a>
+        </div>
+        <div class="form-actions">
+          <a class="btn btn-primary" href="transactions.html"><iconify-icon icon="solar:add-circle-linear"></iconify-icon>Додати</a>
           <a class="btn" href="transactions.html">Скасувати</a>
         </div>
       </form>
@@ -79,7 +70,7 @@
 </main>
 
 <footer>
-  Backlog · поза MVP-скоупом. Екран: «Додати транзакцію вручну» (sitemap.md → Backlog).
+  MVP · мінімальний обсяг. Екран: «Додати транзакцію вручну» (sitemap.md).
 </footer>
 
 <script src="wf-nav.js"></script>

@@ -4,74 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Вайрфрейм — Список транзакцій (успіх)</title>
-  <style>
-    /* Grey-box: лише структура. Тільки сірі, без кольору/шрифтів/іконок/тіней.
-       Пунктир = межа зони вайрфрейму. Мітки зон — службові, не UI продукту. */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: system-ui, sans-serif;   /* системний default, не бренд-шрифт */
-      background: #f4f4f4; color: #222; line-height: 1.5;
-      max-width: 720px; margin: 0 auto; padding: 16px;
-    }
-    /* службові мітки зон */
-    .zone { border: 1px dashed #999; background: #fff; margin: 10px 0; padding: 0; }
-    .zone > .zone-label {
-      font-size: 11px; letter-spacing: .04em; text-transform: uppercase;
-      color: #555; background: #e6e6e6; border-bottom: 1px dashed #999;
-      padding: 4px 8px;
-    }
-    .zone > .zone-label .act { color: #333; text-transform: none; letter-spacing: 0; }
-    .zone-body { padding: 12px; }
 
-    .wf-note { font-size: 12px; color: #444; background: #ddd; border: 1px solid #999;
-      padding: 8px 10px; }
-    .wf-note strong { color: #000; }
-
-    nav ul { list-style: none; display: flex; gap: 8px; flex-wrap: wrap; }
-    nav a { display: inline-block; border: 1px solid #999; background: #fff;
-      padding: 6px 12px; text-decoration: none; color: #222; }
-    nav a[aria-current="page"] { background: #ccc; border-color: #333; }
-
-    h1 { font-size: 18px; margin-bottom: 2px; }
-    h2 { font-size: 15px; margin: 0; }
-    h3 { font-size: 14px; }
-
-    .muted { color: #555; font-size: 13px; }
-
-    button { border: 1px solid #666; background: #eee; color: #111;
-      padding: 6px 12px; cursor: pointer; font: inherit; }
-
-    /* фільтр/пошук */
-    .filter-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-    .filter-row input, .filter-row select { border: 1px solid #999; background: #fff;
-      color: #222; padding: 6px 8px; font: inherit; }
-    .filter-row input[type="search"] { flex: 1; min-width: 160px; }
-
-    ul.cards { list-style: none; }
-    ul.cards li { border: 1px solid #bbb; background: #fafafa; margin: 6px 0; }
-    .card-link { display: flex; justify-content: space-between; gap: 12px;
-      align-items: baseline; text-decoration: none; color: #222; padding: 10px 12px; }
-    .card-link:hover { background: #eee; }
-    .card-main { display: flex; flex-direction: column; }
-    .card-meta { font-size: 12px; color: #555; }
-    .card-sum { white-space: nowrap; }
-    .flag { font-size: 11px; color: #333; border: 1px solid #777; padding: 1px 5px;
-      margin-left: 8px; } /* «без назви / не туди» — текстом, без кольору */
-
-    footer { margin-top: 16px; border-top: 1px solid #999; padding-top: 10px;
-      font-size: 12px; color: #555; }
-    /* перемикач станів екрана — зверху */
-    .states { display: flex; flex-wrap: wrap; gap: 6px; align-items: baseline;
-      border: 1px solid #999; background: #e2e2e2; padding: 6px 8px; margin-bottom: 10px; font-size: 12px; }
-    .states .lbl { color: #555; }
-    .states a { border: 1px solid #999; background: #fff; padding: 3px 8px; text-decoration: none; color: #222; }
-    .states a[aria-current="page"] { background: #c4c4c4; border-color: #333; font-weight: 700; }
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../tokens/tokens.css">
+  <link rel="stylesheet" href="_wf.css">
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@2/dist/iconify-icon.min.js"></script>
 </head>
 <body>
 
 <header>
-  <!-- зверху: перемикач станів цього екрана -->
   <nav class="states" aria-label="Стани екрана «Список транзакцій»">
     <span class="lbl">Стани екрана:</span>
     <a href="transactions.html" aria-current="page">Успіх</a>
@@ -87,16 +30,15 @@
     (звідси тап по транзакції → правка). Зони — лише зі sitemap.md (S4).
   </p>
 
-  <!-- ЗОНА: глобальна навігація (sitemap.md → Крок 03: 4 входи) -->
-  <nav class="zone" aria-label="Глобальна навігація">
+  <nav class="zone navmain" aria-label="Глобальна навігація">
     <span class="zone-label">Зона: глобальна навігація ·
       <span class="act">головна дія: перехід між кластерами</span></span>
     <div class="zone-body">
       <ul>
-        <li><a href="overview.html">Огляд</a></li>
-        <li><a href="transactions.html" aria-current="page">Транзакції</a></li>
-        <li><a href="categories.html">Категорії</a></li>
-        <li><a href="bank-connect.html">Акаунт</a></li>
+        <li><a href="overview.html"><iconify-icon class="i-linear" icon="solar:pie-chart-2-linear"></iconify-icon><iconify-icon class="i-bold" icon="solar:pie-chart-2-bold"></iconify-icon>Огляд</a></li>
+        <li><a href="transactions.html" aria-current="page"><iconify-icon class="i-linear" icon="solar:bill-list-linear"></iconify-icon><iconify-icon class="i-bold" icon="solar:bill-list-bold"></iconify-icon>Транзакції</a></li>
+        <li><a href="categories.html"><iconify-icon class="i-linear" icon="solar:widget-5-linear"></iconify-icon><iconify-icon class="i-bold" icon="solar:widget-5-bold"></iconify-icon>Категорії</a></li>
+        <li><a href="bank-connect.html"><iconify-icon class="i-linear" icon="solar:user-circle-linear"></iconify-icon><iconify-icon class="i-bold" icon="solar:user-circle-bold"></iconify-icon>Акаунт</a></li>
       </ul>
     </div>
   </nav>
@@ -111,19 +53,19 @@
     <div class="zone-body">
       <h1>Транзакції за червень 2026</h1>
       <form class="filter-row" role="search">
-        <label for="q" class="muted">Пошук</label>
-        <input id="q" type="search" placeholder="Назва або сума, напр. Сільпо">
-        <label for="cat" class="muted">Категорія</label>
-        <select id="cat">
-          <option>Усі категорії</option>
-          <option>Продукти</option>
-          <option>Кафе та ресторани</option>
-          <option>Транспорт</option>
-          <option>Комуналка</option>
-          <option>Здоров'я</option>
-          <option selected>Інше</option>
-        </select>
-        <button type="submit">Застосувати</button>
+        <div class="fg"><label for="q">Пошук</label>
+          <input id="q" type="search" placeholder="Назва або сума, напр. Сільпо"></div>
+        <div class="fg"><label for="cat">Категорія</label>
+          <select id="cat">
+            <option>Усі категорії</option>
+            <option>Продукти</option>
+            <option>Кафе та ресторани</option>
+            <option>Транспорт</option>
+            <option>Комуналка</option>
+            <option>Здоров'я</option>
+            <option selected>Інше</option>
+          </select></div>
+        <button type="submit"><iconify-icon icon="solar:magnifer-linear"></iconify-icon>Застосувати</button>
       </form>
       <p class="muted">Фільтр: категорія «Інше» · 5 транзакцій</p>
     </div>
@@ -137,24 +79,29 @@
       <h2>Транзакції категорії «Інше»</h2>
       <ul class="cards">
         <li><article><a class="card-link" href="transaction-edit.html">
+          <span class="disc other"><iconify-icon icon="solar:menu-dots-bold"></iconify-icon></span>
           <span class="card-main"><span>Rozetka</span>
-            <span class="card-meta">12 червня · Інше<span class="flag">не та категорія</span></span></span>
+            <span class="card-meta">12 червня · Інше<span class="flag data"><iconify-icon icon="solar:tag-linear"></iconify-icon>не та категорія</span></span></span>
           <span class="card-sum">−2 400 ₴</span></a></article></li>
         <li><article><a class="card-link" href="transaction-edit.html">
+          <span class="disc other"><iconify-icon icon="solar:menu-dots-bold"></iconify-icon></span>
           <span class="card-main"><span>Оплата 4149…3812</span>
-            <span class="card-meta">10 червня · Інше<span class="flag">без назви</span></span></span>
+            <span class="card-meta">10 червня · Інше<span class="flag data"><iconify-icon icon="solar:pen-linear"></iconify-icon>без назви</span></span></span>
           <span class="card-sum">−780 ₴</span></a></article></li>
         <li><article><a class="card-link" href="transaction-edit.html">
+          <span class="disc other"><iconify-icon icon="solar:menu-dots-bold"></iconify-icon></span>
           <span class="card-main"><span>Нова Пошта</span>
             <span class="card-meta">7 червня · Інше</span></span>
           <span class="card-sum">−140 ₴</span></a></article></li>
         <li><article><a class="card-link" href="transaction-edit.html">
+          <span class="disc other"><iconify-icon icon="solar:menu-dots-bold"></iconify-icon></span>
           <span class="card-main"><span>Аптека АНЦ</span>
             <span class="card-meta">5 червня · Інше</span></span>
           <span class="card-sum">−320 ₴</span></a></article></li>
         <li><article><a class="card-link" href="transaction-edit.html">
+          <span class="disc other"><iconify-icon icon="solar:menu-dots-bold"></iconify-icon></span>
           <span class="card-main"><span>Оплата послуг</span>
-            <span class="card-meta">2 червня · Інше<span class="flag">без назви</span></span></span>
+            <span class="card-meta">2 червня · Інше<span class="flag data"><iconify-icon icon="solar:pen-linear"></iconify-icon>без назви</span></span></span>
           <span class="card-sum">−460 ₴</span></a></article></li>
       </ul>
     </div>

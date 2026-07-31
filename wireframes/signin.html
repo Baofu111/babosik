@@ -4,63 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Вайрфрейм — Вхід / Реєстрація (успіх)</title>
-  <style>
-    /* Grey-box: лише структура. Тільки сірі, без кольору/шрифтів/іконок/тіней.
-       Пунктир = межа зони вайрфрейму. Мітки зон — службові, не UI продукту. */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: system-ui, sans-serif;   /* системний default, не бренд-шрифт */
-      background: #f4f4f4; color: #222; line-height: 1.5;
-      max-width: 720px; margin: 0 auto; padding: 16px;
-    }
-    /* службові мітки зон */
-    .zone { border: 1px dashed #999; background: #fff; margin: 10px 0; padding: 0; }
-    .zone > .zone-label {
-      font-size: 11px; letter-spacing: .04em; text-transform: uppercase;
-      color: #555; background: #e6e6e6; border-bottom: 1px dashed #999;
-      padding: 4px 8px;
-    }
-    .zone > .zone-label .act { color: #333; text-transform: none; letter-spacing: 0; }
-    .zone-body { padding: 12px; }
 
-    .wf-note { font-size: 12px; color: #444; background: #ddd; border: 1px solid #999;
-      padding: 8px 10px; }
-    .wf-note strong { color: #000; }
-
-    h1 { font-size: 18px; margin-bottom: 2px; }
-    h2 { font-size: 15px; margin: 0; }
-    .muted { color: #555; font-size: 13px; }
-    .lead { font-size: 15px; }
-
-    button { border: 1px solid #666; background: #eee; color: #111;
-      padding: 6px 12px; cursor: pointer; font: inherit; }
-    .btn-primary { display: block; width: 100%; padding: 10px 12px; text-align: center;
-      border: 2px solid #444; background: #e0e0e0; }
-
-    form { margin-top: 4px; }
-    .field { margin: 8px 0; }
-    label { display: block; font-size: 13px; color: #333; margin-bottom: 2px; }
-    input { display: block; width: 100%; border: 1px solid #888; background: #fafafa;
-      padding: 8px; font: inherit; color: #222; }
-
-    .divider { display: flex; align-items: center; gap: 8px; margin: 14px 0;
-      color: #666; font-size: 12px; }
-    .divider::before, .divider::after { content: ""; flex: 1; border-top: 1px solid #bbb; }
-
-    footer { margin-top: 16px; border-top: 1px solid #999; padding-top: 10px;
-      font-size: 12px; color: #555; }
-    /* перемикач станів екрана — зверху */
-    .states { display: flex; flex-wrap: wrap; gap: 6px; align-items: baseline;
-      border: 1px solid #999; background: #e2e2e2; padding: 6px 8px; margin-bottom: 10px; font-size: 12px; }
-    .states .lbl { color: #555; }
-    .states a { border: 1px solid #999; background: #fff; padding: 3px 8px; text-decoration: none; color: #222; }
-    .states a[aria-current="page"] { background: #c4c4c4; border-color: #333; font-weight: 700; }
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../tokens/tokens.css">
+  <link rel="stylesheet" href="_wf.css">
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@2/dist/iconify-icon.min.js"></script>
 </head>
 <body>
 
 <header>
-  <!-- зверху: перемикач станів цього екрана -->
   <nav class="states" aria-label="Стани екрана «Вхід / Реєстрація»">
     <span class="lbl">Стани екрана:</span>
     <a href="signin.html" aria-current="page">Успіх</a>
@@ -100,11 +54,11 @@
         перший вхід одразу створює твій профіль.</p>
 
       <!-- головна дія: перехід у loading (Flow A: Reg → RegLoad) -->
-      <a class="btn-primary" href="signin-loading.html">Увійти через Google</a>
+      <a class="btn btn-primary btn-block" href="signin-loading.html"><iconify-icon icon="solar:login-3-linear"></iconify-icon>Увійти через Google</a>
 
       <p class="divider">або через email</p>
 
-      <form action="signin-loading.html" method="post">
+      <form class="signin-form" action="signin-loading.html" method="post">
         <div class="field">
           <label for="email">Електронна пошта</label>
           <input type="email" id="email" name="email" placeholder="ти@example.com" autocomplete="email">
