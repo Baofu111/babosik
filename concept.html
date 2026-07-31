@@ -1,0 +1,603 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Бабосік · Напрям 3 «Ясність» — стенд мови</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/iconify-icon@2/dist/iconify-icon.min.js"></script>
+
+<style>
+:root{
+  /* ——— Brand: Full-palette (3 ролі) ——— */
+  --petrol-700:#0B4642;  /* pressed */
+  --petrol-600:#0F5C57;  /* PRIMARY — дія, вибраний стан, поточний таб */
+  --petrol-100:#E4F0EE;  /* wash — вибраний фон, info */
+  --petrol-50:#F0F7F5;
+  --coral-600:#B54A28;   /* ACCENT text-safe (AA на білому) */
+  --coral-500:#E8734F;   /* accent fill / диск */
+  --coral-100:#FBEDE7;   /* wash */
+  --gold-600:#8A5E12;    /* TERTIARY text-safe (AA на білому 5.7:1 і на gold-100 5.0:1) */
+  --gold-500:#E0A13C;    /* tertiary fill / диск */
+  --gold-100:#FBF1DF;
+
+  /* ——— Neutral (ледь холодна) ——— */
+  --bg:#FBFBFA;          /* тло застосунку */
+  --surface:#FFFFFF;     /* поверхня карток */
+  --n-900:#181C1B;       /* чорнило — заголовки, суми */
+  --n-700:#333A38;       /* основний текст */
+  --n-500:#5B6462;       /* приглушений / placeholder */
+  --n-300:#A8AEAC;       /* disabled fg, idle-іконка */
+  --n-200:#E7E8E6;       /* межа, лінія */
+  --n-100:#F0F1EF;       /* тонкий фон, skeleton */
+
+  /* ——— Semantic (лише СИСТЕМНІ стани, не суми) ——— */
+  --success-600:#1E7A4D; --success-100:#E5F3EC;
+  --danger-600:#C0392B;  --danger-100:#FBEAE8;
+  --warning-600:#9C6A15; --warning-100:#FBF1DF;
+  --info-600:#0F5C57;    --info-100:#E4F0EE;
+
+  /* ——— Типографіка ——— */
+  --font-display:'Bricolage Grotesque',system-ui,sans-serif;
+  --font-body:'IBM Plex Sans',system-ui,sans-serif;
+
+  /* ——— Форма: радіуси ——— */
+  --r-sm:8px;    /* чипи, бейджі */
+  --r-md:10px;   /* кнопки, поля */
+  --r-lg:12px;   /* картки */
+  --r-pill:999px;
+
+  /* ——— Форма: тіні (елевація) ——— */
+  --shadow-sm:0 1px 2px rgba(24,28,27,.06);
+  --shadow-md:0 4px 14px rgba(24,28,27,.09);
+  --shadow-lg:0 12px 32px -12px rgba(24,28,27,.18);
+  --ring:0 0 0 3px rgba(15,92,87,.30);
+
+  /* ——— Форма: відступи (крок 4px) ——— */
+  --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px;
+  --sp-5:20px; --sp-6:24px; --sp-8:32px; --sp-10:40px; --sp-12:48px;
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bg);color:var(--n-700);
+  font-family:var(--font-body);font-size:15px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1180px;margin:0 auto;padding:var(--sp-6)}
+h1,h2,h3,.amount,.disp{font-family:var(--font-display);color:var(--n-900);letter-spacing:-0.02em}
+:focus-visible{outline:none;box-shadow:var(--ring);border-radius:var(--r-sm)}
+
+/* masthead */
+.masthead{padding:var(--sp-8) 0 var(--sp-4);border-bottom:1px solid var(--n-200)}
+.masthead h1{font-size:2rem;margin:0 0 var(--sp-2);font-weight:600}
+.masthead p{max-width:68ch;color:var(--n-500);margin:.25rem 0}
+.masthead .tagrow{display:flex;flex-wrap:wrap;gap:var(--sp-2);margin-top:var(--sp-3)}
+.pill{font-size:.75rem;color:var(--n-500);border:1px solid var(--n-200);background:var(--surface);border-radius:var(--r-pill);padding:.28rem .65rem}
+
+/* section scaffolding */
+section{padding:var(--sp-10) 0;border-bottom:1px solid var(--n-200)}
+.sec-h{display:flex;align-items:baseline;gap:var(--sp-3);margin:0 0 var(--sp-6)}
+.sec-h h2{font-size:1.4rem;margin:0;font-weight:600}
+.sec-h .k{font-size:.8rem;color:var(--n-500)}
+.lead{color:var(--n-500);max-width:70ch;margin:-.5rem 0 var(--sp-6)}
+
+/* attribute annotation */
+.attr{
+  display:inline-flex;align-items:center;gap:.35rem;
+  font-family:var(--font-body);font-size:.7rem;font-weight:500;
+  color:var(--petrol-600);background:var(--petrol-100);
+  border-radius:var(--r-sm);padding:.15rem .45rem;letter-spacing:0;
+  font-feature-settings:"tnum";
+}
+.attr--muted{color:var(--n-500);background:var(--n-100)}
+.note{font-size:.78rem;color:var(--n-500);margin-top:.35rem}
+.aa{font-size:.7rem;font-weight:600;color:var(--success-600);background:var(--success-100);border-radius:var(--r-sm);padding:.12rem .4rem;white-space:nowrap}
+
+/* ——— БЛОК: мова живцем ——— */
+.live-grid{display:grid;gap:var(--sp-6);grid-template-columns:1.2fr .8fr;align-items:start}
+@media(max-width:820px){.live-grid{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--n-200);border-radius:var(--r-lg);padding:var(--sp-6);box-shadow:var(--shadow-sm)}
+.panel h3{font-size:.8rem;font-weight:600;color:var(--n-500);text-transform:uppercase;letter-spacing:.04em;margin:0 0 var(--sp-4)}
+
+/* buttons */
+.btnrow{display:flex;flex-wrap:wrap;gap:var(--sp-3);align-items:center}
+.btn{
+  font-family:var(--font-body);font-size:.9rem;font-weight:600;cursor:pointer;
+  border:1px solid transparent;border-radius:var(--r-md);
+  padding:.62rem 1.05rem;display:inline-flex;align-items:center;gap:.5rem;
+  transition:background .18s ease,box-shadow .18s ease,transform .18s ease,border-color .18s ease,color .18s ease;
+}
+.btn iconify-icon{font-size:18px}
+.btn-primary{background:var(--petrol-600);color:#fff}
+/* контрастні (заливкою) кнопки: іконка завжди біла — ніколи не успадковує акцент контексту */
+.btn-primary iconify-icon,.btn-accent iconify-icon{color:#fff}
+.btn-primary:hover{background:var(--petrol-700);box-shadow:var(--shadow-md);transform:translateY(-1px)}
+.btn-primary:active{background:var(--petrol-700);transform:translateY(0)}
+.btn-accent{background:var(--coral-500);color:#fff}
+.btn-accent:hover{background:var(--coral-600);box-shadow:var(--shadow-md);transform:translateY(-1px)}
+.btn-ghost{background:var(--surface);color:var(--n-900);border-color:var(--n-200)}
+.btn-ghost:hover{background:var(--n-100);border-color:var(--n-300)}
+.btn:disabled{background:var(--n-100);color:var(--n-300);cursor:not-allowed;box-shadow:none;transform:none;border-color:transparent}
+
+/* tab-bar */
+.tabbar{display:flex;background:var(--surface);border:1px solid var(--n-200);border-radius:var(--r-lg);padding:var(--sp-2);gap:var(--sp-1);box-shadow:var(--shadow-sm)}
+.tab{
+  flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;
+  padding:.5rem .25rem;border-radius:var(--r-md);color:var(--n-500);
+  font-size:.72rem;font-weight:500;cursor:pointer;border:0;background:transparent;
+  transition:background .18s ease,color .18s ease;
+}
+.tab iconify-icon{font-size:22px}
+.tab:hover{background:var(--n-100);color:var(--n-700)}
+.tab[aria-current="page"]{color:var(--petrol-600);background:var(--petrol-100)}
+
+/* segmented */
+.seg{display:inline-flex;background:var(--n-100);border-radius:var(--r-md);padding:3px}
+.seg button{font-family:var(--font-body);font-size:.82rem;font-weight:500;cursor:pointer;border:0;background:transparent;color:var(--n-500);padding:.38rem .8rem;border-radius:calc(var(--r-md) - 3px);transition:background .18s,color .18s}
+.seg button[aria-selected="true"]{background:var(--surface);color:var(--petrol-600);font-weight:600;box-shadow:var(--shadow-sm)}
+
+/* ——— Палітра ——— */
+.pal-group{margin-bottom:var(--sp-6)}
+.pal-group > .gl{font-size:.82rem;font-weight:600;color:var(--n-700);margin:0 0 var(--sp-3);display:flex;align-items:center;gap:var(--sp-2)}
+.swatches{display:grid;gap:var(--sp-3);grid-template-columns:repeat(auto-fill,minmax(190px,1fr))}
+.sw{border:1px solid var(--n-200);border-radius:var(--r-md);overflow:hidden;background:var(--surface)}
+.sw__c{height:56px;display:flex;align-items:flex-end;justify-content:flex-end;padding:6px}
+.sw__c .aa{transform:scale(.9);transform-origin:bottom right}
+.sw__meta{padding:.55rem .65rem}
+.sw__tok{font-family:var(--font-body);font-size:.76rem;font-weight:600;color:var(--n-900)}
+.sw__hex{font-size:.72rem;color:var(--n-500);font-variant-numeric:tabular-nums}
+.sw__use{font-size:.72rem;color:var(--n-500);margin-top:.25rem;display:block}
+
+/* ——— Типографіка ——— */
+.type-list{display:grid;gap:var(--sp-4)}
+.type-row{display:grid;grid-template-columns:1fr auto;gap:var(--sp-4);align-items:baseline;border-bottom:1px dashed var(--n-200);padding-bottom:var(--sp-4)}
+.type-row .spec{font-size:.74rem;color:var(--n-500);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.t-amount{font-family:var(--font-display);font-size:3rem;line-height:1;font-weight:600;color:var(--n-900);font-variant-numeric:tabular-nums;letter-spacing:-0.03em}
+.t-display{font-family:var(--font-display);font-size:2rem;font-weight:600;color:var(--n-900);letter-spacing:-0.02em}
+.t-h1{font-family:var(--font-display);font-size:1.5rem;font-weight:600;color:var(--n-900)}
+.t-h2{font-family:var(--font-display);font-size:1.25rem;font-weight:600;color:var(--n-900)}
+.t-bodylg{font-size:1.0625rem}
+.t-body{font-size:.9375rem}
+.t-sm{font-size:.8125rem;color:var(--n-500)}
+.t-cap{font-size:.75rem;color:var(--n-500);letter-spacing:.01em}
+
+/* ——— Форма-специфікація ——— */
+.spec-cols{display:grid;gap:var(--sp-6);grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.radii{display:flex;gap:var(--sp-4);flex-wrap:wrap;align-items:flex-end}
+.radii figure{margin:0;text-align:center}
+.radii .box{width:64px;height:64px;background:var(--petrol-100);border:1.5px solid var(--petrol-600)}
+.radii figcaption{font-size:.72rem;color:var(--n-500);margin-top:.4rem}
+.shadows{display:flex;gap:var(--sp-5);flex-wrap:wrap}
+.shadows figure{margin:0;text-align:center}
+.shadows .box{width:76px;height:56px;background:var(--surface);border-radius:var(--r-md)}
+.shadows figcaption{font-size:.72rem;color:var(--n-500);margin-top:.6rem}
+.scale-ramp{display:flex;gap:var(--sp-2);align-items:flex-end;flex-wrap:wrap}
+.scale-ramp figure{margin:0;text-align:center}
+.scale-ramp .bar{background:var(--coral-500);width:24px;border-radius:3px}
+.scale-ramp figcaption{font-size:.68rem;color:var(--n-500);margin-top:.35rem;font-variant-numeric:tabular-nums}
+
+/* ——— Іконки: план покриття ——— */
+.icontable{width:100%;border-collapse:collapse;font-size:.9rem}
+.icontable th,.icontable td{text-align:left;padding:.7rem .6rem;border-bottom:1px solid var(--n-200);vertical-align:middle}
+.icontable th{font-size:.72rem;text-transform:uppercase;letter-spacing:.04em;color:var(--n-500);font-weight:600}
+.icontable .ic{display:flex;gap:.9rem;color:var(--petrol-600);font-size:24px;align-items:center}
+.icontable td .role{font-weight:600;color:var(--n-900)}
+.icontable td .use{font-size:.78rem;color:var(--n-500)}
+
+/* ——— 3 живі компоненти ——— */
+.components{display:grid;gap:var(--sp-6);grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.card{background:var(--surface);border:1px solid var(--n-200);border-radius:var(--r-lg);box-shadow:var(--shadow-sm);overflow:hidden}
+.card__cap{font-size:.72rem;color:var(--n-500);padding:.6rem var(--sp-5) 0}
+.card__body{padding:var(--sp-5)}
+
+/* overview component */
+.ov-top{display:flex;justify-content:space-between;align-items:flex-start;gap:var(--sp-3);margin-bottom:var(--sp-4)}
+.ov-amount{font-family:var(--font-display);font-size:2.4rem;line-height:1;font-weight:600;color:var(--n-900);font-variant-numeric:tabular-nums;letter-spacing:-0.03em}
+.ov-sub{font-size:.82rem;color:var(--n-500);margin-top:.3rem}
+.cat{display:flex;align-items:center;gap:.8rem;padding:.6rem 0}
+.cat + .cat{border-top:1px solid var(--n-200)}
+.disc{width:34px;height:34px;border-radius:50%;flex:none;display:grid;place-items:center;color:#fff}
+.disc iconify-icon{font-size:18px}
+.cat__name{font-weight:600;color:var(--n-900);font-size:.92rem}
+.cat__sub{font-size:.76rem;color:var(--n-500)}
+.cat__pct{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--n-500);font-weight:500}
+.cat--add{color:var(--coral-600)}
+.cat--add .disc{background:transparent;border:1.5px dashed var(--coral-500);color:var(--coral-500)}
+.cat--add .cat__name{color:var(--coral-600);font-weight:500}
+
+/* transaction row */
+.tx{display:flex;align-items:center;gap:.8rem;padding:.7rem 0}
+.tx + .tx{border-top:1px solid var(--n-200)}
+.tx__main{min-width:0}
+.tx__name{font-weight:600;color:var(--n-900);font-size:.92rem}
+.tx__meta{display:flex;gap:.4rem;align-items:center;margin-top:.25rem;flex-wrap:wrap}
+.tx__amt{margin-left:auto;font-variant-numeric:tabular-nums;font-weight:600;color:var(--n-900);white-space:nowrap}
+.chip{font-size:.72rem;font-weight:500;padding:.18rem .5rem;border-radius:var(--r-sm);display:inline-flex;align-items:center;gap:.3rem}
+.chip iconify-icon{font-size:13px}
+.chip--cat{background:var(--n-100);color:var(--n-700)}
+.chip--auto{background:var(--petrol-100);color:var(--petrol-600)}
+.chip--tag{background:var(--gold-100);color:var(--gold-600)}
+.chip--date{color:var(--n-500);font-variant-numeric:tabular-nums}
+
+/* states */
+.state{padding:var(--sp-5);text-align:center;border-radius:var(--r-md)}
+.state iconify-icon{font-size:30px}
+.state h4{font-family:var(--font-display);font-size:1.05rem;margin:.5rem 0 .3rem;color:var(--n-900);font-weight:600}
+.state p{font-size:.85rem;color:var(--n-500);margin:0 auto var(--sp-4);max-width:32ch}
+.state--error{background:var(--danger-100)}
+.state--error > iconify-icon{color:var(--danger-600)}
+.state--empty > iconify-icon{color:var(--n-300)}
+.toast{display:flex;align-items:center;gap:.6rem;background:var(--success-100);color:var(--success-600);border-radius:var(--r-md);padding:.6rem .8rem;font-size:.85rem;font-weight:500;margin-top:var(--sp-4)}
+.toast iconify-icon{font-size:18px}
+.sk{background:var(--n-100);border-radius:6px;height:14px}
+.sk-row{display:flex;align-items:center;gap:.8rem;padding:.6rem 0}
+.sk-row + .sk-row{border-top:1px solid var(--n-200)}
+.sk-disc{width:34px;height:34px;border-radius:50%;background:var(--n-100);flex:none}
+.sk-pulse{animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+
+/* ——— Синтез Magnific: wash-плитки + тихий сайдбар ——— */
+.synth-grid{display:grid;gap:var(--sp-6);grid-template-columns:1fr 260px;align-items:start}
+@media(max-width:820px){.synth-grid{grid-template-columns:1fr}}
+.tiles{display:grid;gap:var(--sp-3);grid-template-columns:repeat(auto-fill,minmax(112px,1fr))}
+.tile{
+  background:var(--surface);border:1px solid var(--n-200);border-radius:var(--r-lg);
+  padding:var(--sp-4) var(--sp-3);text-align:center;cursor:pointer;
+  transition:border-color .18s ease,box-shadow .18s ease,transform .18s ease;
+}
+.tile:hover{border-color:var(--n-300);box-shadow:var(--shadow-md);transform:translateY(-1px)}
+.tile__wash{width:44px;height:44px;border-radius:var(--r-md);display:grid;place-items:center;margin:0 auto var(--sp-2)}
+.tile__wash iconify-icon{font-size:22px}
+.tile__name{font-size:.8rem;font-weight:500;color:var(--n-700)}
+/* тихий лівий сайдбар (десктоп-навігація в манері Magnific) */
+.rail{background:var(--surface);border:1px solid var(--n-200);border-radius:var(--r-lg);padding:var(--sp-3);box-shadow:var(--shadow-sm)}
+.rail__new{width:100%;justify-content:flex-start;margin-bottom:var(--sp-3)}
+.rail a{display:flex;align-items:center;gap:.6rem;padding:.5rem .6rem;border-radius:var(--r-md);color:var(--n-500);font-size:.86rem;text-decoration:none;font-weight:500;transition:background .18s,color .18s}
+.rail a iconify-icon{font-size:20px}
+.rail a:hover{background:var(--n-100);color:var(--n-700)}
+.rail a[aria-current="page"]{background:var(--petrol-100);color:var(--petrol-600)}
+/* вага іконки за станом: linear у спокої, bold на вибраному */
+.tab .i-bold,.rail a .i-bold{display:none}
+.tab[aria-current="page"] .i-linear,.rail a[aria-current="page"] .i-linear{display:none}
+.tab[aria-current="page"] .i-bold,.rail a[aria-current="page"] .i-bold{display:inline-block}
+footer{color:var(--n-500);font-size:.82rem;padding:var(--sp-8) 0}
+footer code{background:var(--surface);border:1px solid var(--n-200);padding:.05rem .35rem;border-radius:4px}
+
+@media(prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <h1>Напрям 3 · Ясність — стенд мови</h1>
+    <p>Обрана візуальна мова Бабосіка, показана живцем і специфікацією. Кожне рішення підписане атрибутом; контраст тексту перевірено на <strong>WCAG AA</strong>. Два інші напрями лишаються в <code>concept.md</code> — до них можна повернутись.</p>
+    <div class="tagrow">
+      <span class="pill">Світла тема</span>
+      <span class="pill">Full-palette: петроль · корал · золото</span>
+      <span class="pill">Bricolage Grotesque + IBM Plex Sans</span>
+      <span class="pill">Solar Linear · Bold на вибраному</span>
+      <span class="pill">Колір не судить суми</span>
+    </div>
+  </header>
+
+  <!-- ============ 1 · МОВА ЖИВЦЕМ ============ -->
+  <section>
+    <div class="sec-h"><h2>Мова живцем</h2><span class="k">як напрям виглядав на directions.html — тепер в русі</span></div>
+    <div class="live-grid">
+
+      <div class="panel">
+        <h3>Кнопки та стани</h3>
+        <div class="btnrow" style="margin-bottom:var(--sp-4)">
+          <button class="btn btn-primary"><iconify-icon icon="solar:link-round-linear"></iconify-icon>Підключити банк</button>
+          <button class="btn btn-ghost">До огляду</button>
+          <button class="btn btn-accent"><iconify-icon icon="solar:add-circle-linear"></iconify-icon>Додати</button>
+          <button class="btn btn-primary" disabled>Зберегти</button>
+        </div>
+        <div class="btnrow">
+          <span class="attr">.btn-primary → petrol-600 · дія</span>
+          <span class="attr attr--muted">.btn-ghost · вторинна</span>
+          <span class="attr attr--muted">.btn-accent → coral · увага</span>
+          <span class="attr attr--muted">:disabled → n-100 / n-300</span>
+        </div>
+        <div style="margin-top:var(--sp-5)">
+          <div class="seg" role="tablist">
+            <button role="tab" aria-selected="true">Категорії</button>
+            <button role="tab" aria-selected="false">Теги</button>
+          </div>
+          <span class="attr" style="margin-left:.5rem">segmented → вибране = petrol на surface</span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Таб-бар</h3>
+        <nav class="tabbar" aria-label="Головна навігація">
+          <button class="tab" aria-current="page"><iconify-icon class="i-linear" icon="solar:pie-chart-2-linear"></iconify-icon><iconify-icon class="i-bold" icon="solar:pie-chart-2-bold"></iconify-icon>Огляд</button>
+          <button class="tab"><iconify-icon class="i-linear" icon="solar:bill-list-linear"></iconify-icon><iconify-icon class="i-bold" icon="solar:bill-list-bold"></iconify-icon>Транзакції</button>
+          <button class="tab"><iconify-icon class="i-linear" icon="solar:widget-5-linear"></iconify-icon><iconify-icon class="i-bold" icon="solar:widget-5-bold"></iconify-icon>Категорії</button>
+          <button class="tab"><iconify-icon class="i-linear" icon="solar:user-circle-linear"></iconify-icon><iconify-icon class="i-bold" icon="solar:user-circle-bold"></iconify-icon>Акаунт</button>
+        </nav>
+        <p class="note">4 входи зі sitemap. Активний = <span class="attr">petrol-600 на petrol-100</span> <span class="attr">іконка Bold</span></p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ 1.5 · СИНТЕЗ MAGNIFIC ============ -->
+  <section>
+    <div class="sec-h"><h2>Синтез: прийоми Magnific</h2><span class="k">повітря · washes · тихий сайдбар · дисципліна акценту — прийоми, не клон</span></div>
+    <p class="lead">Гібрид: мʼякі <strong>washes</strong> (color-100 фон + color-600 іконка) — для навігації і вторинних плиток; <strong>насичені диски</strong> лишаються на сигнатурних рядках категорій (основа Monobank із <code>references.md</code>). Уникаємо клішé SaaS: без ідентичної сітки-героя і без вітання (заборонено голосом).</p>
+    <div class="synth-grid">
+
+      <div class="panel">
+        <h3>Wash-плитки · вторинні входи</h3>
+        <div class="tiles">
+          <div class="tile"><div class="tile__wash" style="background:var(--petrol-100);color:var(--petrol-600)"><iconify-icon icon="solar:pie-chart-2-linear"></iconify-icon></div><div class="tile__name">Огляд</div></div>
+          <div class="tile"><div class="tile__wash" style="background:var(--coral-100);color:var(--coral-600)"><iconify-icon icon="solar:bill-list-linear"></iconify-icon></div><div class="tile__name">Транзакції</div></div>
+          <div class="tile"><div class="tile__wash" style="background:var(--gold-100);color:var(--gold-600)"><iconify-icon icon="solar:widget-5-linear"></iconify-icon></div><div class="tile__name">Категорії</div></div>
+          <div class="tile"><div class="tile__wash" style="background:var(--n-100);color:var(--n-700)"><iconify-icon icon="solar:card-linear"></iconify-icon></div><div class="tile__name">Банки</div></div>
+        </div>
+        <p class="note">Іконка color-600 на color-100: <span class="attr">petrol 6.2:1</span> <span class="attr">coral 4.9:1</span> <span class="attr">gold 5.0:1</span> — усі AA (навіть як текст).</p>
+      </div>
+
+      <nav class="rail" aria-label="Десктоп-навігація">
+        <button class="btn btn-primary rail__new"><iconify-icon icon="solar:add-circle-linear"></iconify-icon>Додати</button>
+        <a href="#" aria-current="page"><iconify-icon class="i-linear" icon="solar:pie-chart-2-linear"></iconify-icon><iconify-icon class="i-bold" icon="solar:pie-chart-2-bold"></iconify-icon>Огляд</a>
+        <a href="#"><iconify-icon class="i-linear" icon="solar:bill-list-linear"></iconify-icon><iconify-icon class="i-bold" icon="solar:bill-list-bold"></iconify-icon>Транзакції</a>
+        <a href="#"><iconify-icon class="i-linear" icon="solar:widget-5-linear"></iconify-icon><iconify-icon class="i-bold" icon="solar:widget-5-bold"></iconify-icon>Категорії</a>
+        <a href="#"><iconify-icon class="i-linear" icon="solar:user-circle-linear"></iconify-icon><iconify-icon class="i-bold" icon="solar:user-circle-bold"></iconify-icon>Акаунт</a>
+        <p class="note" style="margin:var(--sp-2) .6rem 0">Тихий сайдбар: n-500 у спокої, активний — <span class="attr">petrol-100</span></p>
+      </nav>
+
+    </div>
+  </section>
+
+  <!-- ============ 2 · ПАЛІТРА ============ -->
+  <section>
+    <div class="sec-h"><h2>Палітра</h2><span class="k">primary / accent / tertiary · neutral · семантичні — кожен колір із атрибутом</span></div>
+    <p class="lead">Стратегія Full-palette: три ролі кольору роблять роботу. <strong>Семантичні кольори — лише для системних станів</strong> (підключення, помилка мережі), <strong>ніколи на сумах транзакцій</strong> — це наскрізний закон із голосу.</p>
+
+    <div class="pal-group">
+      <p class="gl">Primary — петроль <span class="attr">дія · вибраний стан · поточний таб</span></p>
+      <div class="swatches">
+        <div class="sw"><div class="sw__c" style="background:var(--petrol-700)"><span class="aa">AA · білий 8.7:1</span></div><div class="sw__meta"><div class="sw__tok">--petrol-700</div><div class="sw__hex">#0B4642</div><span class="sw__use">hover / pressed</span></div></div>
+        <div class="sw"><div class="sw__c" style="background:var(--petrol-600)"><span class="aa">AA · білий 7.5:1</span></div><div class="sw__meta"><div class="sw__tok">--petrol-600</div><div class="sw__hex">#0F5C57</div><span class="sw__use">кнопка, активний таб</span></div></div>
+        <div class="sw"><div class="sw__c" style="background:var(--petrol-100)"></div><div class="sw__meta"><div class="sw__tok">--petrol-100</div><div class="sw__hex">#E4F0EE</div><span class="sw__use">вибраний фон, info-wash</span></div></div>
+      </div>
+    </div>
+
+    <div class="pal-group">
+      <p class="gl">Accent — корал <span class="attr">увага без присуду · контрапункт</span></p>
+      <div class="swatches">
+        <div class="sw"><div class="sw__c" style="background:var(--coral-600)"><span class="aa">AA · білий 5.1:1</span></div><div class="sw__meta"><div class="sw__tok">--coral-600</div><div class="sw__hex">#B54A28</div><span class="sw__use">текст-safe, hover</span></div></div>
+        <div class="sw"><div class="sw__c" style="background:var(--coral-500)"></div><div class="sw__meta"><div class="sw__tok">--coral-500</div><div class="sw__hex">#E8734F</div><span class="sw__use">заливка, диск, «+»</span></div></div>
+        <div class="sw"><div class="sw__c" style="background:var(--coral-100)"></div><div class="sw__meta"><div class="sw__tok">--coral-100</div><div class="sw__hex">#FBEDE7</div><span class="sw__use">wash</span></div></div>
+      </div>
+    </div>
+
+    <div class="pal-group">
+      <p class="gl">Tertiary — золото <span class="attr">теги · дрібні підсвітки</span></p>
+      <div class="swatches">
+        <div class="sw"><div class="sw__c" style="background:var(--gold-600)"><span class="aa">AA · білий 5.7:1</span></div><div class="sw__meta"><div class="sw__tok">--gold-600</div><div class="sw__hex">#8A5E12</div><span class="sw__use">текст тега (на gold-100 = 5.0:1)</span></div></div>
+        <div class="sw"><div class="sw__c" style="background:var(--gold-500)"></div><div class="sw__meta"><div class="sw__tok">--gold-500</div><div class="sw__hex">#E0A13C</div><span class="sw__use">заливка, диск</span></div></div>
+        <div class="sw"><div class="sw__c" style="background:var(--gold-100)"></div><div class="sw__meta"><div class="sw__tok">--gold-100</div><div class="sw__hex">#FBF1DF</div><span class="sw__use">wash тега</span></div></div>
+      </div>
+    </div>
+
+    <div class="pal-group">
+      <p class="gl">Neutral — ледь холодна шкала <span class="attr attr--muted">текст · межі · поверхні</span></p>
+      <div class="swatches">
+        <div class="sw"><div class="sw__c" style="background:var(--n-900)"><span class="aa">AA · тло 15:1</span></div><div class="sw__meta"><div class="sw__tok">--n-900</div><div class="sw__hex">#181C1B</div><span class="sw__use">чорнило: заголовки, суми</span></div></div>
+        <div class="sw"><div class="sw__c" style="background:var(--n-700)"><span class="aa">AA · тло 10:1</span></div><div class="sw__meta"><div class="sw__tok">--n-700</div><div class="sw__hex">#333A38</div><span class="sw__use">основний текст</span></div></div>
+        <div class="sw"><div class="sw__c" style="background:var(--n-500)"><span class="aa">AA · тло 5.6:1</span></div><div class="sw__meta"><div class="sw__tok">--n-500</div><div class="sw__hex">#5B6462</div><span class="sw__use">приглушений, placeholder</span></div></div>
+        <div class="sw"><div class="sw__c" style="background:var(--n-300)"></div><div class="sw__meta"><div class="sw__tok">--n-300</div><div class="sw__hex">#A8AEAC</div><span class="sw__use">disabled fg, idle-іконка</span></div></div>
+        <div class="sw"><div class="sw__c" style="background:var(--n-200)"></div><div class="sw__meta"><div class="sw__tok">--n-200</div><div class="sw__hex">#E7E8E6</div><span class="sw__use">межа, лінія</span></div></div>
+        <div class="sw"><div class="sw__c" style="background:var(--n-100)"></div><div class="sw__meta"><div class="sw__tok">--n-100</div><div class="sw__hex">#F0F1EF</div><span class="sw__use">тонкий фон, skeleton</span></div></div>
+        <div class="sw"><div class="sw__c" style="background:var(--surface);border-bottom:1px solid var(--n-200)"></div><div class="sw__meta"><div class="sw__tok">--surface</div><div class="sw__hex">#FFFFFF</div><span class="sw__use">поверхня карток</span></div></div>
+        <div class="sw"><div class="sw__c" style="background:var(--bg);border-bottom:1px solid var(--n-200)"></div><div class="sw__meta"><div class="sw__tok">--bg</div><div class="sw__hex">#FBFBFA</div><span class="sw__use">тло застосунку</span></div></div>
+      </div>
+    </div>
+
+    <div class="pal-group">
+      <p class="gl">Semantic <span class="attr attr--muted">лише системні стани — не суми</span></p>
+      <div class="swatches">
+        <div class="sw"><div class="sw__c" style="background:var(--success-600)"><span class="aa">AA · білий 4.5:1</span></div><div class="sw__meta"><div class="sw__tok">--success-600</div><div class="sw__hex">#1E7A4D</div><span class="sw__use">банк підключено (не «успішно»)</span></div></div>
+        <div class="sw"><div class="sw__c" style="background:var(--danger-600)"><span class="aa">AA · білий 4.9:1</span></div><div class="sw__meta"><div class="sw__tok">--danger-600</div><div class="sw__hex">#C0392B</div><span class="sw__use">збій мережі, помилка</span></div></div>
+        <div class="sw"><div class="sw__c" style="background:var(--warning-600)"><span class="aa">AA · білий 4.7:1</span></div><div class="sw__meta"><div class="sw__tok">--warning-600</div><div class="sw__hex">#9C6A15</div><span class="sw__use">увага, підтвердження дії</span></div></div>
+        <div class="sw"><div class="sw__c" style="background:var(--info-600)"><span class="aa">AA · білий 7.5:1</span></div><div class="sw__meta"><div class="sw__tok">--info-600</div><div class="sw__hex">#0F5C57</div><span class="sw__use">підказка (= петроль)</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3 · ТИПОГРАФІКА ============ -->
+  <section>
+    <div class="sec-h"><h2>Типографіка</h2><span class="k">пара шрифтів + шкала розмірів (крок ≈1.2, фіксований rem)</span></div>
+    <p class="lead"><strong>Bricolage Grotesque</strong> несе суми й заголовки (характер, впевненість), <strong>IBM Plex Sans</strong> — увесь інтерфейс (гуманістична читабельність). Контраст-вісь: характерний гротеск + гуманістика. Суми завжди <span class="attr">tabular-nums</span>.</p>
+    <div class="type-list">
+      <div class="type-row"><div class="amount t-amount">−12 480 ₴</div><div class="spec">Bricolage 600 · 48/48 · -0.03em<br>сума-герой</div></div>
+      <div class="type-row"><div class="disp t-display">Огляд за червень</div><div class="spec">Bricolage 600 · 32/36 · -0.02em<br>display</div></div>
+      <div class="type-row"><div class="t-h1">Категорії та підкатегорії</div><div class="spec">Bricolage 600 · 24/30<br>h1</div></div>
+      <div class="type-row"><div class="t-h2">Продукти та супермаркети</div><div class="spec">Bricolage 600 · 20/26<br>h2 · назва категорії</div></div>
+      <div class="type-row"><div class="t-bodylg">Твої витрати за червень — на 6% менше, ніж у травні.</div><div class="spec">Plex 400 · 17/26<br>body-lg</div></div>
+      <div class="type-row"><div class="t-body">Найбільша частка — продукти. Далі кафе й транспорт.</div><div class="spec">Plex 400 · 15/23<br>body (база)</div></div>
+      <div class="type-row"><div class="t-sm">42 транзакції · оновлено сьогодні</div><div class="spec">Plex 400 · 13/18<br>small · метадані</div></div>
+      <div class="type-row"><div class="t-cap">АВТО · #відрядження</div><div class="spec">Plex 500 · 12/16<br>caption · бейдж</div></div>
+    </div>
+  </section>
+
+  <!-- ============ 4 · ФОРМА ============ -->
+  <section>
+    <div class="sec-h"><h2>Форма</h2><span class="k">радіуси · тіні · відступи</span></div>
+    <div class="spec-cols">
+      <div>
+        <p class="gl" style="font-weight:600;color:var(--n-700);margin:0 0 var(--sp-4)">Радіуси</p>
+        <div class="radii">
+          <figure><div class="box" style="border-radius:var(--r-sm)"></div><figcaption>--r-sm · 8px<br>чипи, бейджі</figcaption></figure>
+          <figure><div class="box" style="border-radius:var(--r-md)"></div><figcaption>--r-md · 10px<br>кнопки, поля</figcaption></figure>
+          <figure><div class="box" style="border-radius:var(--r-lg)"></div><figcaption>--r-lg · 12px<br>картки</figcaption></figure>
+          <figure><div class="box" style="border-radius:var(--r-pill);width:64px"></div><figcaption>--r-pill<br>перемикачі</figcaption></figure>
+        </div>
+      </div>
+      <div>
+        <p class="gl" style="font-weight:600;color:var(--n-700);margin:0 0 var(--sp-4)">Тіні (елевація)</p>
+        <div class="shadows">
+          <figure><div class="box" style="box-shadow:var(--shadow-sm)"></div><figcaption>--shadow-sm<br>картка в спокої</figcaption></figure>
+          <figure><div class="box" style="box-shadow:var(--shadow-md)"></div><figcaption>--shadow-md<br>hover, підняте</figcaption></figure>
+          <figure><div class="box" style="box-shadow:var(--shadow-lg)"></div><figcaption>--shadow-lg<br>меню, поповер</figcaption></figure>
+        </div>
+      </div>
+      <div>
+        <p class="gl" style="font-weight:600;color:var(--n-700);margin:0 0 var(--sp-4)">Відступи · крок 4px</p>
+        <div class="scale-ramp">
+          <figure><div class="bar" style="height:4px"></div><figcaption>4</figcaption></figure>
+          <figure><div class="bar" style="height:8px"></div><figcaption>8</figcaption></figure>
+          <figure><div class="bar" style="height:12px"></div><figcaption>12</figcaption></figure>
+          <figure><div class="bar" style="height:16px"></div><figcaption>16</figcaption></figure>
+          <figure><div class="bar" style="height:20px"></div><figcaption>20</figcaption></figure>
+          <figure><div class="bar" style="height:24px"></div><figcaption>24</figcaption></figure>
+          <figure><div class="bar" style="height:32px"></div><figcaption>32</figcaption></figure>
+          <figure><div class="bar" style="height:40px"></div><figcaption>40</figcaption></figure>
+          <figure><div class="bar" style="height:48px"></div><figcaption>48</figcaption></figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 5 · ІКОНКИ (план покриття) ============ -->
+  <section>
+    <div class="sec-h"><h2>Іконки Solar · Linear</h2><span class="k">тонкі у спокої, Bold на вибраному стані — за планом покриття</span></div>
+    <table class="icontable">
+      <thead><tr><th>Іконки</th><th>Роль</th><th>Де застосовано</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><div class="ic"><iconify-icon icon="solar:pie-chart-2-linear"></iconify-icon><iconify-icon icon="solar:bill-list-linear"></iconify-icon><iconify-icon icon="solar:widget-5-linear"></iconify-icon><iconify-icon icon="solar:user-circle-linear"></iconify-icon></div></td>
+          <td><span class="role">Таб-бар</span></td>
+          <td><span class="use">Огляд · Транзакції · Категорії · Акаунт — активний у petrol-600</span></td>
+        </tr>
+        <tr>
+          <td><div class="ic" style="color:var(--n-500)"><iconify-icon icon="solar:calendar-linear"></iconify-icon><iconify-icon icon="solar:card-linear"></iconify-icon><iconify-icon icon="solar:clock-circle-linear"></iconify-icon></div></td>
+          <td><span class="role">Метадані</span></td>
+          <td><span class="use">дата, банк, час оновлення — у n-500, тихо</span></td>
+        </tr>
+        <tr>
+          <td><div class="ic"><span class="chip chip--auto"><iconify-icon icon="solar:bolt-linear"></iconify-icon>авто</span><span class="chip chip--tag"><iconify-icon icon="solar:tag-horizontal-linear"></iconify-icon>тег</span></div></td>
+          <td><span class="role">Бейдж</span></td>
+          <td><span class="use">джерело транзакції (авто/вручну), теги</span></td>
+        </tr>
+        <tr>
+          <td><div class="ic"><iconify-icon icon="solar:link-round-linear"></iconify-icon><iconify-icon icon="solar:add-circle-linear"></iconify-icon><iconify-icon icon="solar:refresh-linear"></iconify-icon><iconify-icon icon="solar:pen-2-linear"></iconify-icon></div></td>
+          <td><span class="role">Кнопки</span></td>
+          <td><span class="use">підключити, додати, оновити, редагувати</span></td>
+        </tr>
+        <tr>
+          <td><div class="ic"><iconify-icon icon="solar:check-circle-bold" style="color:var(--success-600)"></iconify-icon><iconify-icon icon="solar:danger-triangle-bold" style="color:var(--danger-600)"></iconify-icon><iconify-icon icon="solar:info-circle-bold" style="color:var(--info-600)"></iconify-icon><iconify-icon icon="solar:hourglass-bold" style="color:var(--n-300)"></iconify-icon></div></td>
+          <td><span class="role">Стани</span></td>
+          <td><span class="use">підтвердження · помилка · підказка · очікування</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ============ 6 · ТРИ ЖИВІ КОМПОНЕНТИ ============ -->
+  <section style="border-bottom:0">
+    <div class="sec-h"><h2>Три живі компоненти</h2><span class="k">мова, зібрана в реальні вузли продукту</span></div>
+    <div class="components">
+
+      <!-- 1: Огляд-картка -->
+      <div class="card">
+        <div class="card__cap">Компонент 1 · Огляд-картка (сума-герой + категорії)</div>
+        <div class="card__body">
+          <div class="ov-top">
+            <div>
+              <div class="ov-amount">−12 480 ₴</div>
+              <div class="ov-sub">червень · на 6% менше, ніж у травні</div>
+            </div>
+            <div class="seg"><button aria-selected="true">Список</button><button aria-selected="false">Мапа</button></div>
+          </div>
+          <div class="cat"><div class="disc" style="background:var(--petrol-600)"><iconify-icon icon="solar:cart-3-linear"></iconify-icon></div><div><div class="cat__name">Продукти</div><div class="cat__sub">42 транзакції</div></div><div class="cat__pct">31%</div></div>
+          <div class="cat"><div class="disc" style="background:var(--coral-500)"><iconify-icon icon="solar:cup-hot-linear"></iconify-icon></div><div><div class="cat__name">Кафе</div><div class="cat__sub">18 транзакцій</div></div><div class="cat__pct">14%</div></div>
+          <div class="cat"><div class="disc" style="background:var(--gold-500)"><iconify-icon icon="solar:bus-linear"></iconify-icon></div><div><div class="cat__name">Транспорт</div><div class="cat__sub">27 транзакцій</div></div><div class="cat__pct">9%</div></div>
+          <div class="cat cat--add"><div class="disc"><iconify-icon icon="solar:add-circle-linear"></iconify-icon></div><div class="cat__name">Додати категорію</div></div>
+        </div>
+      </div>
+
+      <!-- 2: Рядок транзакції -->
+      <div class="card">
+        <div class="card__cap">Компонент 2 · Рядок транзакції (метадані + бейджі)</div>
+        <div class="card__body">
+          <div class="tx">
+            <div class="disc" style="background:var(--petrol-600)"><iconify-icon icon="solar:cart-3-linear"></iconify-icon></div>
+            <div class="tx__main">
+              <div class="tx__name">Сільпо</div>
+              <div class="tx__meta">
+                <span class="chip chip--cat">Продукти</span>
+                <span class="chip chip--auto"><iconify-icon icon="solar:bolt-linear"></iconify-icon>авто</span>
+                <span class="chip chip--date">30 червня</span>
+              </div>
+            </div>
+            <div class="tx__amt">−742 ₴</div>
+          </div>
+          <div class="tx">
+            <div class="disc" style="background:var(--coral-500)"><iconify-icon icon="solar:cup-hot-linear"></iconify-icon></div>
+            <div class="tx__main">
+              <div class="tx__name">Кавʼярня «Один»</div>
+              <div class="tx__meta">
+                <span class="chip chip--cat">Кафе</span>
+                <span class="chip chip--tag"><iconify-icon icon="solar:tag-horizontal-linear"></iconify-icon>відрядження</span>
+                <span class="chip chip--date">29 червня</span>
+              </div>
+            </div>
+            <div class="tx__amt">−145 ₴</div>
+          </div>
+          <div class="tx">
+            <div class="disc" style="background:var(--n-500)"><iconify-icon icon="solar:banknote-2-linear"></iconify-icon></div>
+            <div class="tx__main">
+              <div class="tx__name">Готівка</div>
+              <div class="tx__meta">
+                <span class="chip chip--cat">Без категорії</span>
+                <span class="chip chip--date">28 червня</span>
+              </div>
+            </div>
+            <div class="tx__amt">−500 ₴</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3: Системні стани -->
+      <div class="card">
+        <div class="card__cap">Компонент 3 · Системні стани (голос + семантика)</div>
+        <div class="card__body">
+          <div class="state state--error">
+            <iconify-icon icon="solar:danger-triangle-linear"></iconify-icon>
+            <h4>Не вдалось оновити Monobank</h4>
+            <p>Дані за минулі місяці на місці.</p>
+            <button class="btn btn-primary"><iconify-icon icon="solar:refresh-linear"></iconify-icon>Спробувати ще</button>
+          </div>
+
+          <div class="toast"><iconify-icon icon="solar:check-circle-linear"></iconify-icon>Monobank підключено</div>
+
+          <div style="margin-top:var(--sp-5)">
+            <div class="sk-row"><div class="sk-disc sk-pulse"></div><div style="flex:1"><div class="sk sk-pulse" style="width:45%"></div><div class="sk sk-pulse" style="width:30%;margin-top:6px;height:10px"></div></div><div class="sk sk-pulse" style="width:52px"></div></div>
+            <div class="sk-row"><div class="sk-disc sk-pulse"></div><div style="flex:1"><div class="sk sk-pulse" style="width:38%"></div><div class="sk sk-pulse" style="width:26%;margin-top:6px;height:10px"></div></div><div class="sk sk-pulse" style="width:52px"></div></div>
+            <p class="note" style="text-align:center">skeleton замість спінера · ми оновлюємо транзакції…</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <p>Кожне рішення підписане атрибутом і токеном; контраст тексту — WCAG AA. Ця мова стає прямим входом для <code>tokens/</code> (CSS-змінні вже названі як токени) і продуктового <code>DESIGN.md</code>. Напрями 1 і 2 — у <code>concept.md</code>.</p>
+  </footer>
+
+</div>
+</body>
+</html>
