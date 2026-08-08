@@ -406,6 +406,21 @@ button{font:inherit}
 .skel-field{height:44px; margin:8px 0; border-radius:var(--r-md)}
 .skel-filter{height:96px; border-radius:var(--r-lg)} /* місце під картку фільтра — без стрибка при появі */
 
+/* ═══ ДІАЛОГ ПІДТВЕРДЖЕННЯ (native <dialog>) ══════════════════════════════
+   Деструктивна дія (видалити категорію/підкатегорію) не виконується одним кліком. */
+.confirm{border:0; padding:0; max-width:420px; width:calc(100% - 32px); border-radius:var(--r-lg);
+  background:var(--surface); box-shadow:var(--shadow-md); color:var(--n-700)}
+.confirm::backdrop{background:rgba(11,54,50,.40); backdrop-filter:blur(2px)}
+.confirm .confirm-in{padding:26px 24px; margin:0; border:0}
+.confirm .ic-warn{width:52px; height:52px; border-radius:50%; display:grid; place-items:center;
+  background:var(--danger-100); color:var(--danger-600); font-size:26px; margin-bottom:14px}
+.confirm h2{font-size:19px; margin-bottom:8px}
+.confirm p{color:var(--n-500); font-size:14px; margin:0 0 20px}
+.confirm .state-actions{justify-content:flex-end; margin-top:0}
+.confirm[open]{animation:confirm-in .22s var(--ease-out)}
+@keyframes confirm-in{from{opacity:0; transform:translateY(6px) scale(.98)}}
+@media (prefers-reduced-motion:reduce){.confirm[open]{animation:none}}
+
 /* ═══ Утиліти ═════════════════════════════════════════════════════════════ */
 .muted{color:var(--n-500); font-size:13px}
 

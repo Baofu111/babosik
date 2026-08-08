@@ -65,6 +65,7 @@
 | Файл (Експорт) | `.file-row`(`.f-icon` `.f-name>b` `.f-meta`) | painted (замість запозиченого `.bank`) |
 | Категорія (CRUD) | `.cat`(`.cat-head`(`.disc` `h3` `.cat-actions`(`a` · `a.danger`=видалити)) `.subs`(`li` `.muted-sub`(`--n-500`) `.sub-actions`(`a` `a.danger`, ціль ≥24px)) `.add-sub`) · `.add-cat`(`summary` `.add-cat-row`) | painted |
 | Вхід (auth) | `.auth` `.auth-hero`(`.a-brand` `h1` `.lead` `.trust`) `.auth-form`(`.inner`) | painted (Вхід) |
+| Підтвердження (модалка) | `.confirm` native `<dialog>` (`.confirm-in` `form[method=dialog]` `.ic-warn` `h2` `p` `.state-actions`) | деструктив (видалити категорію) не одним кліком; `categories.html` має скрипт-обгортку |
 
 ## Стани (структура з вайрфреймів, вигляд з мови)
 

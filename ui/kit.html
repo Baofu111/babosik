@@ -223,6 +223,19 @@
         </ul>
         <p class="add-sub"><a href="#">＋ Додати підкатегорію</a></p>
       </article>
+      <p class="kx-cap" style="margin-top:18px">Підтвердження видалення (native &lt;dialog&gt; · деструктив не одним кліком)</p>
+      <button class="btn btn-danger" onclick="document.getElementById('kx-confirm').showModal()"><iconify-icon icon="solar:trash-bin-trash-linear"></iconify-icon>Видалити категорію</button>
+      <dialog class="confirm" id="kx-confirm" aria-labelledby="kx-cd-title">
+        <form method="dialog" class="confirm-in">
+          <div class="ic-warn"><iconify-icon icon="solar:trash-bin-trash-bold"></iconify-icon></div>
+          <h2 id="kx-cd-title">Видалити категорію «Продукти»?</h2>
+          <p>Разом зникнуть її підкатегорії. Дію не можна відмінити.</p>
+          <div class="state-actions">
+            <button class="btn" value="cancel">Скасувати</button>
+            <button class="btn btn-danger" value="confirm">Видалити</button>
+          </div>
+        </form>
+      </dialog>
     </div>
   </section>
 

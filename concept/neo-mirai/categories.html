@@ -119,5 +119,49 @@
     </div>
   </main>
 </div>
+
+<!-- Підтвердження видалення (компонент .confirm з ui/kit.html) -->
+<dialog class="confirm" id="confirm-del" aria-labelledby="cd-title">
+  <form method="dialog" class="confirm-in">
+    <div class="ic-warn"><iconify-icon icon="solar:trash-bin-trash-bold"></iconify-icon></div>
+    <h2 id="cd-title">Видалити <span data-cd-name>цей запис</span>?</h2>
+    <p data-cd-body>Дію не можна відмінити.</p>
+    <div class="state-actions">
+      <button class="btn" value="cancel">Скасувати</button>
+      <button class="btn btn-danger" value="confirm">Видалити</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+  (function(){
+    var dlg = document.getElementById('confirm-del');
+    var nameEl = dlg.querySelector('[data-cd-name]');
+    var bodyEl = dlg.querySelector('[data-cd-body]');
+    var target = null;
+    document.querySelectorAll('.cat-actions a.danger, .sub-actions a.danger').forEach(function(a){
+      a.addEventListener('click', function(e){
+        e.preventDefault();
+        var sub = a.closest('.subs > li');
+        if(sub){
+          target = sub;
+          nameEl.textContent = 'підкатегорію «' + sub.childNodes[0].textContent.trim() + '»';
+          bodyEl.textContent = 'Транзакції залишаться в категорії. Дію не можна відмінити.';
+        } else {
+          var cat = a.closest('.cat');
+          target = cat.closest('li') || cat;
+          var h = cat.querySelector('h3');
+          nameEl.textContent = 'категорію «' + (h ? h.textContent.trim() : '') + '»';
+          bodyEl.textContent = 'Разом зникнуть її підкатегорії. Дію не можна відмінити.';
+        }
+        dlg.showModal();
+      });
+    });
+    dlg.addEventListener('close', function(){
+      if(dlg.returnValue === 'confirm' && target){ target.remove(); }
+      target = null;
+    });
+  })();
+</script>
 </body>
 </html>
