@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Бабосік · Додати транзакцію вручну</title>
+<link rel="stylesheet" href="../../ui/kit.css">
+<script src="https://cdn.jsdelivr.net/npm/iconify-icon@2/dist/iconify-icon.min.js"></script>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><span class="mark" aria-hidden="true"></span><b>Бабосік</b></div>
+    <nav class="nav" aria-label="Глобальна навігація">
+      <span class="cap">Огляд грошей</span>
+      <a href="overview.html"><iconify-icon icon="solar:pie-chart-2-bold"></iconify-icon><span>Огляд</span></a>
+      <a href="transactions.html" aria-current="page"><iconify-icon icon="solar:bill-list-bold"></iconify-icon><span>Транзакції</span></a>
+      <a href="categories.html"><iconify-icon icon="solar:widget-5-bold"></iconify-icon><span>Категорії</span></a>
+      <span class="cap">Налаштування</span>
+      <a href="bank-connect.html"><iconify-icon icon="solar:user-circle-bold"></iconify-icon><span>Акаунт</span></a>
+    </nav>
+    <p class="foot">Дані з Monobank та ПриватБанк.</p>
+  </aside>
+
+  <main class="content">
+    <div class="page-head">
+      <a class="back" href="transactions.html"><iconify-icon icon="solar:arrow-left-linear"></iconify-icon>До транзакцій</a>
+      <h1>Додати транзакцію вручну</h1>
+      <p class="sub">Готівкова оплата, якої немає у виписці — щоб картина була повна.</p>
+    </div>
+
+    <div class="work" style="max-width:560px">
+      <section aria-label="Ручна транзакція">
+        <div class="card">
+          <form action="transactions.html" method="post">
+            <div class="field"><label for="sum">Сума, ₴</label><input id="sum" type="text" inputmode="decimal" placeholder="480" required></div>
+            <div class="field"><label for="date">Дата</label><input id="date" type="date" value="2026-06-30" required></div>
+            <div class="field"><label for="cat">Категорія</label>
+              <select id="cat" required><option value="" disabled selected>Оберіть категорію</option><option>Продукти</option><option>Кафе та ресторани</option><option>Транспорт</option><option>Комуналка</option><option>Здоров'я</option><option>Інше</option></select></div>
+            <div class="form-actions">
+              <a class="btn btn-primary" href="add-transaction-loading.html"><iconify-icon icon="solar:add-circle-linear"></iconify-icon>Додати</a>
+              <a class="btn" href="transactions.html">Скасувати</a>
+            </div>
+          </form>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+</body>
+</html>

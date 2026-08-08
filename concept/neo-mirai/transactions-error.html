@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Бабосік · Транзакції — помилка</title>
+<link rel="stylesheet" href="../../ui/kit.css">
+<script src="https://cdn.jsdelivr.net/npm/iconify-icon@2/dist/iconify-icon.min.js"></script>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><span class="mark" aria-hidden="true"></span><b>Бабосік</b></div>
+    <nav class="nav" aria-label="Глобальна навігація">
+      <span class="cap">Огляд грошей</span>
+      <a href="overview.html"><iconify-icon icon="solar:pie-chart-2-bold"></iconify-icon><span>Огляд</span></a>
+      <a href="transactions.html" aria-current="page"><iconify-icon icon="solar:bill-list-bold"></iconify-icon><span>Транзакції</span></a>
+      <a href="categories.html"><iconify-icon icon="solar:widget-5-bold"></iconify-icon><span>Категорії</span></a>
+      <span class="cap">Налаштування</span>
+      <a href="bank-connect.html"><iconify-icon icon="solar:user-circle-bold"></iconify-icon><span>Акаунт</span></a>
+    </nav>
+    <p class="foot">Дані з Monobank та ПриватБанк.</p>
+  </aside>
+
+  <main class="content">
+    <div class="page-head">
+      <h1>Транзакції за червень 2026</h1>
+      <p class="sub">Знайди те, що потрапило не туди або без назви — і наведи лад.</p>
+    </div>
+
+    <div class="work">
+      <section aria-label="Пошук і фільтр">
+        <div class="card">
+          <form class="filter-row" role="search">
+            <div class="fg"><label for="q">Пошук</label><input id="q" type="search" placeholder="Назва або сума" disabled></div>
+            <div class="fg"><label for="cat">Категорія</label><select id="cat" disabled><option>Усі категорії</option></select></div>
+            <button type="submit" class="btn btn-primary" disabled><iconify-icon icon="solar:magnifer-linear"></iconify-icon>Застосувати</button>
+          </form>
+          <p class="muted" style="margin:14px 0 0">Не вдалося завантажити список — фільтр тимчасово недоступний</p>
+        </div>
+      </section>
+
+      <section aria-label="Список транзакцій">
+        <div class="sec-head"><h2>Не вдалося завантажити транзакції</h2></div>
+        <p class="error-msg"><iconify-icon icon="solar:danger-triangle-bold"></iconify-icon>Не вдалося завантажити список — стався збій зв'язку. Дані не втрачено. Спробуй ще раз.</p>
+        <div class="state-actions">
+          <a class="btn btn-primary" href="transactions-loading.html"><iconify-icon icon="solar:refresh-linear"></iconify-icon>Спробувати ще</a>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+</body>
+</html>

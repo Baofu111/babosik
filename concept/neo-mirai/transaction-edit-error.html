@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Бабосік · Правка транзакції — помилка</title>
+<link rel="stylesheet" href="../../ui/kit.css">
+<script src="https://cdn.jsdelivr.net/npm/iconify-icon@2/dist/iconify-icon.min.js"></script>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><span class="mark" aria-hidden="true"></span><b>Бабосік</b></div>
+    <nav class="nav" aria-label="Глобальна навігація">
+      <span class="cap">Огляд грошей</span>
+      <a href="overview.html"><iconify-icon icon="solar:pie-chart-2-bold"></iconify-icon><span>Огляд</span></a>
+      <a href="transactions.html" aria-current="page"><iconify-icon icon="solar:bill-list-bold"></iconify-icon><span>Транзакції</span></a>
+      <a href="categories.html"><iconify-icon icon="solar:widget-5-bold"></iconify-icon><span>Категорії</span></a>
+      <span class="cap">Налаштування</span>
+      <a href="bank-connect.html"><iconify-icon icon="solar:user-circle-bold"></iconify-icon><span>Акаунт</span></a>
+    </nav>
+    <p class="foot">Дані з Monobank та ПриватБанк.</p>
+  </aside>
+
+  <main class="content">
+    <div class="page-head">
+      <a class="back" href="transactions.html"><iconify-icon icon="solar:arrow-left-linear"></iconify-icon>До транзакцій</a>
+      <h1>Правка транзакції</h1>
+      <p class="sub">Ця витрата поки в категорії «Інше» — постав її туди, де для тебе має сенс.</p>
+    </div>
+
+    <div class="work" style="max-width:720px">
+      <form style="display:grid; gap:20px">
+        <section aria-label="Деталі транзакції">
+          <div class="sec-head"><h2>Деталі</h2></div>
+          <div class="card">
+            <div class="field"><label for="name">Назва</label><input id="name" type="text" value="Rozetka"></div>
+            <div class="field"><label for="sum">Сума, ₴</label><input id="sum" type="text" value="−2 400"></div>
+            <div class="field"><label for="date">Дата</label><input id="date" type="text" value="12 червня 2026"></div>
+          </div>
+        </section>
+
+        <section aria-label="Категорія">
+          <div class="sec-head"><h2>Категорія</h2></div>
+          <div class="card">
+            <fieldset class="opts" style="border:0; padding:0; margin:0">
+              <legend>Куди перенести цю транзакцію</legend>
+              <div class="picker">
+                <label class="opt"><input type="radio" name="cat"><span>Продукти</span></label>
+                <label class="opt"><input type="radio" name="cat"><span>Кафе та ресторани</span></label>
+                <label class="opt"><input type="radio" name="cat"><span>Транспорт</span></label>
+                <label class="opt"><input type="radio" name="cat"><span>Комуналка</span></label>
+                <label class="opt"><input type="radio" name="cat"><span>Здоров'я</span></label>
+                <label class="opt"><input type="radio" name="cat" checked><span>Інше</span></label>
+              </div>
+            </fieldset>
+            <div class="inline-newcat">
+              <p class="muted">Немає потрібної? Додай свою, не виходячи з правки:</p>
+              <div class="newcat-row">
+                <input type="text" placeholder="напр. Техніка та гаджети" aria-label="Назва нової категорії">
+                <a class="btn btn-primary" href="transaction-edit.html"><iconify-icon icon="solar:add-circle-linear"></iconify-icon>Додати</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section aria-label="Зберегти">
+          <p class="error-msg" role="alert"><iconify-icon icon="solar:danger-triangle-bold"></iconify-icon>Не вдалося зберегти зміни транзакції. Твій ввід не втрачено — спробуй ще раз.</p>
+          <div class="form-actions">
+            <a class="btn btn-primary" href="transaction-edit.html"><iconify-icon icon="solar:refresh-linear"></iconify-icon>Спробувати ще</a>
+            <a class="btn" href="transactions.html">Скасувати</a>
+          </div>
+        </section>
+      </form>
+    </div>
+  </main>
+</div>
+</body>
+</html>

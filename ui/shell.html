@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Бабосік · Оболонка (shell)</title>
+<link rel="stylesheet" href="kit.css">
+<script src="https://cdn.jsdelivr.net/npm/iconify-icon@2/dist/iconify-icon.min.js"></script>
+</head>
+<!--
+  ОБОЛОНКА як РОЗМІТКА. Будь-який екран (у т.ч. сірий) бере каркас звідси:
+    A · таб-бар      — рейка навігації <aside class="side"> (desktop збоку / ≤900px горизонталь)
+    B · двошарова шапка — <div class="page-head">: (шар 1) .ph-context · (шар 2) .ph-bar
+    C · слот контенту  — <div class="work"> …секції екрана…
+  Кіт-лише-CSS не вдягне того, що не має скелета — тому shell живе як HTML.
+  aria-current="page" ставиться на активний пункт таб-бару для кожного екрана.
+-->
+<body>
+<div class="app">
+
+  <!-- ═══ A · ТАБ-БАР (рейка навігації) ═══ -->
+  <aside class="side">
+    <div class="brand"><span class="mark" aria-hidden="true"></span><b>Бабосік</b></div>
+    <nav class="nav" aria-label="Глобальна навігація">
+      <span class="cap">Огляд грошей</span>
+      <a href="#" aria-current="page"><iconify-icon icon="solar:pie-chart-2-bold"></iconify-icon><span>Огляд</span></a>
+      <a href="#"><iconify-icon icon="solar:bill-list-bold"></iconify-icon><span>Транзакції</span></a>
+      <a href="#"><iconify-icon icon="solar:widget-5-bold"></iconify-icon><span>Категорії</span></a>
+      <span class="cap">Налаштування</span>
+      <a href="#"><iconify-icon icon="solar:user-circle-bold"></iconify-icon><span>Акаунт</span></a>
+    </nav>
+    <p class="foot">Дані з Monobank та ПриватБанк.</p>
+  </aside>
+
+  <main class="content">
+
+    <!-- ═══ B · ДВОШАРОВА ШАПКА ═══ -->
+    <div class="page-head">
+      <!-- шар 1 · контекст-рядок: back або джерело/період -->
+      <div class="ph-context">
+        <a class="back" href="#"><iconify-icon icon="solar:arrow-left-linear"></iconify-icon>Назад</a>
+        <span class="ph-meta">Джерело: Monobank · ПриватБанк</span>
+      </div>
+      <!-- шар 2 · титул + дії -->
+      <div class="ph-bar">
+        <div>
+          <h1>Назва екрана</h1>
+          <p class="sub">Короткий опис призначення екрана.</p>
+        </div>
+        <div class="head-actions">
+          <a class="btn btn-primary" href="#"><iconify-icon icon="solar:add-circle-linear"></iconify-icon>Головна дія</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ C · СЛОТ КОНТЕНТУ ═══ -->
+    <div class="work">
+      <!-- сюди лягають секції екрана: .breakdown / .tx-list / .cats / .cmp / .card …
+           у станах — .empty-msg / .error-msg / .skel-* / .statebox -->
+      <section aria-label="Слот контенту">
+        <div class="sec-head"><h2>Секція екрана</h2><a class="link" href="#">Дія секції →</a></div>
+        <div class="card">Тут — компоненти з kit.html.</div>
+      </section>
+    </div>
+
+  </main>
+</div>
+</body>
+</html>

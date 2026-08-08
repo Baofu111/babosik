@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Бабосік · Правка транзакції — завантаження</title>
+<link rel="stylesheet" href="../../ui/kit.css">
+<script src="https://cdn.jsdelivr.net/npm/iconify-icon@2/dist/iconify-icon.min.js"></script>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><span class="mark" aria-hidden="true"></span><b>Бабосік</b></div>
+    <nav class="nav" aria-label="Глобальна навігація">
+      <span class="cap">Огляд грошей</span>
+      <a href="overview.html"><iconify-icon icon="solar:pie-chart-2-bold"></iconify-icon><span>Огляд</span></a>
+      <a href="transactions.html" aria-current="page"><iconify-icon icon="solar:bill-list-bold"></iconify-icon><span>Транзакції</span></a>
+      <a href="categories.html"><iconify-icon icon="solar:widget-5-bold"></iconify-icon><span>Категорії</span></a>
+      <span class="cap">Налаштування</span>
+      <a href="bank-connect.html"><iconify-icon icon="solar:user-circle-bold"></iconify-icon><span>Акаунт</span></a>
+    </nav>
+    <p class="foot">Дані з Monobank та ПриватБанк.</p>
+  </aside>
+
+  <main class="content">
+    <div class="page-head">
+      <a class="back" href="transactions.html"><iconify-icon icon="solar:arrow-left-linear"></iconify-icon>До транзакцій</a>
+      <h1>Правка транзакції</h1>
+      <p class="loading-status" role="status" aria-live="polite" style="margin-top:9px"><span class="spinner" aria-hidden="true"></span>Відкриваємо транзакцію…</p>
+    </div>
+
+    <div class="work" style="max-width:720px">
+      <section aria-label="Деталі транзакції">
+        <div class="sec-head"><h2>Деталі</h2></div>
+        <div class="card">
+          <div class="skel skel-line short" aria-hidden="true"></div>
+          <div class="skel skel-field" aria-hidden="true"></div>
+          <div class="skel skel-line short" aria-hidden="true"></div>
+          <div class="skel skel-field" aria-hidden="true"></div>
+        </div>
+      </section>
+
+      <section aria-label="Категорія" style="margin-top:20px">
+        <div class="sec-head"><h2>Категорія</h2></div>
+        <div class="card">
+          <div class="skel skel-field" aria-hidden="true"></div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,443 @@
+@import url("../tokens/tokens.css");
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&display=swap");
+/* ============================================================================
+   Бабосік · KIT — компонентний набір (крок 03: кіт компонентів)
+   ЄДИНИЙ ПЛАСКИЙ ФАЙЛ: :root-змінні + класи компонентів. Без розколу на рівні
+   токенів (урок 8) — значення-примітиви живуть у tokens.css (імпортовано вгорі),
+   тут лише NM-семантичний :root-шар + компоненти. Шрифти імпортовано сюди, тож
+   достатньо підключити один kit.css.
+
+   ТРИ ВХОДИ, ТРИ РОЛІ:
+     tokens/DESIGN.md — що (токени)  ·  concept.md — чому (мова «Ясність» + NEO MIRAI)
+     concept/neo-mirai/* — живий взірець (звідси painted-компоненти 1:1)
+   Дубльованого джерела не тримаємо: painted-класи = еталон; сірі стани
+   (skeleton / empty / error) взято СТРУКТУРОЮ з wireframes/*-loading|empty|error,
+   ВИГЛЯДОМ — з мови, не з уяви.
+
+   ЗВЕДЕННЯ ДРЕЙФУ НАЗВ (один API):
+     _wf .flag / .flag.data      → .tag-up / .tag-data
+     _wf .cards (один на все)     → .breakdown/.row (розбивка) · .top (картки) · .tx-list (транзакції)
+     _wf a.btn[aria-disabled]     → лишається: єдиний вимкнений контрол
+     _wf .empty-msg / .error-msg  → лишаються (інлайн-стани зони) + .statebox (повноекранний стан)
+
+   ЗАКОН КОЛЬОРУ (voices/docs/voice.md): колір не судить суму. Суми — нейтральні
+   (--n-900). Семантика (success/danger/warning) лише для системних станів. «up» =
+   коралова увага без присуду, «down» = спокійний петроль.
+
+   НЕ ТЯГНЕМО каркас вайрфреймів: .wf-note / .zone / .zone-label / .states / .device.
+   ========================================================================== */
+
+:root{
+  --nm-deep:      var(--petrol-700);
+  --nm-petrol:    var(--petrol-600);
+  --nm-sun:       var(--coral-500);
+  --nm-sun-core:  var(--gold-500);
+  --nm-sky-top:   #FBF4EC;
+  --nm-sky-warm:  #F6E3D2;
+  --nm-warm-line: #EAD9C7;
+  --panel:  #10403C;
+  --panel-2:#0C3330;
+  --z-sticky:100; --z-modal:300; --z-tooltip:400;
+  --ease-out: cubic-bezier(.19,1,.22,1);
+}
+
+/* --- База ----------------------------------------------------------------- */
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; font-family:var(--font-body); font-size:15px; line-height:1.5;
+  color:var(--n-700); background:var(--bg); -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{font-family:var(--font-display); color:var(--n-900); letter-spacing:-.02em; margin:0}
+a{color:inherit; text-decoration:none}
+ul{list-style:none; margin:0; padding:0}
+button{font:inherit}
+
+/* ═══ ОБОЛОНКА (shell) ════════════════════════════════════════════════════
+   таб-бар (рейка навігації) + двошарова шапка контенту. Розмітка — в ui/shell.html. */
+.app{display:grid; grid-template-columns:248px 1fr; min-height:100vh}
+.content{min-width:0}
+
+/* Таб-бар: рейка навігації (десктоп — збоку, ≤900px — горизонтальний таб-бар) */
+.side{
+  background:linear-gradient(180deg,var(--panel) 0%,var(--panel-2) 100%);
+  color:#CFE3E0; padding:22px 16px;
+  display:flex; flex-direction:column; gap:28px;
+  position:sticky; top:0; height:100vh;
+}
+.brand{display:flex; align-items:center; gap:11px; padding:4px 8px}
+.brand .mark{
+  width:34px; height:34px; border-radius:11px; flex:none; position:relative;
+  background:radial-gradient(circle at 50% 62%,var(--nm-sun-core) 0%,var(--nm-sun) 55%,#9E3E20 100%);
+  box-shadow:0 4px 14px rgba(232,115,79,.4);
+}
+.brand .mark::after{content:""; position:absolute; left:0; right:0; bottom:11px; height:1.5px; background:rgba(251,244,236,.55)}
+.brand b{font-family:var(--font-display); font-weight:700; color:#fff; font-size:19px; letter-spacing:-.02em}
+
+.nav{display:flex; flex-direction:column; gap:3px}
+.nav .cap{font-size:11px; letter-spacing:.09em; text-transform:uppercase; color:#7FA39E; padding:6px 10px 4px}
+.nav a{
+  display:flex; align-items:center; gap:12px; padding:10px 12px; border-radius:var(--r-md);
+  color:#BFD6D2; font-weight:500;
+  transition:background .18s var(--ease-out), color .18s var(--ease-out);
+}
+.nav a iconify-icon{font-size:20px; opacity:.85}
+.nav a:hover{background:rgba(255,255,255,.06); color:#EAF4F2}
+.nav a[aria-current="page"]{background:linear-gradient(90deg,rgba(232,115,79,.22),rgba(232,115,79,.06)); color:#fff}
+.nav a[aria-current="page"] iconify-icon{color:var(--nm-sun); opacity:1}
+.side .foot{margin-top:auto; padding:10px; font-size:12.5px; color:#6E938E; line-height:1.45}
+
+/* Двошарова шапка контенту: (шар 1) контекст-рядок · (шар 2) титул + дії */
+.page-head{padding:34px 44px 22px; border-bottom:1px solid var(--n-200); background:var(--surface); position:relative}
+.page-head::after{content:""; position:absolute; left:44px; bottom:-1px; width:64px; height:2px; border-radius:2px;
+  background:linear-gradient(90deg,var(--nm-sun-core),var(--nm-sun))}
+.ph-context{display:flex; align-items:center; gap:12px; margin-bottom:10px; min-height:20px} /* шар 1 */
+.ph-bar{display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap} /* шар 2 */
+.page-head h1{font-size:26px; font-weight:600}
+.page-head .sub{color:var(--n-500); margin:7px 0 0; font-size:14px}
+.page-head .head-actions{display:flex; gap:10px; margin-top:18px; flex-wrap:wrap}
+.ph-bar .head-actions{margin-top:0}
+.back{display:inline-flex; align-items:center; gap:6px; color:var(--petrol-600); font-weight:500; font-size:13.5px}
+.back:hover{color:var(--petrol-700)}
+.back iconify-icon{font-size:17px}
+.ph-meta{font-size:12.5px; color:var(--n-500)}
+
+/* HERO (Огляд / Вхід) — момент NEO MIRAI */
+.hero{
+  position:relative; overflow:hidden; padding:40px 44px 44px;
+  background:
+    radial-gradient(120% 130% at 78% 6%, rgba(224,161,60,.20) 0%, rgba(224,161,60,0) 42%),
+    linear-gradient(180deg,var(--nm-sky-top) 0%,var(--nm-sky-warm) 100%);
+  border-bottom:1px solid var(--nm-warm-line);
+}
+.sun{
+  position:absolute; top:-64px; right:8%; width:300px; height:300px; border-radius:50%;
+  background:radial-gradient(circle at 50% 55%,
+    var(--nm-sun-core) 0%, var(--nm-sun) 46%, rgba(232,115,79,.35) 66%, rgba(232,115,79,0) 72%);
+  transform:translateY(18px) scale(.96); opacity:0; animation:sunrise 1.1s var(--ease-out) .15s forwards;
+}
+.rings{position:absolute; top:-64px; right:8%; width:300px; height:300px; pointer-events:none}
+.rings span{position:absolute; inset:50% auto auto 50%; border-radius:50%; border:1px solid rgba(158,62,32,.16); transform:translate(-50%,-50%)}
+.rings span:nth-child(1){width:360px; height:360px}
+.rings span:nth-child(2){width:452px; height:452px}
+.rings span:nth-child(3){width:560px; height:560px; border-color:rgba(158,62,32,.08)}
+@keyframes sunrise{to{transform:translateY(0) scale(1); opacity:1}}
+.hero-in{position:relative; z-index:1; max-width:760px}
+.period{
+  display:inline-flex; align-items:center; gap:8px; font-size:13px; font-weight:600;
+  color:var(--coral-600); background:rgba(255,255,255,.6); border:1px solid #ECD3C0;
+  padding:5px 12px; border-radius:var(--r-pill); margin-bottom:18px;
+}
+.hero h1{font-size:30px; font-weight:600; line-height:1.1; text-wrap:balance}
+.hero .sub{color:#8A6B54; margin:8px 0 0; font-size:14px}
+.total-row{display:flex; align-items:flex-end; gap:20px; flex-wrap:wrap; margin-top:26px}
+.total{font-family:var(--font-display); font-weight:700; letter-spacing:-.035em; font-size:64px; line-height:.95; color:var(--n-900); font-variant-numeric:tabular-nums}
+/* Немає даних: не гігантський дефіс (читається як перекреслення), а тихий плейсхолдер */
+.total.none{font-size:38px; font-weight:600; color:var(--n-300); letter-spacing:-.02em}
+.delta{
+  display:inline-flex; align-items:center; gap:7px; font-size:14px; font-weight:500;
+  color:var(--coral-600); background:var(--coral-100); padding:7px 13px; border-radius:var(--r-pill); margin-bottom:8px;
+}
+.delta iconify-icon{font-size:17px}
+.delta .q{color:#8A6B54; font-weight:400}
+.hero-actions{display:flex; gap:10px; margin-top:26px; flex-wrap:wrap}
+
+/* ═══ ВХІД (auth) — pre-auth split, drenched welcome (дозволено для онбордингу) ═══ */
+.auth{display:grid; grid-template-columns:1.05fr .95fr; min-height:100vh}
+.auth-hero{position:relative; overflow:hidden; padding:56px 56px; display:flex; flex-direction:column; justify-content:center;
+  background:radial-gradient(130% 120% at 20% 100%, rgba(224,161,60,.28) 0%, rgba(224,161,60,0) 46%),
+             linear-gradient(155deg, var(--panel) 0%, var(--nm-petrol) 60%, #14514B 100%); color:#EAF4F2}
+.auth-hero .sun{top:auto; bottom:-90px; left:-40px; right:auto; width:340px; height:340px; opacity:.9; animation:none}
+.auth-hero .rings{top:auto; bottom:-90px; left:-40px; right:auto; width:340px; height:340px}
+.auth-hero .rings span{border-color:rgba(251,244,236,.14)}
+.a-brand{display:flex; align-items:center; gap:12px; position:relative; z-index:1}
+.a-brand b{font-family:var(--font-display); font-weight:700; font-size:22px; color:#fff}
+.auth-hero h1{position:relative; z-index:1; color:#fff; font-size:40px; font-weight:600; line-height:1.08; margin:28px 0 0; max-width:12ch; text-wrap:balance}
+.auth-hero .lead{position:relative; z-index:1; color:#BFD6D2; font-size:16px; margin:16px 0 0; max-width:34ch; line-height:1.55}
+.auth-hero .trust{position:relative; z-index:1; margin-top:auto; padding-top:32px; display:flex; gap:18px; color:#9CC2BC; font-size:13px}
+.auth-hero .trust span{display:inline-flex; align-items:center; gap:6px}
+.auth-form{display:flex; align-items:center; justify-content:center; padding:40px}
+.auth-form .inner{width:100%; max-width:380px}
+.auth-form h2{font-size:23px; font-weight:600; margin-bottom:8px}
+.auth-form .muted{color:var(--n-500); font-size:14px; margin:0 0 24px}
+.btn-google{background:var(--surface); border:1px solid var(--n-300); color:var(--n-900); font-weight:600}
+.btn-google:hover{border-color:var(--petrol-600); background:var(--petrol-50); transform:none}
+@media (max-width:820px){.auth{grid-template-columns:1fr} .auth-hero{padding:44px 28px; min-height:auto}
+  .auth-hero h1{font-size:30px} .auth-hero .trust{display:none}}
+
+/* --- Робоча зона / секції ------------------------------------------------- */
+.work{padding:30px 44px 56px; display:grid; gap:34px; max-width:1080px}
+.sec-head{display:flex; align-items:baseline; justify-content:space-between; margin-bottom:16px; gap:16px}
+.sec-head h2{font-size:19px; font-weight:600}
+.sec-head .link{font-size:13.5px; color:var(--petrol-600); font-weight:500}
+.sec-head .link:hover{color:var(--petrol-700)}
+
+/* ═══ КНОПКИ ══════════════════════════════════════════════════════════════ */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  padding:11px 18px; border-radius:var(--r-md); font-weight:600; font-size:14px;
+  cursor:pointer; border:1px solid var(--n-200); background:var(--surface); color:var(--n-700);
+  transition:transform .16s var(--ease-out), box-shadow .18s var(--ease-out), background .18s var(--ease-out), border-color .18s var(--ease-out);
+}
+.btn iconify-icon{font-size:18px}
+.btn:hover{border-color:#DCC3AE; background:#FFFDFB}
+.btn-primary{color:#fff; border-color:transparent; background:linear-gradient(180deg,var(--coral-500),#D45E38); box-shadow:0 6px 18px rgba(212,94,56,.32)}
+.btn-primary:hover{transform:translateY(-1px); box-shadow:0 9px 24px rgba(212,94,56,.4); background:linear-gradient(180deg,#EA7A57,#D45E38)}
+.btn-primary:active{transform:translateY(0)}
+.btn-ghost{background:rgba(255,255,255,.7); border-color:#E7D3C1}
+.btn-ghost:hover{background:#fff; border-color:#DCC3AE}
+.btn-quiet{background:transparent; border-color:transparent; color:var(--petrol-600); padding:8px 10px}
+.btn-quiet:hover{background:var(--petrol-50); border-color:transparent}
+.btn-block{width:100%}
+.btn:focus-visible{outline:none; box-shadow:var(--ring)}
+/* єдиний вимкнений контрол (з _wf: той самий <a>, лише aria-disabled)
+   Текст вимкненого — --n-500 на --n-100 (≈5.9:1), а не --n-300 (≈1.6:1): читабельно й на теплому hero. */
+.btn[aria-disabled="true"]{background:var(--n-100); color:var(--n-500); border-color:transparent;
+  box-shadow:none; cursor:not-allowed; pointer-events:none; transform:none}
+.btn[aria-disabled="true"] iconify-icon{color:var(--n-500)}
+/* Деструктивна дія (відключити банк) — червоний намір, окремий від нейтральних кнопок */
+.btn-danger{background:var(--surface); border-color:var(--danger-edge); color:var(--danger-600)}
+.btn-danger:hover{background:var(--danger-100); border-color:var(--danger-600); color:var(--danger-600)}
+.state-actions,.form-actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:18px}
+
+/* ═══ ДИСКИ КАТЕГОРІЙ (окрема багатоколірна палітра) ══════════════════════ */
+.disc{width:40px; height:40px; border-radius:12px; display:grid; place-items:center; color:#fff; font-size:20px; flex:none}
+.disc iconify-icon{filter:drop-shadow(0 1px 1px rgba(0,0,0,.12))}
+.disc.food{background:var(--c-food)} .disc.cafe{background:var(--c-cafe)}
+.disc.other{background:var(--c-other)} .disc.utility{background:var(--c-utility)}
+.disc.transport{background:var(--c-transport)} .disc.health{background:var(--c-health)}
+
+/* ═══ МІТКИ / СТАТУСИ ═════════════════════════════════════════════════════ */
+.tag-up{display:inline-flex; align-items:center; gap:3px; font-size:11.5px; font-weight:600;
+  color:var(--coral-600); background:var(--coral-100); padding:2px 8px; border-radius:var(--r-pill)}
+.tag-up iconify-icon{font-size:13px}
+.tag-data{display:inline-flex; align-items:center; gap:3px; font-size:11.5px; font-weight:500;
+  color:var(--n-500); background:var(--n-100); padding:2px 8px; border-radius:var(--r-pill)}
+.tag-data iconify-icon{font-size:13px}
+.status{display:inline-flex; align-items:center; gap:5px; font-size:12.5px; font-weight:600; padding:4px 10px; border-radius:var(--r-pill)}
+.status iconify-icon{font-size:15px}
+.status.ok{color:var(--success-600); background:var(--success-100)}
+.status.warn{color:var(--warning-600); background:var(--warning-100)}
+.status.err{color:var(--danger-600); background:var(--danger-100)}
+
+/* ═══ РОЗБИВКА / рядки з часткою (Огляд) ══════════════════════════════════ */
+.breakdown{display:flex; flex-direction:column; gap:2px}
+.row{display:grid; grid-template-columns:40px 1fr auto; align-items:center; gap:16px; padding:14px; border-radius:var(--r-md); transition:background .16s var(--ease-out)}
+.row:hover{background:#F6F1EB}
+.row-main{min-width:0}
+.row-name{display:flex; align-items:center; gap:9px; font-weight:600; color:var(--n-900); font-size:15px}
+.bar{height:6px; border-radius:99px; background:#EEE7DF; margin-top:9px; overflow:hidden}
+.bar > i{display:block; height:100%; border-radius:99px; transform-origin:left; transform:scaleX(var(--p,0)); transition:transform .8s var(--ease-out)}
+.row-meta{font-size:12.5px; color:var(--n-500); margin-top:6px}
+.row-sum-wrap{text-align:right}
+.row-sum{font-family:var(--font-display); font-weight:600; font-size:17px; color:var(--n-900); white-space:nowrap; letter-spacing:-.01em; font-variant-numeric:tabular-nums}
+.row-pct{font-size:12px; color:var(--n-500); margin-top:3px}
+
+/* ═══ КАРТКИ (топ витрат) ═════════════════════════════════════════════════ */
+.top{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px}
+.top a{display:flex; align-items:center; gap:13px; padding:14px; border-radius:var(--r-lg); background:var(--surface); border:1px solid var(--n-200);
+  transition:border-color .16s var(--ease-out), box-shadow .18s var(--ease-out), transform .16s var(--ease-out)}
+.top a:hover{border-color:#DFD6C9; box-shadow:var(--shadow-md); transform:translateY(-2px)}
+.top .disc{width:38px; height:38px; font-size:19px}
+.top .t-main{min-width:0; flex:1}
+.top .t-name{display:block; font-weight:600; color:var(--n-900); font-size:14.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.top .t-meta{display:block; font-size:12px; color:var(--n-500); margin-top:2px}
+.top .t-sum{font-family:var(--font-display); font-weight:600; font-size:16px; color:var(--n-900); white-space:nowrap; font-variant-numeric:tabular-nums}
+
+/* ═══ СПИСОК ТРАНЗАКЦІЙ ═══════════════════════════════════════════════════ */
+.tx-list{background:var(--surface); border:1px solid var(--n-200); border-radius:var(--r-lg); overflow:hidden}
+.tx-list a{display:flex; align-items:center; gap:14px; padding:14px 16px; border-bottom:1px solid var(--n-200); transition:background .14s var(--ease-out)}
+.tx-list a:last-child{border-bottom:0}
+.tx-list a:hover{background:#F8F5F0}
+.tx-main{min-width:0; flex:1}
+.tx-name{display:block; font-weight:600; color:var(--n-900); font-size:15px}
+.tx-meta{display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-size:12.5px; color:var(--n-500); margin-top:3px}
+.tx-sum{font-family:var(--font-display); font-weight:600; font-size:16px; color:var(--n-900); white-space:nowrap; letter-spacing:-.01em; font-variant-numeric:tabular-nums}
+
+/* ═══ ФОРМИ ═══════════════════════════════════════════════════════════════ */
+.card{background:var(--surface); border:1px solid var(--n-200); border-radius:var(--r-lg); padding:22px}
+.field{margin-bottom:16px}
+.field:last-child{margin-bottom:0}
+.field label{display:block; font-size:13px; font-weight:600; color:var(--n-700); margin-bottom:6px}
+.field input,.field select,.filter-row input,.filter-row select{
+  width:100%; padding:11px 13px; font:inherit; color:var(--n-900);
+  background:var(--surface); border:1px solid var(--n-300); border-radius:var(--r-md);
+  transition:border-color .16s var(--ease-out), box-shadow .16s var(--ease-out);
+}
+.field input::placeholder{color:var(--n-500)} /* плейсхолдер ≥4.5:1 на білому, не блідий --n-300 */
+.field input:focus,.field select:focus,.filter-row input:focus,.filter-row select:focus{outline:none; border-color:var(--petrol-600); box-shadow:var(--ring)}
+.field input:disabled,.field select:disabled,
+.filter-row input:disabled,.filter-row select:disabled{background:var(--n-100); color:var(--n-500); cursor:not-allowed}
+.btn:disabled,.btn[disabled]{background:var(--n-100); color:var(--n-500); border-color:transparent; box-shadow:none; cursor:not-allowed; transform:none}
+.btn:disabled iconify-icon,.btn[disabled] iconify-icon{color:var(--n-500)}
+/* Селект — кастомний шеврон із власним відступом (рідна стрілка липне до краю) */
+.field select,.filter-row select{
+  -webkit-appearance:none; -moz-appearance:none; appearance:none;
+  padding-right:42px; cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%235B6462' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 14px center; background-size:18px;
+}
+/* Розкритий select — шеврон угору (сучасні браузери) */
+.field select:open,.filter-row select:open{
+  border-color:var(--petrol-600);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%230F5C57' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 15l6-6 6 6'/%3E%3C/svg%3E");
+}
+.divider{display:flex; align-items:center; gap:12px; color:var(--n-500); font-size:13px; margin:20px 0}
+.divider::before,.divider::after{content:""; height:1px; background:var(--n-200); flex:1}
+
+/* Радіо-опції (вибір банку / пікер) */
+.opts{display:flex; flex-direction:column; gap:8px; border:0; margin:0; padding:0}
+.opts legend{font-size:13px; font-weight:600; color:var(--n-700); margin-bottom:6px; padding:0}
+.opt{display:flex; align-items:center; gap:11px; padding:12px 14px; border:1px solid var(--n-200); border-radius:var(--r-md); cursor:pointer; font-weight:500; color:var(--n-900);
+  transition:border-color .14s var(--ease-out), background .14s var(--ease-out)}
+.opt:hover{border-color:var(--petrol-600); background:var(--petrol-50)}
+.opt input{accent-color:var(--petrol-600); width:18px; height:18px}
+.opt:has(input:checked){border-color:var(--petrol-600); background:var(--petrol-50); box-shadow:inset 0 0 0 1px var(--petrol-600)}
+.picker{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:8px}
+.picker .opt{justify-content:flex-start}
+.inline-newcat{margin-top:16px; padding-top:16px; border-top:1px dashed var(--n-200)}
+.inline-newcat .muted{font-size:13px; color:var(--n-500); margin:0 0 10px}
+.newcat-row{display:flex; gap:10px}
+.newcat-row input{flex:1}
+
+/* Фільтр-рядок */
+.filter-row{display:grid; grid-template-columns:2fr 1fr auto; gap:12px; align-items:end}
+.filter-row .fg label{display:block; font-size:12px; font-weight:600; color:var(--n-500); margin-bottom:5px}
+
+/* ═══ БАНКИ ═══════════════════════════════════════════════════════════════ */
+.bank{display:flex; align-items:center; flex-wrap:wrap; gap:14px; padding:16px; background:var(--surface); border:1px solid var(--n-200); border-radius:var(--r-lg); margin-bottom:10px}
+.bank .b-icon{width:44px; height:44px; border-radius:12px; display:grid; place-items:center; background:var(--petrol-50); color:var(--petrol-600); font-size:23px; flex:none}
+.bank .b-name{min-width:0; flex:1 1 160px}
+.bank .b-name b{display:block; color:var(--n-900); font-weight:600; font-family:var(--font-body)}
+.bank .b-meta{font-size:12.5px; color:var(--n-500); margin-top:2px}
+.bank .b-actions{display:flex; gap:8px; flex-wrap:wrap} /* переноситься на вузьких, а не вилазить за край */
+
+/* Файл на вивантаження (Експорт) — власний компонент, не запозичений .bank */
+.file-row{display:flex; align-items:center; gap:14px; padding:16px; background:var(--surface); border:1px solid var(--n-200); border-radius:var(--r-lg)}
+.file-row .f-icon{width:44px; height:44px; border-radius:12px; display:grid; place-items:center; background:var(--gold-100); color:var(--gold-600); font-size:23px; flex:none}
+.file-row .f-name{min-width:0; flex:1}
+.file-row .f-name b{display:block; color:var(--n-900); font-weight:600}
+.file-row .f-meta{font-size:12.5px; color:var(--n-500); margin-top:2px}
+
+/* ═══ КАТЕГОРІЇ (CRUD) ════════════════════════════════════════════════════ */
+.cats{display:flex; flex-direction:column; gap:12px}
+.cat{background:var(--surface); border:1px solid var(--n-200); border-radius:var(--r-lg); padding:16px 18px}
+.cat-head{display:flex; align-items:center; gap:13px}
+.cat-head h3{font-size:16px; font-weight:600; flex:1; font-family:var(--font-body)}
+.cat-actions{display:flex; gap:4px}
+.cat-actions a{display:inline-flex; align-items:center; gap:5px; font-size:12.5px; color:var(--n-500); padding:6px 9px; border-radius:var(--r-sm); font-weight:500; transition:background .14s, color .14s}
+.cat-actions a:hover{background:var(--n-100); color:var(--n-900)}
+.cat-actions a iconify-icon{font-size:15px}
+/* Деструктив (видалити) — окремий намір, читається інакше за «редагувати» */
+.cat-actions a.danger{color:var(--danger-600)}
+.cat-actions a.danger:hover{background:var(--danger-100); color:var(--danger-600)}
+.subs{display:flex; flex-wrap:wrap; gap:7px; margin:14px 0 0; padding:14px 0 0; border-top:1px solid var(--n-100)}
+.subs li{display:inline-flex; align-items:center; gap:7px; padding:5px 10px 5px 12px; background:var(--n-100); border-radius:var(--r-pill); font-size:13px; color:var(--n-700)}
+.subs .muted-sub{background:transparent; color:var(--n-500); font-style:italic; padding-left:0}
+.sub-actions{display:inline-flex; gap:2px}
+.sub-actions a{display:grid; place-items:center; width:26px; height:26px; border-radius:50%; color:var(--n-500)} /* ціль ≥24px */
+.sub-actions a:hover{background:#fff; color:var(--n-900)}
+.sub-actions a.danger:hover{background:var(--danger-100); color:var(--danger-600)}
+.sub-actions iconify-icon{font-size:14px}
+.add-sub{margin:12px 0 0}
+.add-sub a{color:var(--petrol-600); font-weight:500; font-size:13px}
+.add-sub a:hover{color:var(--petrol-700)}
+.add-cat{margin-bottom:14px}
+.add-cat summary{display:inline-flex; align-items:center; gap:7px; cursor:pointer; color:var(--petrol-600); font-weight:600; font-size:14px; list-style:none}
+.add-cat summary::-webkit-details-marker{display:none}
+.add-cat summary::before{content:"＋"; font-weight:700}
+.add-cat[open] summary{margin-bottom:12px}
+.add-cat-row{display:flex; gap:10px}
+.add-cat-row input{flex:1; padding:11px 13px; border:1px solid var(--n-300); border-radius:var(--r-md); font:inherit}
+.add-cat-row input:focus{outline:none; border-color:var(--petrol-600); box-shadow:var(--ring)}
+
+/* ═══ ПОРІВНЯННЯ ══════════════════════════════════════════════════════════ */
+.cmp{display:flex; flex-direction:column; gap:2px}
+.cmp li{display:grid; grid-template-columns:40px 1fr auto; align-items:center; gap:16px; padding:14px; border-radius:var(--r-md)}
+.cmp li:hover{background:#F6F1EB}
+.cmp-main{min-width:0}
+.cmp-cat{display:block; font-weight:600; color:var(--n-900); font-size:15px}
+.cmp-nums{display:block; font-size:12.5px; color:var(--n-500); margin-top:4px; font-variant-numeric:tabular-nums}
+.cmp-delta{text-align:right}
+.cmp-delta .d-sum{font-family:var(--font-display); font-weight:600; font-size:16px; color:var(--n-900); letter-spacing:-.01em; font-variant-numeric:tabular-nums}
+.cmp-delta .d-word{display:inline-flex; align-items:center; gap:3px; font-size:11.5px; font-weight:500; padding:2px 8px; border-radius:var(--r-pill); margin-top:4px; color:var(--n-500); background:var(--n-100)}
+.cmp-delta .d-word iconify-icon{font-size:13px}
+.cmp-delta.up .d-word{color:var(--coral-600); background:var(--coral-100)}    /* увага без присуду */
+.cmp-delta.down .d-word{color:var(--petrol-600); background:var(--petrol-50)} /* спокій, не «добре» */
+.cmp-delta.flat .d-word{color:var(--n-500); background:var(--n-100)}
+
+/* ═══ СТАНИ: порожній / помилка / завантаження ════════════════════════════
+   Структуру взято з wireframes/*-empty|error|loading; вигляд — з мови. */
+
+/* Інлайн-стан зони: порожній — нейтральна підказка, що «вчить» */
+.empty-msg{display:flex; gap:10px; align-items:flex-start; color:var(--n-700); font-size:14px; max-width:62ch; margin:4px 0 0}
+.empty-msg iconify-icon{flex:none; font-size:20px; color:var(--petrol-600); margin-top:1px} /* петроль (спокій/підказка), не корал — «нічого нема» ≠ попередження */
+
+/* Інлайн-стан зони: помилка — danger-callout (системний збій, не глухий кут) */
+.error-msg{display:flex; gap:10px; align-items:flex-start; color:var(--n-700); font-size:14px; max-width:62ch;
+  margin:4px 0 0; background:var(--danger-100); border:1px solid var(--danger-edge); border-radius:var(--r-md); padding:12px 14px}
+.error-msg iconify-icon{flex:none; font-size:20px; color:var(--danger-600); margin-top:1px}
+
+/* Повноекранний стан (напр. Вхід·помилка / Вхід·завантаження) */
+.statebox{text-align:center; max-width:460px; margin:24px auto; padding:36px 24px; background:var(--surface); border:1px solid var(--n-200); border-radius:var(--r-lg)}
+.statebox .ic{width:64px; height:64px; border-radius:50%; display:grid; place-items:center; margin:0 auto 16px; font-size:30px}
+.statebox .ic.warm{background:var(--coral-100); color:var(--coral-600)}
+.statebox .ic.err{background:var(--danger-100); color:var(--danger-600)}
+.statebox .ic.info{background:var(--petrol-50); color:var(--petrol-600)}
+.statebox h2{font-size:19px; margin-bottom:8px}
+.statebox p{color:var(--n-500); margin:0 0 18px; font-size:14px}
+.statebox .state-actions{justify-content:center}
+
+/* Живий статус завантаження (role="status") — активне «ми-» дієслово + … */
+.loading-status{display:inline-flex; align-items:center; gap:9px; color:var(--petrol-600); font-size:14px; font-weight:500}
+.loading-status .spinner{width:16px; height:16px; border-radius:50%; border:2px solid var(--petrol-100); border-top-color:var(--petrol-600); animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Скелетони — теплий NM-shimmer (структура з _wf: skel-num / skel-card / skel-line / skel-field) */
+.skel{position:relative; overflow:hidden; background:#EFEAE3; border-radius:var(--r-sm)}
+.skel::after{content:""; position:absolute; inset:0;
+  background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.65) 50%,transparent 100%);
+  transform:translateX(-100%); animation:shimmer 1.3s var(--ease-out) infinite}
+@keyframes shimmer{to{transform:translateX(100%)}}
+.skel-line{height:12px; margin:8px 0}
+.skel-line.short{width:45%}
+.skel-num{height:60px; width:220px; margin-top:10px; border-radius:var(--r-md)}
+.skel-card{height:60px; margin:10px 0; border-radius:var(--r-lg)}
+.skel-field{height:44px; margin:8px 0; border-radius:var(--r-md)}
+.skel-filter{height:96px; border-radius:var(--r-lg)} /* місце під картку фільтра — без стрибка при появі */
+
+/* ═══ Утиліти ═════════════════════════════════════════════════════════════ */
+.muted{color:var(--n-500); font-size:13px}
+
+/* ═══ Вхідні анімації ═════════════════════════════════════════════════════ */
+.reveal{opacity:0; transform:translateY(10px); animation:rise .55s var(--ease-out) forwards}
+@keyframes rise{to{opacity:1; transform:none}}
+
+/* ═══ Адаптив ═════════════════════════════════════════════════════════════ */
+@media (max-width:900px){
+  .app{grid-template-columns:1fr}
+  .side{position:static; height:auto; flex-direction:row; align-items:center; gap:14px; padding:12px 16px; overflow-x:auto}
+  .side .foot,.nav .cap{display:none}
+  .nav{flex-direction:row; gap:2px}
+  .nav a span{display:none}
+  .brand{flex:none}
+  .hero,.page-head{padding-left:22px; padding-right:22px}
+  .page-head::after{left:22px}
+  .work{padding:26px 22px 44px}
+  .total{font-size:48px}
+  .hero h1{font-size:24px}
+  .sun,.rings{right:-40px; width:220px; height:220px}
+  .filter-row{grid-template-columns:1fr 1fr}
+  .filter-row button{grid-column:1 / -1}
+}
+@media (max-width:560px){
+  .row,.cmp li{grid-template-columns:40px 1fr}
+  .row-sum-wrap,.cmp-delta{grid-column:2; text-align:left; margin-top:4px}
+  .filter-row{grid-template-columns:1fr}
+  .cat-actions a span{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .sun,.reveal{animation:none; opacity:1; transform:none}
+  .bar > i{transition:none}
+  .skel::after,.spinner{animation:none}
+}

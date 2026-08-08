@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Бабосік · Огляд — помилка</title>
+<link rel="stylesheet" href="../../ui/kit.css">
+<script src="https://cdn.jsdelivr.net/npm/iconify-icon@2/dist/iconify-icon.min.js"></script>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><span class="mark" aria-hidden="true"></span><b>Бабосік</b></div>
+    <nav class="nav" aria-label="Глобальна навігація">
+      <span class="cap">Огляд грошей</span>
+      <a href="overview.html" aria-current="page"><iconify-icon icon="solar:pie-chart-2-bold"></iconify-icon><span>Огляд</span></a>
+      <a href="transactions.html"><iconify-icon icon="solar:bill-list-bold"></iconify-icon><span>Транзакції</span></a>
+      <a href="categories.html"><iconify-icon icon="solar:widget-5-bold"></iconify-icon><span>Категорії</span></a>
+      <span class="cap">Налаштування</span>
+      <a href="bank-connect.html"><iconify-icon icon="solar:user-circle-bold"></iconify-icon><span>Акаунт</span></a>
+    </nav>
+    <p class="foot">Дані з Monobank та ПриватБанк.</p>
+  </aside>
+
+  <main class="content">
+    <section class="hero" aria-label="Підсумок за місяць">
+      <div class="rings" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="sun" aria-hidden="true"></div>
+      <div class="hero-in">
+        <span class="period"><iconify-icon icon="solar:calendar-minimalistic-bold"></iconify-icon>червень 2026</span>
+        <h1>Ось твоя картина за місяць</h1>
+        <p class="sub">Не вдалося оновити дані</p>
+        <div class="total-row"><span class="total none">—&nbsp;₴</span></div>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="overview-loading.html"><iconify-icon icon="solar:refresh-linear"></iconify-icon>Спробувати ще</a>
+          <a class="btn btn-ghost" role="button" aria-disabled="true"><iconify-icon icon="solar:chart-2-bold"></iconify-icon>Порівняти з травнем</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="work">
+      <section aria-label="Розбивка по категоріях">
+        <div class="sec-head"><h2>Куди пішли гроші</h2></div>
+        <p class="error-msg"><iconify-icon icon="solar:danger-triangle-bold"></iconify-icon>Не вдалося завантажити розбивку по категоріях — не змогли зв'язатися з банком. Дані не втрачено. Спробуй ще раз.</p>
+        <div class="state-actions">
+          <a class="btn btn-primary" href="overview-loading.html"><iconify-icon icon="solar:refresh-linear"></iconify-icon>Спробувати ще</a>
+          <a class="btn" href="bank-connect.html"><iconify-icon icon="solar:card-linear"></iconify-icon>Перевірити підключення банку</a>
+        </div>
+      </section>
+
+      <section aria-label="Найбільші окремі витрати">
+        <div class="sec-head"><h2>Найбільші окремі витрати</h2></div>
+        <p class="error-msg"><iconify-icon icon="solar:danger-triangle-bold"></iconify-icon>Список найбільших витрат не завантажився.</p>
+      </section>
+    </div>
+  </main>
+</div>
+</body>
+</html>

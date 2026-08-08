@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Бабосік · Огляд за місяць</title>
+<link rel="stylesheet" href="../../ui/kit.css">
+<script src="https://cdn.jsdelivr.net/npm/iconify-icon@2/dist/iconify-icon.min.js"></script>
+</head>
+<body>
+<div class="app">
+
+  <aside class="side">
+    <div class="brand"><span class="mark" aria-hidden="true"></span><b>Бабосік</b></div>
+    <nav class="nav" aria-label="Глобальна навігація">
+      <span class="cap">Огляд грошей</span>
+      <a href="overview.html" aria-current="page"><iconify-icon icon="solar:pie-chart-2-bold"></iconify-icon><span>Огляд</span></a>
+      <a href="transactions.html"><iconify-icon icon="solar:bill-list-bold"></iconify-icon><span>Транзакції</span></a>
+      <a href="categories.html"><iconify-icon icon="solar:widget-5-bold"></iconify-icon><span>Категорії</span></a>
+      <span class="cap">Налаштування</span>
+      <a href="bank-connect.html"><iconify-icon icon="solar:user-circle-bold"></iconify-icon><span>Акаунт</span></a>
+    </nav>
+    <p class="foot">Дані з Monobank та ПриватБанк.</p>
+  </aside>
+
+  <main class="content">
+
+    <section class="hero" aria-label="Підсумок за місяць">
+      <div class="rings" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="sun" aria-hidden="true"></div>
+      <div class="hero-in">
+        <span class="period"><iconify-icon icon="solar:calendar-minimalistic-bold"></iconify-icon>червень 2026</span>
+        <h1>Ось твоя картина за місяць</h1>
+        <p class="sub">Усе, що пройшло через Monobank та ПриватБанк · оновлено 30 червня 2026</p>
+        <div class="total-row">
+          <span class="total">18&#8239;450&nbsp;₴</span>
+          <span class="delta"><iconify-icon icon="solar:alt-arrow-up-linear"></iconify-icon>1&#8239;200&nbsp;₴ <span class="q">більше, ніж у травні</span></span>
+        </div>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="compare.html"><iconify-icon icon="solar:chart-2-bold"></iconify-icon>Порівняти з травнем</a>
+          <a class="btn btn-ghost" href="overview-loading.html"><iconify-icon icon="solar:refresh-linear"></iconify-icon>Оновити</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="work">
+      <section aria-label="Розбивка по категоріях">
+        <div class="sec-head"><h2>Куди пішли гроші</h2><a class="link" href="categories.html">Усі категорії →</a></div>
+        <div class="breakdown">
+          <a class="row reveal" href="transactions.html" style="animation-delay:.05s">
+            <span class="disc food"><iconify-icon icon="solar:cart-3-bold"></iconify-icon></span>
+            <span class="row-main"><span class="row-name">Продукти</span><span class="bar"><i style="--p:1; background:var(--c-food)"></i></span><span class="row-meta">Сільпо, АТБ · 28% місяця</span></span>
+            <span class="row-sum-wrap"><span class="row-sum">5&#8239;200&nbsp;₴</span><span class="row-pct">28%</span></span>
+          </a>
+          <a class="row reveal" href="transactions.html" style="animation-delay:.11s">
+            <span class="disc other"><iconify-icon icon="solar:menu-dots-bold"></iconify-icon></span>
+            <span class="row-main"><span class="row-name">Інше <span class="tag-up"><iconify-icon icon="solar:alt-arrow-up-linear"></iconify-icon>більше ніж у травні</span></span><span class="bar"><i style="--p:.857; background:var(--c-other)"></i></span><span class="row-meta">24% місяця</span></span>
+            <span class="row-sum-wrap"><span class="row-sum">4&#8239;400&nbsp;₴</span><span class="row-pct">24%</span></span>
+          </a>
+          <a class="row reveal" href="transactions.html" style="animation-delay:.17s">
+            <span class="disc cafe"><iconify-icon icon="solar:cup-hot-bold"></iconify-icon></span>
+            <span class="row-main"><span class="row-name">Кафе та ресторани <span class="tag-up"><iconify-icon icon="solar:alt-arrow-up-linear"></iconify-icon>більше ніж у травні</span></span><span class="bar"><i style="--p:.607; background:var(--c-cafe)"></i></span><span class="row-meta">17% місяця</span></span>
+            <span class="row-sum-wrap"><span class="row-sum">3&#8239;100&nbsp;₴</span><span class="row-pct">17%</span></span>
+          </a>
+          <a class="row reveal" href="transactions.html" style="animation-delay:.23s">
+            <span class="disc utility"><iconify-icon icon="solar:home-2-bold"></iconify-icon></span>
+            <span class="row-main"><span class="row-name">Комуналка</span><span class="bar"><i style="--p:.428; background:var(--c-utility)"></i></span><span class="row-meta">12% місяця</span></span>
+            <span class="row-sum-wrap"><span class="row-sum">2&#8239;300&nbsp;₴</span><span class="row-pct">12%</span></span>
+          </a>
+          <a class="row reveal" href="transactions.html" style="animation-delay:.29s">
+            <span class="disc transport"><iconify-icon icon="solar:bus-bold"></iconify-icon></span>
+            <span class="row-main"><span class="row-name">Транспорт</span><span class="bar"><i style="--p:.278; background:var(--c-transport)"></i></span><span class="row-meta">WOG, метро · 8% місяця</span></span>
+            <span class="row-sum-wrap"><span class="row-sum">1&#8239;450&nbsp;₴</span><span class="row-pct">8%</span></span>
+          </a>
+        </div>
+      </section>
+
+      <section aria-label="Найбільші окремі витрати">
+        <div class="sec-head"><h2>Найбільші окремі витрати</h2><a class="link" href="transactions.html">Усі транзакції →</a></div>
+        <div class="top">
+          <a href="transaction-edit.html" class="reveal" style="animation-delay:.3s"><span class="disc other"><iconify-icon icon="solar:menu-dots-bold"></iconify-icon></span><span class="t-main"><span class="t-name">Rozetka</span><span class="t-meta">12 червня · Інше</span></span><span class="t-sum">2&#8239;400&nbsp;₴</span></a>
+          <a href="transaction-edit.html" class="reveal" style="animation-delay:.35s"><span class="disc food"><iconify-icon icon="solar:cart-3-bold"></iconify-icon></span><span class="t-main"><span class="t-name">Сільпо</span><span class="t-meta">8 червня · Продукти</span></span><span class="t-sum">1&#8239;180&nbsp;₴</span></a>
+          <a href="transaction-edit.html" class="reveal" style="animation-delay:.4s"><span class="disc transport"><iconify-icon icon="solar:bus-bold"></iconify-icon></span><span class="t-main"><span class="t-name">WOG</span><span class="t-meta">3 червня · Транспорт</span></span><span class="t-sum">900&nbsp;₴</span></a>
+          <a href="transaction-edit.html" class="reveal" style="animation-delay:.45s"><span class="disc health"><iconify-icon icon="solar:health-bold"></iconify-icon></span><span class="t-main"><span class="t-name">Аптека АНЦ</span><span class="t-meta">20 червня · Здоров'я</span></span><span class="t-sum">640&nbsp;₴</span></a>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+</body>
+</html>

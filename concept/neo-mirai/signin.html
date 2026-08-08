@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Бабосік · Вхід</title>
+<link rel="stylesheet" href="../../ui/kit.css">
+<script src="https://cdn.jsdelivr.net/npm/iconify-icon@2/dist/iconify-icon.min.js"></script>
+</head>
+<body>
+<div class="auth">
+
+  <section class="auth-hero" aria-label="Про Бабосік">
+    <div class="rings" aria-hidden="true"><span></span><span></span><span></span></div>
+    <div class="sun" aria-hidden="true"></div>
+    <div class="a-brand"><span class="mark" aria-hidden="true"></span><b>Бабосік</b></div>
+    <h1>Повна картина твоїх витрат</h1>
+    <p class="lead">Без рутини. Банк заповнює її сам — ти лише дивишся, куди пішли гроші.</p>
+    <div class="trust">
+      <span><iconify-icon icon="solar:shield-check-bold"></iconify-icon>Дані під захистом</span>
+      <span><iconify-icon icon="solar:card-2-bold"></iconify-icon>Monobank · ПриватБанк</span>
+    </div>
+  </section>
+
+  <section class="auth-form" aria-label="Вхід">
+    <div class="inner">
+      <h2>Увійти в Бабосік</h2>
+      <p class="muted">Найшвидше — через Google. Перший вхід одразу створює твій профіль.</p>
+
+      <a class="btn btn-google btn-block" href="overview.html"><iconify-icon icon="logos:google-icon"></iconify-icon>Увійти через Google</a>
+
+      <p class="divider">або через пошту</p>
+
+      <form action="overview.html" method="post">
+        <div class="field">
+          <label for="email">Електронна пошта</label>
+          <input type="email" id="email" name="email" placeholder="ти@example.com" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="password">Пароль</label>
+          <input type="password" id="password" name="password" placeholder="Твій пароль" autocomplete="current-password" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" style="margin-top:6px"><iconify-icon icon="solar:login-3-linear"></iconify-icon>Увійти через пошту</button>
+      </form>
+    </div>
+  </section>
+</div>
+</body>
+</html>

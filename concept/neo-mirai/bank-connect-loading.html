@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Бабосік · Підключення банків — завантаження</title>
+<link rel="stylesheet" href="../../ui/kit.css">
+<script src="https://cdn.jsdelivr.net/npm/iconify-icon@2/dist/iconify-icon.min.js"></script>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><span class="mark" aria-hidden="true"></span><b>Бабосік</b></div>
+    <nav class="nav" aria-label="Глобальна навігація">
+      <span class="cap">Огляд грошей</span>
+      <a href="overview.html"><iconify-icon icon="solar:pie-chart-2-bold"></iconify-icon><span>Огляд</span></a>
+      <a href="transactions.html"><iconify-icon icon="solar:bill-list-bold"></iconify-icon><span>Транзакції</span></a>
+      <a href="categories.html"><iconify-icon icon="solar:widget-5-bold"></iconify-icon><span>Категорії</span></a>
+      <span class="cap">Налаштування</span>
+      <a href="bank-connect.html" aria-current="page"><iconify-icon icon="solar:user-circle-bold"></iconify-icon><span>Акаунт</span></a>
+    </nav>
+    <p class="foot">Дані з Monobank та ПриватБанк.</p>
+  </aside>
+
+  <main class="content">
+    <div class="page-head">
+      <h1>Підключення банків</h1>
+      <p class="sub">Банки самі наповнюють твою картину — без ручного введення.</p>
+    </div>
+
+    <div class="work">
+      <section aria-label="Підключені банки">
+        <div class="sec-head"><h2>Твої банки</h2></div>
+        <div class="skel skel-card" aria-hidden="true"></div>
+        <div class="skel skel-card" aria-hidden="true"></div>
+      </section>
+
+      <section aria-label="Додати банк">
+        <div class="sec-head"><h2>Підключаємо Monobank</h2></div>
+        <p class="loading-status" role="status" aria-live="polite"><span class="spinner" aria-hidden="true"></span>Тягнемо транзакції — це може зайняти кілька секунд…</p>
+        <div class="skel skel-line" aria-hidden="true" style="margin-top:14px"></div>
+        <div class="skel skel-line short" aria-hidden="true"></div>
+      </section>
+    </div>
+  </main>
+</div>
+</body>
+</html>

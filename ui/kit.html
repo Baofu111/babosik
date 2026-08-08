@@ -1,0 +1,325 @@
+﻿<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Бабосік · KIT — вітрина компонентів</title>
+<link rel="stylesheet" href="kit.css">
+<script src="https://cdn.jsdelivr.net/npm/iconify-icon@2/dist/iconify-icon.min.js"></script>
+<style>
+  /* Скаффолд стенду (kx-*) — НЕ продуктові компоненти, лише каркас вітрини */
+  body{background:var(--bg)}
+  .kx-top{position:sticky; top:0; z-index:var(--z-sticky); background:rgba(251,251,250,.86); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--n-200); padding:16px 40px; display:flex; align-items:baseline; gap:16px; flex-wrap:wrap}
+  .kx-top b{font-family:var(--font-display); font-size:18px; color:var(--n-900); letter-spacing:-.02em}
+  .kx-top .kx-note{font-size:12.5px; color:var(--n-500)}
+  .kx-nav{margin-left:auto; display:flex; gap:4px; flex-wrap:wrap}
+  .kx-nav a{font-size:12.5px; color:var(--petrol-600); padding:4px 9px; border-radius:var(--r-pill); font-weight:500}
+  .kx-nav a:hover{background:var(--petrol-50)}
+  .kx-wrap{max-width:1100px; margin:0 auto; padding:8px 40px 80px}
+  .kx-sec{margin-top:44px; scroll-margin-top:70px}
+  .kx-h{display:flex; align-items:baseline; gap:12px; margin-bottom:6px; padding-bottom:10px; border-bottom:1px solid var(--n-200)}
+  .kx-h h2{font-family:var(--font-display); font-size:20px; color:var(--n-900); letter-spacing:-.02em}
+  .kx-h span{font-size:12.5px; color:var(--n-500)}
+  .kx-panel{background:var(--surface); border:1px solid var(--n-200); border-radius:var(--r-lg); padding:22px; margin-top:16px}
+  .kx-panel.warm{background:linear-gradient(180deg,#FBF4EC,#F6E3D2)}
+  .kx-panel.plain{background:var(--bg)}
+  .kx-cap{font-size:11px; letter-spacing:.05em; text-transform:uppercase; color:var(--n-500); font-weight:600; margin:0 0 10px}
+  .kx-row{display:flex; gap:14px; flex-wrap:wrap; align-items:center}
+  .kx-cols{display:grid; grid-template-columns:1fr 1fr; gap:22px}
+  .kx-cols > div{min-width:0}
+  .kx-frame{width:100%; height:560px; border:1px solid var(--n-200); border-radius:var(--r-lg); background:var(--surface)}
+  @media(max-width:820px){.kx-cols{grid-template-columns:1fr} .kx-wrap,.kx-top{padding-left:20px; padding-right:20px}}
+</style>
+</head>
+<body>
+
+<header class="kx-top">
+  <b>Бабосік · KIT</b>
+  <span class="kx-note">крок 03 · компоненти на kit.css · painted = еталон, сірі стани = структура з вайрфреймів</span>
+  <nav class="kx-nav">
+    <a href="#shell">Оболонка</a>
+    <a href="#buttons">Кнопки</a>
+    <a href="#discs">Диски</a>
+    <a href="#tags">Мітки</a>
+    <a href="#forms">Форми</a>
+    <a href="#lists">Списки</a>
+    <a href="#banks">Банки</a>
+    <a href="#cats">Категорії</a>
+    <a href="#cmp">Порівняння</a>
+    <a href="#hero">Hero</a>
+    <a href="#states">Стани</a>
+  </nav>
+</header>
+
+<div class="kx-wrap">
+
+  <!-- ═══ ОБОЛОНКА ═══ -->
+  <section class="kx-sec" id="shell">
+    <div class="kx-h"><h2>Оболонка</h2><span>таб-бар + двошарова шапка · ui/shell.html (сірий екран бере каркас звідси)</span></div>
+    <iframe class="kx-frame" src="shell.html" title="Оболонка Бабосіка"></iframe>
+  </section>
+
+  <!-- ═══ КНОПКИ ═══ -->
+  <section class="kx-sec" id="buttons">
+    <div class="kx-h"><h2>Кнопки</h2><span>один API · дія має одне ім'я (voice)</span></div>
+    <div class="kx-panel">
+      <p class="kx-cap">Варіанти</p>
+      <div class="kx-row">
+        <a class="btn btn-primary" href="#"><iconify-icon icon="solar:add-circle-linear"></iconify-icon>Підключити банк</a>
+        <a class="btn" href="#"><iconify-icon icon="solar:refresh-linear"></iconify-icon>Оновити</a>
+        <a class="btn btn-ghost" href="#"><iconify-icon icon="solar:chart-2-bold"></iconify-icon>Порівняти з травнем</a>
+        <a class="btn btn-quiet" href="#">Скасувати</a>
+        <a class="btn" role="button" aria-disabled="true"><iconify-icon icon="solar:chart-2-linear"></iconify-icon>Порівняти з травнем</a>
+      </div>
+      <p class="kx-cap" style="margin-top:18px">Деструктив (окремий намір)</p>
+      <div class="kx-row"><a class="btn btn-danger" href="#"><iconify-icon icon="solar:link-broken-linear"></iconify-icon>Відключити</a></div>
+      <p class="kx-cap" style="margin-top:18px">Блок (full-width)</p>
+      <div style="max-width:340px"><a class="btn btn-primary btn-block" href="#"><iconify-icon icon="solar:login-3-linear"></iconify-icon>Увійти через пошту</a></div>
+    </div>
+  </section>
+
+  <!-- ═══ ДИСКИ ═══ -->
+  <section class="kx-sec" id="discs">
+    <div class="kx-h"><h2>Диски категорій</h2><span>окрема багатоколірна палітра · контраст пораховано</span></div>
+    <div class="kx-panel">
+      <div class="kx-row">
+        <span class="disc food"><iconify-icon icon="solar:cart-3-bold"></iconify-icon></span>
+        <span class="disc cafe"><iconify-icon icon="solar:cup-hot-bold"></iconify-icon></span>
+        <span class="disc transport"><iconify-icon icon="solar:bus-bold"></iconify-icon></span>
+        <span class="disc utility"><iconify-icon icon="solar:home-2-bold"></iconify-icon></span>
+        <span class="disc health"><iconify-icon icon="solar:health-bold"></iconify-icon></span>
+        <span class="disc other"><iconify-icon icon="solar:menu-dots-bold"></iconify-icon></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ МІТКИ / СТАТУСИ ═══ -->
+  <section class="kx-sec" id="tags">
+    <div class="kx-h"><h2>Мітки та статуси</h2><span>.tag-up (увага без присуду) · .tag-data (якість даних) · .status (системний стан)</span></div>
+    <div class="kx-panel">
+      <p class="kx-cap">Мітки транзакцій</p>
+      <div class="kx-row">
+        <span class="tag-up"><iconify-icon icon="solar:alt-arrow-up-linear"></iconify-icon>більше ніж у травні</span>
+        <span class="tag-data"><iconify-icon icon="solar:tag-linear"></iconify-icon>не та категорія</span>
+        <span class="tag-data"><iconify-icon icon="solar:pen-linear"></iconify-icon>без назви</span>
+      </div>
+      <p class="kx-cap" style="margin-top:18px">Статус підключення (системний стан — легітимна семантика)</p>
+      <div class="kx-row">
+        <span class="status ok"><iconify-icon icon="solar:check-circle-bold"></iconify-icon>Працює</span>
+        <span class="status warn"><iconify-icon icon="solar:clock-circle-bold"></iconify-icon>Потрібна дія</span>
+        <span class="status err"><iconify-icon icon="solar:close-circle-bold"></iconify-icon>Не вдалося підключити</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ ФОРМИ ═══ -->
+  <section class="kx-sec" id="forms">
+    <div class="kx-h"><h2>Поля та вибір</h2><span>field · select (кастомний шеврон, :open) · opts · picker · filter-row</span></div>
+    <div class="kx-cols">
+      <div class="kx-panel">
+        <p class="kx-cap">Поля</p>
+        <div class="field"><label for="d-name">Назва</label><input id="d-name" type="text" value="Rozetka"></div>
+        <div class="field"><label for="d-cat">Категорія</label>
+          <select id="d-cat"><option>Усі категорії</option><option>Продукти</option><option selected>Інше</option></select></div>
+        <p class="divider">або через пошту</p>
+      </div>
+      <div class="kx-panel">
+        <p class="kx-cap">Вибір банку (opts)</p>
+        <fieldset class="opts">
+          <label class="opt"><input type="radio" name="d-bank" checked> Monobank</label>
+          <label class="opt"><input type="radio" name="d-bank"> ПриватБанк</label>
+          <label class="opt"><input type="radio" name="d-bank"> Інший банк</label>
+        </fieldset>
+      </div>
+      <div class="kx-panel">
+        <p class="kx-cap">Пікер категорії (picker)</p>
+        <div class="picker">
+          <label class="opt"><input type="radio" name="d-pick"><span>Продукти</span></label>
+          <label class="opt"><input type="radio" name="d-pick"><span>Транспорт</span></label>
+          <label class="opt"><input type="radio" name="d-pick" checked><span>Інше</span></label>
+        </div>
+      </div>
+      <div class="kx-panel">
+        <p class="kx-cap">Фільтр-рядок (filter-row)</p>
+        <form class="filter-row" role="search">
+          <div class="fg"><label for="d-q">Пошук</label><input id="d-q" type="search" placeholder="Назва або сума, напр. Сільпо"></div>
+          <div class="fg"><label for="d-fc">Категорія</label><select id="d-fc"><option>Усі категорії</option><option selected>Інше</option></select></div>
+          <button type="submit" class="btn btn-primary"><iconify-icon icon="solar:magnifer-linear"></iconify-icon>Застосувати</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ СПИСКИ ═══ -->
+  <section class="kx-sec" id="lists">
+    <div class="kx-h"><h2>Списки витрат</h2><span>.breakdown/.row (частка) · .top (картки) · .tx-list (транзакції) — 3 інтенти замість одного _wf .cards</span></div>
+
+    <div class="kx-panel">
+      <p class="kx-cap">Розбивка по категоріях (breakdown / row)</p>
+      <div class="breakdown">
+        <a class="row" href="#">
+          <span class="disc food"><iconify-icon icon="solar:cart-3-bold"></iconify-icon></span>
+          <span class="row-main"><span class="row-name">Продукти</span><span class="bar"><i style="--p:1; background:var(--c-food)"></i></span><span class="row-meta">Сільпо, АТБ · 28% місяця</span></span>
+          <span class="row-sum-wrap"><span class="row-sum">5&#8239;200&nbsp;₴</span><span class="row-pct">28%</span></span>
+        </a>
+        <a class="row" href="#">
+          <span class="disc other"><iconify-icon icon="solar:menu-dots-bold"></iconify-icon></span>
+          <span class="row-main"><span class="row-name">Інше <span class="tag-up"><iconify-icon icon="solar:alt-arrow-up-linear"></iconify-icon>більше ніж у травні</span></span><span class="bar"><i style="--p:.857; background:var(--c-other)"></i></span><span class="row-meta">24% місяця</span></span>
+          <span class="row-sum-wrap"><span class="row-sum">4&#8239;400&nbsp;₴</span><span class="row-pct">24%</span></span>
+        </a>
+      </div>
+    </div>
+
+    <div class="kx-panel">
+      <p class="kx-cap">Топ окремих витрат (top)</p>
+      <div class="top">
+        <a href="#"><span class="disc other"><iconify-icon icon="solar:menu-dots-bold"></iconify-icon></span><span class="t-main"><span class="t-name">Rozetka</span><span class="t-meta">12 червня · Інше</span></span><span class="t-sum">2&#8239;400&nbsp;₴</span></a>
+        <a href="#"><span class="disc food"><iconify-icon icon="solar:cart-3-bold"></iconify-icon></span><span class="t-main"><span class="t-name">Сільпо</span><span class="t-meta">8 червня · Продукти</span></span><span class="t-sum">1&#8239;180&nbsp;₴</span></a>
+      </div>
+    </div>
+
+    <div class="kx-panel">
+      <p class="kx-cap">Список транзакцій (tx-list)</p>
+      <div class="tx-list">
+        <a href="#"><span class="disc other"><iconify-icon icon="solar:menu-dots-bold"></iconify-icon></span><span class="tx-main"><span class="tx-name">Rozetka</span><span class="tx-meta">12 червня · Інше <span class="tag-data"><iconify-icon icon="solar:tag-linear"></iconify-icon>не та категорія</span></span></span><span class="tx-sum">−2&#8239;400&nbsp;₴</span></a>
+        <a href="#"><span class="disc other"><iconify-icon icon="solar:menu-dots-bold"></iconify-icon></span><span class="tx-main"><span class="tx-name">Оплата 4149…3812</span><span class="tx-meta">10 червня · Інше <span class="tag-data"><iconify-icon icon="solar:pen-linear"></iconify-icon>без назви</span></span></span><span class="tx-sum">−780&nbsp;₴</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ БАНКИ ═══ -->
+  <section class="kx-sec" id="banks">
+    <div class="kx-h"><h2>Підключені банки</h2><span>bank + status</span></div>
+    <div class="kx-panel plain">
+      <article class="bank">
+        <span class="b-icon"><iconify-icon icon="solar:card-2-bold"></iconify-icon></span>
+        <span class="b-name"><b>Monobank</b><span class="b-meta">оновлено 30 червня 2026</span></span>
+        <span class="status ok"><iconify-icon icon="solar:check-circle-bold"></iconify-icon>Працює</span>
+        <span class="b-actions"><a class="btn" href="#"><iconify-icon icon="solar:refresh-linear"></iconify-icon>Оновити</a><a class="btn btn-danger" href="#"><iconify-icon icon="solar:link-broken-linear"></iconify-icon>Відключити</a></span>
+      </article>
+      <p class="kx-cap" style="margin-top:18px">Файл на вивантаження (file-row) — Експорт, окремий від .bank</p>
+      <article class="file-row">
+        <span class="f-icon"><iconify-icon icon="solar:file-text-bold"></iconify-icon></span>
+        <span class="f-name"><b>CSV-файл</b><span class="f-meta">усі транзакції за весь час</span></span>
+        <a class="btn btn-primary" href="#"><iconify-icon icon="solar:download-minimalistic-linear"></iconify-icon>Вивантажити CSV</a>
+      </article>
+    </div>
+  </section>
+
+  <!-- ═══ КАТЕГОРІЇ ═══ -->
+  <section class="kx-sec" id="cats">
+    <div class="kx-h"><h2>Категорії (CRUD)</h2><span>cat + subs · чипи підкатегорій</span></div>
+    <div class="kx-panel plain">
+      <article class="cat">
+        <div class="cat-head">
+          <span class="disc food"><iconify-icon icon="solar:cart-3-bold"></iconify-icon></span>
+          <h3>Продукти</h3>
+          <span class="cat-actions"><a href="#"><iconify-icon icon="solar:pen-2-linear"></iconify-icon><span>Редагувати</span></a><a class="danger" href="#" aria-label="Видалити категорію Продукти"><iconify-icon icon="solar:trash-bin-trash-linear"></iconify-icon><span>Видалити</span></a></span>
+        </div>
+        <ul class="subs">
+          <li>Сільпо<span class="sub-actions"><a href="#" aria-label="Редагувати підкатегорію Сільпо"><iconify-icon icon="solar:pen-2-linear"></iconify-icon></a><a class="danger" href="#" aria-label="Видалити підкатегорію Сільпо"><iconify-icon icon="solar:trash-bin-trash-linear"></iconify-icon></a></span></li>
+          <li>АТБ<span class="sub-actions"><a href="#" aria-label="Редагувати підкатегорію АТБ"><iconify-icon icon="solar:pen-2-linear"></iconify-icon></a><a class="danger" href="#" aria-label="Видалити підкатегорію АТБ"><iconify-icon icon="solar:trash-bin-trash-linear"></iconify-icon></a></span></li>
+        </ul>
+        <p class="add-sub"><a href="#">＋ Додати підкатегорію</a></p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ═══ ПОРІВНЯННЯ ═══ -->
+  <section class="kx-sec" id="cmp">
+    <div class="kx-h"><h2>Порівняння місяців</h2><span>up = корал · down = петроль · flat = сірий (колір не судить)</span></div>
+    <div class="kx-panel plain">
+      <ul class="cmp">
+        <li>
+          <span class="disc cafe"><iconify-icon icon="solar:cup-hot-bold"></iconify-icon></span>
+          <span class="cmp-main"><span class="cmp-cat">Кафе та ресторани</span><span class="cmp-nums">червень 3 100 ₴ · травень 2 400 ₴</span></span>
+          <span class="cmp-delta up"><span class="d-sum">+700&nbsp;₴</span><span class="d-word"><iconify-icon icon="solar:alt-arrow-up-linear"></iconify-icon>більше ніж у травні</span></span>
+        </li>
+        <li>
+          <span class="disc food"><iconify-icon icon="solar:cart-3-bold"></iconify-icon></span>
+          <span class="cmp-main"><span class="cmp-cat">Продукти</span><span class="cmp-nums">червень 5 200 ₴ · травень 5 600 ₴</span></span>
+          <span class="cmp-delta down"><span class="d-sum">−400&nbsp;₴</span><span class="d-word"><iconify-icon icon="solar:alt-arrow-down-linear"></iconify-icon>менше ніж у травні</span></span>
+        </li>
+        <li>
+          <span class="disc utility"><iconify-icon icon="solar:home-2-bold"></iconify-icon></span>
+          <span class="cmp-main"><span class="cmp-cat">Комуналка</span><span class="cmp-nums">червень 2 300 ₴ · травень 2 300 ₴</span></span>
+          <span class="cmp-delta flat"><span class="d-sum">0&nbsp;₴</span><span class="d-word"><iconify-icon icon="solar:minus-square-linear"></iconify-icon>без змін</span></span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="kx-sec" id="hero">
+    <div class="kx-h"><h2>Hero — момент</h2><span>горизонт + сонце · сума нейтральна · delta = увага без присуду</span></div>
+    <div class="kx-panel plain" style="padding:0; overflow:hidden">
+      <div class="hero" style="border-bottom:0">
+        <div class="rings" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div class="sun" aria-hidden="true"></div>
+        <div class="hero-in">
+          <span class="period"><iconify-icon icon="solar:calendar-minimalistic-bold"></iconify-icon>червень 2026</span>
+          <h1>Ось твоя картина за місяць</h1>
+          <p class="sub">Усе, що пройшло через Monobank та ПриватБанк · оновлено 30 червня 2026</p>
+          <div class="total-row">
+            <span class="total">18&#8239;450&nbsp;₴</span>
+            <span class="delta"><iconify-icon icon="solar:alt-arrow-up-linear"></iconify-icon>1&#8239;200&nbsp;₴ <span class="q">більше, ніж у травні</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ СТАНИ ═══ -->
+  <section class="kx-sec" id="states">
+    <div class="kx-h"><h2>Стани</h2><span>тексти з voices/docs/microcopy.md · структура з wireframes/*-empty|error|loading</span></div>
+
+    <div class="kx-cols">
+      <!-- Порожній -->
+      <div class="kx-panel">
+        <p class="kx-cap">Порожній (Огляд · розбивка)</p>
+        <h2 style="font-size:19px; margin-bottom:12px">Куди пішли гроші</h2>
+        <p class="empty-msg"><iconify-icon icon="solar:pie-chart-2-bold"></iconify-icon>Тут з'явиться розбивка по категоріях, щойно надійдуть транзакції. За червень поки що нічого не підтягнулось.</p>
+        <div class="state-actions">
+          <a class="btn btn-primary" href="#"><iconify-icon icon="solar:refresh-linear"></iconify-icon>Оновити</a>
+          <a class="btn" href="#"><iconify-icon icon="solar:card-linear"></iconify-icon>Підключити ще банк</a>
+        </div>
+      </div>
+
+      <!-- Помилка -->
+      <div class="kx-panel">
+        <p class="kx-cap">Помилка (Огляд · розбивка)</p>
+        <h2 style="font-size:19px; margin-bottom:12px">Куди пішли гроші</h2>
+        <p class="error-msg"><iconify-icon icon="solar:danger-triangle-bold"></iconify-icon>Не вдалося завантажити розбивку по категоріях — не змогли зв'язатися з банком. Дані не втрачено. Спробуй ще раз.</p>
+        <div class="state-actions">
+          <a class="btn btn-primary" href="#"><iconify-icon icon="solar:refresh-linear"></iconify-icon>Спробувати ще</a>
+          <a class="btn" href="#"><iconify-icon icon="solar:card-linear"></iconify-icon>Перевірити підключення банку</a>
+        </div>
+      </div>
+
+      <!-- Завантаження -->
+      <div class="kx-panel">
+        <p class="kx-cap">Завантаження (Огляд · скелетони)</p>
+        <p class="loading-status" role="status" aria-live="polite"><span class="spinner" aria-hidden="true"></span>Збираємо картину за червень…</p>
+        <div class="skel skel-num" aria-hidden="true"></div>
+        <div class="skel skel-card" aria-hidden="true"></div>
+        <div class="skel skel-card" aria-hidden="true"></div>
+        <div class="skel skel-line short" aria-hidden="true"></div>
+      </div>
+
+      <!-- Повноекранний стан -->
+      <div class="kx-panel plain">
+        <p class="kx-cap">Повноекранний стан (statebox)</p>
+        <div class="statebox" style="margin:0">
+          <div class="ic err"><iconify-icon icon="solar:danger-triangle-bold"></iconify-icon></div>
+          <h2>Не вдалося увійти</h2>
+          <p>Вхід не завершився: акаунт Google не підтвердив доступ або перервалося з'єднання. Дані не втрачено — спробуй ще раз.</p>
+          <div class="state-actions"><a class="btn btn-primary" href="#"><iconify-icon icon="solar:refresh-linear"></iconify-icon>Спробувати ще</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

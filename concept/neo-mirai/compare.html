@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Бабосік · Порівняння місяців</title>
+<link rel="stylesheet" href="../../ui/kit.css">
+<script src="https://cdn.jsdelivr.net/npm/iconify-icon@2/dist/iconify-icon.min.js"></script>
+</head>
+<body>
+<div class="app">
+
+  <aside class="side">
+    <div class="brand"><span class="mark" aria-hidden="true"></span><b>Бабосік</b></div>
+    <nav class="nav" aria-label="Глобальна навігація">
+      <span class="cap">Огляд грошей</span>
+      <a href="overview.html" aria-current="page"><iconify-icon icon="solar:pie-chart-2-bold"></iconify-icon><span>Огляд</span></a>
+      <a href="transactions.html"><iconify-icon icon="solar:bill-list-bold"></iconify-icon><span>Транзакції</span></a>
+      <a href="categories.html"><iconify-icon icon="solar:widget-5-bold"></iconify-icon><span>Категорії</span></a>
+      <span class="cap">Налаштування</span>
+      <a href="bank-connect.html"><iconify-icon icon="solar:user-circle-bold"></iconify-icon><span>Акаунт</span></a>
+    </nav>
+    <p class="foot">Дані з Monobank та ПриватБанк.</p>
+  </aside>
+
+  <main class="content">
+    <div class="page-head">
+      <a class="back" href="overview.html"><iconify-icon icon="solar:arrow-left-linear"></iconify-icon>До огляду</a>
+      <h1>Червень 2026 проти травня 2026</h1>
+      <p class="sub">Разом: 18 450 ₴ проти 17 250 ₴ — на 1 200 ₴ більше, ніж у травні.</p>
+      <div class="head-actions">
+        <a class="btn" href="compare.html"><iconify-icon icon="solar:calendar-linear"></iconify-icon>Змінити місяці</a>
+        <a class="btn" href="compare.html"><iconify-icon icon="solar:arrow-left-linear"></iconify-icon>Попередня пара: травень проти квітня</a>
+      </div>
+    </div>
+
+    <div class="work">
+      <section aria-label="Порівняння по категоріях">
+        <div class="sec-head"><h2>Куди змінились витрати</h2></div>
+        <ul class="cmp">
+          <li class="reveal" style="animation-delay:.05s">
+            <span class="disc cafe"><iconify-icon icon="solar:cup-hot-bold"></iconify-icon></span>
+            <span class="cmp-main"><span class="cmp-cat">Кафе та ресторани</span><span class="cmp-nums">червень 3 100 ₴ · травень 2 400 ₴</span></span>
+            <span class="cmp-delta up"><span class="d-sum">+700&nbsp;₴</span><span class="d-word"><iconify-icon icon="solar:alt-arrow-up-linear"></iconify-icon>більше ніж у травні</span></span>
+          </li>
+          <li class="reveal" style="animation-delay:.11s">
+            <span class="disc food"><iconify-icon icon="solar:cart-3-bold"></iconify-icon></span>
+            <span class="cmp-main"><span class="cmp-cat">Продукти</span><span class="cmp-nums">червень 5 200 ₴ · травень 5 600 ₴</span></span>
+            <span class="cmp-delta down"><span class="d-sum">−400&nbsp;₴</span><span class="d-word"><iconify-icon icon="solar:alt-arrow-down-linear"></iconify-icon>менше ніж у травні</span></span>
+          </li>
+          <li class="reveal" style="animation-delay:.17s">
+            <span class="disc other"><iconify-icon icon="solar:menu-dots-bold"></iconify-icon></span>
+            <span class="cmp-main"><span class="cmp-cat">Інше</span><span class="cmp-nums">червень 4 400 ₴ · травень 3 200 ₴</span></span>
+            <span class="cmp-delta up"><span class="d-sum">+1 200&nbsp;₴</span><span class="d-word"><iconify-icon icon="solar:alt-arrow-up-linear"></iconify-icon>більше ніж у травні</span></span>
+          </li>
+          <li class="reveal" style="animation-delay:.23s">
+            <span class="disc utility"><iconify-icon icon="solar:home-2-bold"></iconify-icon></span>
+            <span class="cmp-main"><span class="cmp-cat">Комуналка</span><span class="cmp-nums">червень 2 300 ₴ · травень 2 300 ₴</span></span>
+            <span class="cmp-delta flat"><span class="d-sum">0&nbsp;₴</span><span class="d-word"><iconify-icon icon="solar:minus-square-linear"></iconify-icon>без змін</span></span>
+          </li>
+          <li class="reveal" style="animation-delay:.29s">
+            <span class="disc transport"><iconify-icon icon="solar:bus-bold"></iconify-icon></span>
+            <span class="cmp-main"><span class="cmp-cat">Транспорт</span><span class="cmp-nums">червень 1 450 ₴ · травень 1 750 ₴</span></span>
+            <span class="cmp-delta down"><span class="d-sum">−300&nbsp;₴</span><span class="d-word"><iconify-icon icon="solar:alt-arrow-down-linear"></iconify-icon>менше ніж у травні</span></span>
+          </li>
+        </ul>
+      </section>
+    </div>
+  </main>
+</div>
+</body>
+</html>

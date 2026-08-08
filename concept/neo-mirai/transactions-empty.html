@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Бабосік · Транзакції — порожній</title>
+<link rel="stylesheet" href="../../ui/kit.css">
+<script src="https://cdn.jsdelivr.net/npm/iconify-icon@2/dist/iconify-icon.min.js"></script>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><span class="mark" aria-hidden="true"></span><b>Бабосік</b></div>
+    <nav class="nav" aria-label="Глобальна навігація">
+      <span class="cap">Огляд грошей</span>
+      <a href="overview.html"><iconify-icon icon="solar:pie-chart-2-bold"></iconify-icon><span>Огляд</span></a>
+      <a href="transactions.html" aria-current="page"><iconify-icon icon="solar:bill-list-bold"></iconify-icon><span>Транзакції</span></a>
+      <a href="categories.html"><iconify-icon icon="solar:widget-5-bold"></iconify-icon><span>Категорії</span></a>
+      <span class="cap">Налаштування</span>
+      <a href="bank-connect.html"><iconify-icon icon="solar:user-circle-bold"></iconify-icon><span>Акаунт</span></a>
+    </nav>
+    <p class="foot">Дані з Monobank та ПриватБанк.</p>
+  </aside>
+
+  <main class="content">
+    <div class="page-head">
+      <h1>Транзакції за червень 2026</h1>
+      <p class="sub">Знайди те, що потрапило не туди або без назви — і наведи лад.</p>
+    </div>
+
+    <div class="work">
+      <section aria-label="Пошук і фільтр">
+        <div class="card">
+          <form class="filter-row" role="search">
+            <div class="fg"><label for="q">Пошук</label><input id="q" type="search" value="Вокзал готівка" placeholder="Назва або сума"></div>
+            <div class="fg"><label for="cat">Категорія</label>
+              <select id="cat"><option>Усі категорії</option><option>Продукти</option><option>Кафе та ресторани</option><option selected>Транспорт</option><option>Комуналка</option><option>Здоров'я</option><option>Інше</option></select></div>
+            <button type="submit" class="btn btn-primary"><iconify-icon icon="solar:magnifer-linear"></iconify-icon>Застосувати</button>
+          </form>
+          <p class="muted" style="margin:14px 0 0">Фільтр: «Вокзал готівка» + категорія «Транспорт» · нічого не знайдено</p>
+        </div>
+      </section>
+
+      <section aria-label="Список транзакцій">
+        <div class="sec-head"><h2>За цим фільтром транзакцій немає</h2></div>
+        <p class="empty-msg"><iconify-icon icon="solar:magnifer-bold"></iconify-icon>Нічого не збіглося з «Вокзал готівка» у категорії «Транспорт». Прибери частину умов пошуку. Якщо це була готівкова оплата — її можна додати вручну, і вона потрапить у картину.</p>
+        <div class="state-actions">
+          <a class="btn btn-primary" href="transactions.html"><iconify-icon icon="solar:refresh-linear"></iconify-icon>Уточнити пошук</a>
+          <a class="btn" href="add-transaction.html"><iconify-icon icon="solar:add-circle-linear"></iconify-icon>Це готівка → додати вручну</a>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+</body>
+</html>
